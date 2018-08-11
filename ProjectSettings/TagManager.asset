@@ -41,3 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Structure
+    uniqueID: 2792260961
+    locked: 0
+  - name: Terrain
+    uniqueID: 1125569257
+    locked: 0
