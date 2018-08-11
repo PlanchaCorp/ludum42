@@ -6,6 +6,8 @@ TagManager:
   tags:
   - TerrainTilemap
   - WaterTilemap
+  - Grid
+  - TileSelection
   layers:
   - Default
   - TransparentFX
@@ -54,4 +56,7 @@ TagManager:
     locked: 0
   - name: Character
     uniqueID: 401654443
+    locked: 0
+  - name: UI
+    uniqueID: 2296856251
     locked: 0

@@ -67439,7 +67439,7 @@ GameObject:
   - component: {fileID: 2062775358}
   m_Layer: 0
   m_Name: Grid
-  m_TagString: Untagged
+  m_TagString: Grid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -67483,7 +67483,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundTileMap: {fileID: 1145731435}
-  sandTile:
+  sandTiles:
   - {fileID: 11400000, guid: 422ab6c6ada474643a45f6a92c6c6e0f, type: 2}
   - {fileID: 11400000, guid: 67d89065816db474586346bfccd560fb, type: 2}
   - {fileID: 11400000, guid: 6691b36905143944f87deece2ed518ea, type: 2}
@@ -67491,7 +67491,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e798bee14cddab540922700f9cbd8f11, type: 2}
   - {fileID: 11400000, guid: e798bee14cddab540922700f9cbd8f11, type: 2}
   - {fileID: 11400000, guid: e798bee14cddab540922700f9cbd8f11, type: 2}
+  stoneTiles: []
   mapSize: 40
   seed: 15.23
-  xOrg: 0
-  yOrg: 0
