@@ -6,7 +6,8 @@ public class PlayerMovement : MonoBehaviour {
     /// <summary>
     /// Speed of the player
     /// </summary>
-    public float speed = 2.5f;
+    [SerializeField]
+    private float speed = 2.5f;
 
     /// <summary>
     /// Position of the last mouse click
