@@ -1,4 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
+guid: 2a27ec1ee73179341a86683d48ec6c25
+TextureImporter:
+  fileIDToRecycleName: {}
+=======
 guid: e6ff9932963bb374287837a86c75633b
 TextureImporter:
   fileIDToRecycleName:
@@ -10,6 +15,7 @@ TextureImporter:
     21300010: animationCrabWalking_5
     21300012: animationCrabWalking_6
     21300014: animationCrabWalking_7
+>>>>>>> 3c950b5e2437690cb6bdfa3120377a3e41a45fad
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -39,7 +45,11 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
+<<<<<<< HEAD
+    filterMode: -1
+=======
     filterMode: 0
+>>>>>>> 3c950b5e2437690cb6bdfa3120377a3e41a45fad
     aniso: -1
     mipBias: -100
     wrapU: 1
@@ -48,12 +58,20 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
+<<<<<<< HEAD
+  spriteMode: 1
+=======
   spriteMode: 2
+>>>>>>> 3c950b5e2437690cb6bdfa3120377a3e41a45fad
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
+<<<<<<< HEAD
+  spritePixelsToUnits: 100
+=======
   spritePixelsToUnits: 32
+>>>>>>> 3c950b5e2437690cb6bdfa3120377a3e41a45fad
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -77,6 +95,15 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+<<<<<<< HEAD
+  spriteSheet:
+    serializedVersion: 2
+    sprites: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: c22bf8c19b8bd634e8828964a55db2de
+=======
   - serializedVersion: 2
     buildTarget: Standalone
     maxTextureSize: 2048
@@ -255,6 +282,7 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 62be26faab2cfcd468acb7a78970bae7
+>>>>>>> 3c950b5e2437690cb6bdfa3120377a3e41a45fad
     vertices: []
     indices: 
     edges: []
