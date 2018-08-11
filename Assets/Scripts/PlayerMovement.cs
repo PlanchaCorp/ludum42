@@ -28,23 +28,32 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     /// <summary>
-    /// Check mouse clicks and set mouseClickPosition
+    /// Check mouse clicks and call the SetMouseClick method
     /// </summary>
-    void UpdateMouseClick()
+    private void UpdateMouseClick()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(1))
         {
             Ray mousePositionRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-            mouseClickPosition = mousePositionRay.origin;
-            isMoving = true;
+            SetMouseClick(mousePositionRay.origin);
         }
+    }
+    
+    /// <summary>
+    /// Set new direction position of the player
+    /// </summary>
+    /// <param name="position">Position of the new direction of the player</param>
+    public void SetMouseClick(Vector3 position)
+    {
+        mouseClickPosition = position;
+        isMoving = true;
     }
 
     /// <summary>
     /// Move the player accordingly to the mouse click position
     /// </summary>
     /// <param name="elapsedTime">Time elapsed since last fixedUpdate</param>
-    void UpdatePlayerPosition(float elapsedTime)
+    private void UpdatePlayerPosition(float elapsedTime)
     {
         if (isMoving)
         {
