@@ -259,6 +259,7 @@ GameObject:
   - component: {fileID: 516068904}
   - component: {fileID: 516068906}
   - component: {fileID: 516068905}
+  - component: {fileID: 516068907}
   m_Layer: 0
   m_Name: Water
   m_TagString: WaterTilemap
@@ -67242,6 +67243,23 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &516068907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 516068903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ab695eeaf30fb84fb867fe4d4de956f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
+  actualLayer: 0
+  water: {fileID: 0}
+  maxLayer: 6
+  minLayer: 0
+  period: 5
 --- !u!1 &1145731432
 GameObject:
   m_ObjectHideFlags: 0
