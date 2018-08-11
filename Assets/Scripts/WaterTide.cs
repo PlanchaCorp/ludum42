@@ -31,7 +31,8 @@ public class WaterTide : MonoBehaviour {
             startingLayer = water.GetComponent<TilemapRenderer>().sortingOrder;
             state = TideState.STILL;
             actualLayer = startingLayer;
-            InvokeRepeating("ChangeTide", 2.0f, period);
+            // Change the state of the tide with the current state selected (after 'period' seconds)
+            Invoke("ChangeTide", period);
         } else
         {
             Debug.LogError("Could not get Water with Tag " + waterTag);
@@ -66,6 +67,8 @@ public class WaterTide : MonoBehaviour {
                 break;
         }
         UpdateTideLayer();
+        // Act as a clock, re invoke this method after 'period' seconds
+        Invoke("ChangeTide", period);
     }
 
     private void UpdateTideLayer()
