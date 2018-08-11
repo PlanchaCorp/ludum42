@@ -207,19 +207,19 @@ Tilemap:
   m_TileMatrixArray:
   - m_RefCount: 0
     m_Data:
-      e00: 0
-      e01: 0
+      e00: NaN
+      e01: 9.8e-44
       e02: NaN
       e03: 0
-      e10: 0
+      e10: NaN
       e11: 0
       e12: NaN
       e13: 0
       e20: 0
       e21: 0
-      e22: 0
+      e22: 9.8e-44
       e23: 0
-      e30: 0
+      e30: NaN
       e31: 0
       e32: 0
       e33: 0
@@ -228,8 +228,8 @@ Tilemap:
     m_Data: {r: NaN, g: NaN, b: NaN, a: NaN}
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Origin: {x: -5, y: -5, z: 0}
-  m_Size: {x: 11, y: 10, z: 1}
+  m_Origin: {x: -20, y: -14, z: 0}
+  m_Size: {x: 43, y: 31, z: 1}
   m_TileAnchor: {x: 0, y: 0, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -259,6 +259,7 @@ GameObject:
   - component: {fileID: 516068904}
   - component: {fileID: 516068906}
   - component: {fileID: 516068905}
+  - component: {fileID: 516068907}
   m_Layer: 0
   m_Name: Water
   m_TagString: WaterTilemap
@@ -67220,7 +67221,7 @@ Tilemap:
   - m_RefCount: 2907
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_AnimationFrameRate: 1
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.45490196}
   m_Origin: {x: -30, y: -24, z: 0}
   m_Size: {x: 57, y: 51, z: 1}
   m_TileAnchor: {x: 0, y: 0, z: 0}
@@ -67242,6 +67243,23 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &516068907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 516068903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ab695eeaf30fb84fb867fe4d4de956f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
+  actualLayer: 0
+  water: {fileID: 0}
+  maxLayer: 6
+  minLayer: 0
+  period: 5
 --- !u!1 &1145731432
 GameObject:
   m_ObjectHideFlags: 0
@@ -67439,7 +67457,7 @@ GameObject:
   - component: {fileID: 2062775358}
   m_Layer: 0
   m_Name: Grid
-  m_TagString: Untagged
+  m_TagString: Grid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -67483,7 +67501,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundTileMap: {fileID: 1145731435}
-  sandTile:
+  sandTiles:
   - {fileID: 11400000, guid: 422ab6c6ada474643a45f6a92c6c6e0f, type: 2}
   - {fileID: 11400000, guid: 67d89065816db474586346bfccd560fb, type: 2}
   - {fileID: 11400000, guid: 6691b36905143944f87deece2ed518ea, type: 2}
@@ -67491,7 +67509,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e798bee14cddab540922700f9cbd8f11, type: 2}
   - {fileID: 11400000, guid: e798bee14cddab540922700f9cbd8f11, type: 2}
   - {fileID: 11400000, guid: e798bee14cddab540922700f9cbd8f11, type: 2}
+  stoneTiles:
+  - {fileID: 11400000, guid: 894ee2e3df07b24458a0fad21904983b, type: 2}
+  - {fileID: 11400000, guid: 1d223253ca4c34a4d8784499b39d223d, type: 2}
+  - {fileID: 11400000, guid: 5663b2ca8e49cbe478bfdec19be2a463, type: 2}
+  - {fileID: 11400000, guid: 748195071a52dff4caa14143fd2f539b, type: 2}
+  - {fileID: 11400000, guid: 69f35adc1e1cd3e48b3afff32b6cedf8, type: 2}
+  - {fileID: 11400000, guid: 69f35adc1e1cd3e48b3afff32b6cedf8, type: 2}
+  - {fileID: 11400000, guid: 69f35adc1e1cd3e48b3afff32b6cedf8, type: 2}
   mapSize: 40
   seed: 15.23
-  xOrg: 0
-  yOrg: 0
