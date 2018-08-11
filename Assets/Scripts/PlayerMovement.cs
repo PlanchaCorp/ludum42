@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour {
     /// </summary>
     void UpdateMouseClick()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(1))
         {
             Ray mousePositionRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             mouseClickPosition = mousePositionRay.origin;
