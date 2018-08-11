@@ -67,20 +67,30 @@ public class IslandGenerator : MonoBehaviour
         for (int l =0; l< scale; l++) {
             GameObject sandLayer = new GameObject();
             sandLayer.AddComponent<Tilemap>();
-            sandLayer.AddComponent<TilemapRenderer>();
+            sandLayer.AddComponent<TilemapRenderer>().sortingLayerName = "Terrain";
             sandLayer.GetComponent<TilemapRenderer>().sortingOrder = l;
+            sandLayer.GetComponent<Tilemap>().tileAnchor = Vector3.zero;
+            sandLayer.tag = "TerrainTilemap";
+            
             sandLayer.name = "SandLayer" + l;
+            sandLayer.GetComponent<TilemapRenderer>().sortOrder = TilemapRenderer.SortOrder.BottomLeft;
             sandLayer.transform.SetParent(groundTileMap.transform);
+            
         }
-        
+
+
         Vector3Int vectorPosition = Vector3Int.zero;
         for (int i = 0; i < perlinSizeX; i++)
         {
             for (int j = 0; j < perlinSizeY; j++)
             {
-                vectorPosition.x = mapSize / 2 - i;
+                vectorPosition.x = mapSize/2-  i;
                 vectorPosition.y = mapSize / 2 - j;
                 groundTileMap.transform.Find("SandLayer"+ map[i,j]).GetComponent<Tilemap>().SetTile(vectorPosition, sandTile[map[i, j]]);
+                if(map[i, j] < 3)
+                {
+
+                }
              
 
             }
