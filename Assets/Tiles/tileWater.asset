@@ -11,8 +11,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
   m_Name: tileWater
   m_EditorClassIdentifier: 
-  m_AnimatedSprites: []
-  m_MinSpeed: 1
-  m_MaxSpeed: 1
+  m_AnimatedSprites:
+  - {fileID: 21300000, guid: b7205d7062f06814ea5f5e91e849008d, type: 3}
+  - {fileID: 21300002, guid: b7205d7062f06814ea5f5e91e849008d, type: 3}
+  - {fileID: 21300004, guid: b7205d7062f06814ea5f5e91e849008d, type: 3}
+  - {fileID: 21300006, guid: b7205d7062f06814ea5f5e91e849008d, type: 3}
+  - {fileID: 21300008, guid: b7205d7062f06814ea5f5e91e849008d, type: 3}
+  - {fileID: 21300010, guid: b7205d7062f06814ea5f5e91e849008d, type: 3}
+  - {fileID: 21300012, guid: b7205d7062f06814ea5f5e91e849008d, type: 3}
+  - {fileID: 21300014, guid: b7205d7062f06814ea5f5e91e849008d, type: 3}
+  m_MinSpeed: 4.43
+  m_MaxSpeed: 4.79
   m_AnimationStartTime: 0
   m_TileColliderType: 0
