@@ -12,20 +12,18 @@ public class IslandGenerator : MonoBehaviour
     private Tilemap groundTileMap;
 
     [SerializeField]
-    private Tile sandTile;
+    private Tile[] sandTile;
 
-    [SerializeField]
-    private AnimatedTile waterTile;
+    private int perlinSizeX ;// Longueur du tableau
+    private int perlinSizeY ;// Largeur du tableau 
 
-    public int perlinSizeX = 64;// Longueur du tableau
-    public int perlinSizeY = 64;// Largeur du tableau 
+    public int mapSize = 40;
 
+    private float K;
 
-    public float K = 64;
+    private float scale = 7;
 
-    public float scale = 7;
-
-    public float seed = Random.Range(0, 999);
+    public float seed;
 
     // The origin of the sampled area in the plane.
     public float xOrg;
@@ -35,26 +33,29 @@ public class IslandGenerator : MonoBehaviour
 
     // Use this for initialization
     void Start()
-{
-
-    
-
-    GenerateIsland(generatePerlin());
-}
-
-
-    private float[,] GaussianMask()
     {
-        int X0 = perlinSizeY;//2;
-        int Y0 = perlinSizeY;//2;
 
-         //Coefficient donnant la taille du masque (Plus K est grand, plus le masque est petit)
-        float[,] mask = new float[perlinSizeX, perlinSizeY];
+        perlinSizeX = mapSize;// Longueur du tableau
+        perlinSizeY = mapSize;// Largeur du tableau 
+        K = mapSize / 2;
+        seed = Random.Range(0, 999);
+        GenerateIsland(GaussianMask(GeneratePerlin()));
+    }
+
+
+    private int[,] GaussianMask(float[,] map)
+    {
+        int X0 = perlinSizeX / 2;//2;
+        int Y0 = perlinSizeY / 2;//2;
+
+        //Coefficient donnant la taille du masque (Plus K est grand, plus le masque est petit)
+        int[,] mask = new int[perlinSizeX, perlinSizeY];
         for (int x = 0; x < perlinSizeX; x++)
         {
             for (int y = 0; y < perlinSizeY; y++)
             {
-                mask[x, y] = Mathf.Exp(-((x - X0) * (x - X0) + (y - Y0) * (y - Y0) / K));
+                mask[x, y] = Mathf.Max(Mathf.RoundToInt(map[x, y] * (-Mathf.Sqrt((x - X0) * (x - X0) + (y - Y0) * (y - Y0)) / K + 1) * 7), 0);
+              
             }
 
         }
@@ -63,32 +64,36 @@ public class IslandGenerator : MonoBehaviour
 
     private void GenerateIsland(int[,] map)
     {
+        for (int l =0; l< scale; l++) {
+            GameObject sandLayer = new GameObject();
+            sandLayer.AddComponent<Tilemap>();
+            sandLayer.AddComponent<TilemapRenderer>();
+            sandLayer.GetComponent<TilemapRenderer>().sortingOrder = l;
+            sandLayer.name = "SandLayer" + l;
+            sandLayer.transform.SetParent(groundTileMap.transform);
+        }
+        
         Vector3Int vectorPosition = Vector3Int.zero;
         for (int i = 0; i < perlinSizeX; i++)
         {
             for (int j = 0; j < perlinSizeY; j++)
             {
-                vectorPosition.x = i;
-                vectorPosition.y = j;
-                if (map[i,j] > 2)
-                {
-                    groundTileMap.SetTile(vectorPosition, sandTile);
-                }
-                else {
-                    groundTileMap.SetTile(vectorPosition, waterTile);
-                }
+                vectorPosition.x = mapSize / 2 - i;
+                vectorPosition.y = mapSize / 2 - j;
+                groundTileMap.transform.Find("SandLayer"+ map[i,j]).GetComponent<Tilemap>().SetTile(vectorPosition, sandTile[map[i, j]]);
+             
 
             }
         }
     }
-/// <summary>
-/// Generate a perlin noise for a 64*64 map size
-/// </summary>
-/// <returns>an array with values between 0 and 7</returns>
-public int[,] generatePerlin()
-{
-    int[,] map = new int[perlinSizeX, perlinSizeY];
-          float y = 0.0F;
+    /// <summary>
+    /// Generate a perlin noise for a 64*64 map size
+    /// </summary>
+    /// <returns>an array with values between 0 and 7</returns>
+    public float[,] GeneratePerlin()
+    {
+        float[,] map = new float[perlinSizeX, perlinSizeY];
+        float y = 0.0F;
 
         while (y < perlinSizeX)
         {
@@ -97,8 +102,8 @@ public int[,] generatePerlin()
             {
                 float xCoord = xOrg + x / perlinSizeX * scale;
                 float yCoord = yOrg + y / perlinSizeY * scale;
-                map[(int)x, (int)y] = Mathf.RoundToInt(Mathf.PerlinNoise(seed+xCoord,seed+ yCoord)*7);
-                Debug.Log(map[(int)x, (int)y]);
+                map[(int)x, (int)y] = Mathf.PerlinNoise(seed + xCoord, seed + yCoord);
+
                 x++;
             }
             y++;
@@ -108,30 +113,30 @@ public int[,] generatePerlin()
 
     }
 
-private void ReadImage()
-{
-    Texture2D image = (Texture2D)Resources.Load("texture");
-    Debug.Log(image);
-
-    // Iterate through it's pixels
-    for (int i = 0; i < image.width; i++)
+    private void ReadImage()
     {
-        for (int j = 0; j < image.height; j++)
-        {
-            Color pixel = image.GetPixel(i, j);
+        Texture2D image = (Texture2D)Resources.Load("texture");
+        Debug.Log(image);
 
-            // if it's a white color then just debug...
-            if (pixel == Color.white)
+        // Iterate through it's pixels
+        for (int i = 0; i < image.width; i++)
+        {
+            for (int j = 0; j < image.height; j++)
             {
-                Debug.Log("Im white");
-            }
-            else
-            {
-                Debug.Log("Im black");
+                Color pixel = image.GetPixel(i, j);
+
+                // if it's a white color then just debug...
+                if (pixel == Color.white)
+                {
+                    Debug.Log("Im white");
+                }
+                else
+                {
+                    Debug.Log("Im black");
+                }
             }
         }
     }
-}
 
 
 }
