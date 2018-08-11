@@ -197,7 +197,11 @@ Tilemap:
   m_TileAssetArray:
   - m_RefCount: 0
     m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   m_TileSpriteArray:
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
   m_TileMatrixArray:
@@ -210,7 +214,7 @@ Tilemap:
       e10: 0
       e11: 0
       e12: NaN
-      e13: 4.4765625
+      e13: 0
       e20: 0
       e21: 0
       e22: 0
@@ -532,7 +536,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1606063416}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -9.82}
+  m_LocalPosition: {x: -1.92, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -595,4 +599,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundTileMap: {fileID: 1145731435}
   sandTile: {fileID: 11400000, guid: ed3962e9a90c6fc4bbfb1b4dfd3eeff6, type: 2}
-  heigtmap: {fileID: 2800000, guid: 51c9ab1e59e027d43ac4168c1eebb307, type: 3}
+  waterTile: {fileID: 11400000, guid: f675243b986e55f4f9fdacb5b74b5089, type: 2}
+  perlinSizeX: 64
+  perlinSizeY: 64
+  K: 0.13
+  scale: 7
+  seed: 15.23
+  xOrg: 0
+  yOrg: 0
