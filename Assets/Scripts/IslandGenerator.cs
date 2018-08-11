@@ -21,6 +21,12 @@ public class IslandGenerator : MonoBehaviour
     [SerializeField]
     private Tile[] stoneTiles;
 
+    [SerializeField]
+    private Tile wall;
+
+    [SerializeField]
+    private AnimatedTile waterTile;
+
     private int perlinSizeX ;// Longueur du tableau
     private int perlinSizeY ;// Largeur du tableau 
 
@@ -46,7 +52,7 @@ public class IslandGenerator : MonoBehaviour
     // Use this for initialization
     void Awake()
     {
-        Debug.Log("awake");
+        
         perlinSizeX = mapSize;// Longueur du tableau
         perlinSizeY = mapSize;// Largeur du tableau 
         K = 0.01f;
@@ -56,7 +62,6 @@ public class IslandGenerator : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("start");
         GenerateIsland(map);
     }
 
@@ -114,7 +119,7 @@ public class IslandGenerator : MonoBehaviour
 
                 float xCoord = xOrg + x / perlinSizeX * scale;
                 float yCoord = yOrg + y / perlinSizeY * scale;
-                Debug.Log(Mathf.PerlinNoise(xCoord + seed, yCoord + seed));
+               
                /* if (Mathf.PerlinNoise(xCoord + seed, yCoord + seed) < 0.25f)
                 {*/
                     
@@ -130,7 +135,10 @@ public class IslandGenerator : MonoBehaviour
 
                 if (map[i, j] < 2)
                 {
-                
+                    waterTilemap.SetTile(vectorPosition, waterTile);
+                } else
+                {
+                    waterTilemap.SetTile(vectorPosition, wall);
                 }
              
 
