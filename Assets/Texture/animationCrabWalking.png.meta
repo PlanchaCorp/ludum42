@@ -1,15 +1,15 @@
 fileFormatVersion: 2
-guid: b7205d7062f06814ea5f5e91e849008d
+guid: e6ff9932963bb374287837a86c75633b
 TextureImporter:
   fileIDToRecycleName:
-    21300000: tileWater_0
-    21300002: tileWater_1
-    21300004: tileWater_2
-    21300006: tileWater_3
-    21300008: tileWater_4
-    21300010: tileWater_5
-    21300012: tileWater_6
-    21300014: tileWater_7
+    21300000: animationCrabWalking_0
+    21300002: animationCrabWalking_1
+    21300004: animationCrabWalking_2
+    21300006: animationCrabWalking_3
+    21300008: animationCrabWalking_4
+    21300010: animationCrabWalking_5
+    21300012: animationCrabWalking_6
+    21300014: animationCrabWalking_7
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -40,11 +40,11 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: 1
+    aniso: -1
     mipBias: -100
     wrapU: 1
     wrapV: 1
-    wrapW: -1
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -68,7 +68,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 2
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 256
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -79,7 +79,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: Standalone
-    maxTextureSize: 256
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -92,7 +92,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: tileWater_0
+      name: animationCrabWalking_0
       rect:
         serializedVersion: 2
         x: 0
@@ -106,13 +106,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 98aabb6aeedaf62459b75811cda9ee22
+      spriteID: 620f88f7d9b66eb4bbbdd7488a0f9c8d
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileWater_1
+      name: animationCrabWalking_1
       rect:
         serializedVersion: 2
         x: 32
@@ -126,13 +126,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 05b8fcc051a8595489ae77e0ff450b81
+      spriteID: 4976e4889915f784a96394be43584f65
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileWater_2
+      name: animationCrabWalking_2
       rect:
         serializedVersion: 2
         x: 64
@@ -146,13 +146,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2cf9d55da2bdd724cb61e237021dd97a
+      spriteID: cf0369ccca3bddd4e8759a4dbc4aa72f
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileWater_3
+      name: animationCrabWalking_3
       rect:
         serializedVersion: 2
         x: 96
@@ -166,13 +166,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a597d6f9de8ad134e8fd0d3087cbe196
+      spriteID: 24b02d8186673174a8420b3772aa5d26
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileWater_4
+      name: animationCrabWalking_4
       rect:
         serializedVersion: 2
         x: 128
@@ -186,13 +186,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ffc34ff7304a5d24f936bcd370b3fb20
+      spriteID: 716190a339fd4f342beaeba5c97ceb8e
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileWater_5
+      name: animationCrabWalking_5
       rect:
         serializedVersion: 2
         x: 160
@@ -206,13 +206,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e46b6759ef3aa1a48968d57164aa7dae
+      spriteID: f4581e01fe485c547afaf4c409c202b2
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileWater_6
+      name: animationCrabWalking_6
       rect:
         serializedVersion: 2
         x: 192
@@ -226,13 +226,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3da91404a019f8f4487ba04086a86b4f
+      spriteID: 2b11c4138629c2f428b2096886d72ab6
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileWater_7
+      name: animationCrabWalking_7
       rect:
         serializedVersion: 2
         x: 224
@@ -246,7 +246,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 280359f36a3086749b0f6614dd12dc64
+      spriteID: 299c9d95606f8b84cb10ddce2045cccf
       vertices: []
       indices: 
       edges: []
@@ -254,7 +254,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 2efaca8a434b8c046926b32f16c3f82f
+    spriteID: 62be26faab2cfcd468acb7a78970bae7
     vertices: []
     indices: 
     edges: []
