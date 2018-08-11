@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Texture/wall.png.meta
 guid: 56005695673590f4e8757add14dd3908
+=======
+guid: 38592708863761f45be19952f186ac72
+>>>>>>> 5a04c706805dfe7b9500c7a8c8e05c16fcd0cd17:Assets/Texture/tileSandTopeft.png.meta
 TextureImporter:
   fileIDToRecycleName: {}
   externalObjects: {}
@@ -34,13 +38,13 @@ TextureImporter:
     filterMode: -1
     aniso: -1
     mipBias: -100
-    wrapU: 1
-    wrapV: 1
-    wrapW: 1
-  nPOTScale: 0
+    wrapU: -1
+    wrapV: -1
+    wrapW: -1
+  nPOTScale: 1
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 0
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -49,9 +53,9 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
-  alphaIsTransparency: 1
+  alphaIsTransparency: 0
   spriteTessellationDetail: -1
-  textureType: 8
+  textureType: 0
   textureShape: 1
   singleChannelComponent: 0
   maxTextureSizeSet: 0
@@ -75,7 +79,11 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
+<<<<<<< HEAD:Assets/Texture/wall.png.meta
     spriteID: 912d8b843c322bc4da5d1d55b0a4690a
+=======
+    spriteID: ca590ced5fa4c0146b1554da7ad05c95
+>>>>>>> 5a04c706805dfe7b9500c7a8c8e05c16fcd0cd17:Assets/Texture/tileSandTopeft.png.meta
     vertices: []
     indices: 
     edges: []
