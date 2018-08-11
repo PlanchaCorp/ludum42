@@ -12,10 +12,7 @@ public class IslandGenerator : MonoBehaviour
     private Tilemap groundTileMap;
 
     [SerializeField]
-    private Tile sandTile;
-
-    [SerializeField]
-    private AnimatedTile waterTile;
+    private Tile[] sandTile;
 
     private int perlinSizeX ;// Longueur du tableau
     private int perlinSizeY ;// Largeur du tableau 
@@ -83,7 +80,7 @@ public class IslandGenerator : MonoBehaviour
             {
                 vectorPosition.x = mapSize / 2 - i;
                 vectorPosition.y = mapSize / 2 - j;
-                groundTileMap.transform.Find("SandLayer"+ map[i,j]).GetComponent<Tilemap>().SetTile(vectorPosition, sandTile);
+                groundTileMap.transform.Find("SandLayer"+ map[i,j]).GetComponent<Tilemap>().SetTile(vectorPosition, sandTile[map[i, j]]);
              
 
             }
