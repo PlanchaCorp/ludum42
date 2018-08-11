@@ -218,7 +218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87cba75432f733344ab971db00054190, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundTileMap: {fileID: 0}
+  groundTileMap: {fileID: 1394768636}
   sandTiles:
   - {fileID: 11400000, guid: 422ab6c6ada474643a45f6a92c6c6e0f, type: 2}
   - {fileID: 11400000, guid: 67d89065816db474586346bfccd560fb, type: 2}
