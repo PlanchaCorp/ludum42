@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class UIHotbar : MonoBehaviour {
 
     [SerializeField] int switchStat;
-    [SerializeField] GameObject switchSelector1;
-    [SerializeField] GameObject switchSelector2;
+    [SerializeField] Image switchSelector1;
+    [SerializeField] Image switchSelector2;
+    [SerializeField] Sprite Sprite1 ;
+    [SerializeField] Sprite Sprite2 ;
 
     // Use this for initialization
     void Start () {
@@ -17,14 +20,15 @@ public class UIHotbar : MonoBehaviour {
 	void Update () {
         if (Input.GetKey("1"))
         {
-            switchSelector1.SetActive(true);
-            switchSelector2.SetActive(false);
+            switchSelector1.sprite = Sprite2;
+            switchSelector2.sprite = Sprite1;
+                
             switchStat = 1;
         }
         if (Input.GetKey("2"))
         {
-            switchSelector1.SetActive(false);
-            switchSelector2.SetActive(true);
+            switchSelector2.sprite = Sprite2;
+            switchSelector1.sprite = Sprite1;
             switchStat = 2;
         }
     }
