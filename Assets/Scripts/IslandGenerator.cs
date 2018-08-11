@@ -34,7 +34,10 @@ public class IslandGenerator : MonoBehaviour
     private float xOrg;
     private float yOrg;
 
-
+    public Tile[] GetSandTiles()
+    {
+        return sandTiles;
+    }
 
     // Use this for initialization
     void Awake()
@@ -88,23 +91,40 @@ public class IslandGenerator : MonoBehaviour
             
         }
 
+        
+
    
 
         Vector3Int vectorPosition = Vector3Int.zero;
+        float y = 0.0F;
         for (int i = 0; i < perlinSizeX; i++)
         {
+            float x = 0.0F;
             for (int j = 0; j < perlinSizeY; j++)
             {
                 vectorPosition.x = mapSize/2-  i;
                 vectorPosition.y = mapSize / 2 - j;
-                groundTileMap.transform.Find("SandLayer"+ map[i,j]).GetComponent<Tilemap>().SetTile(vectorPosition, sandTiles[map[i, j]]);
+
+                float xCoord = xOrg + x / perlinSizeX * scale;
+                float yCoord = yOrg + y / perlinSizeY * scale;
+                Debug.Log(Mathf.PerlinNoise(xCoord + seed, yCoord + seed));
+                if (Mathf.PerlinNoise(xCoord + seed, yCoord + seed) < 0.25f)
+                {
+                    groundTileMap.transform.Find("SandLayer" + map[i, j]).GetComponent<Tilemap>().SetTile(vectorPosition, stoneTiles[map[i, j]]);
+                }
+                else
+                {
+                    groundTileMap.transform.Find("SandLayer" + map[i, j]).GetComponent<Tilemap>().SetTile(vectorPosition, sandTiles[map[i, j]]);
+                }
+                
                 if(map[i, j] < 3)
                 {
 
                 }
-             
 
+                x++;
             }
+            y++;
         }
     }
     /// <summary>
@@ -116,10 +136,10 @@ public class IslandGenerator : MonoBehaviour
         float[,] map = new float[perlinSizeX, perlinSizeY];
         float y = 0.0F;
 
-        while (y < perlinSizeX)
+        while (y < perlinSizeY)
         {
             float x = 0.0F;
-            while (x < perlinSizeY)
+            while (x < perlinSizeX)
             {
                 float xCoord = xOrg + x / perlinSizeX * scale;
                 float yCoord = yOrg + y / perlinSizeY * scale;
