@@ -40,6 +40,11 @@ public class PlayerAction : MonoBehaviour {
     private List<Tilemap> terrainTilemaps = new List<Tilemap>();
 
     /// <summary>
+    /// Tilemap of the water
+    /// </summary>
+    private Tilemap waterTilemap;
+
+    /// <summary>
     /// Grid object containing all tilesets
     /// </summary>
     private Grid grid;
@@ -64,6 +69,7 @@ public class PlayerAction : MonoBehaviour {
             terrainTilemaps.Add(terrainObject.GetComponent<Tilemap>());
             i++;
         }
+        waterTilemap = GameObject.FindGameObjectWithTag("WaterTilemap").GetComponent<Tilemap>();
         grid = GameObject.FindGameObjectWithTag("Grid").GetComponent<Grid>();
     }
 	
@@ -98,21 +104,27 @@ public class PlayerAction : MonoBehaviour {
     /// </summary>
     private void HoverTile(Vector3 mousePosition)
     {
+        GameObject tileSelection = GameObject.FindGameObjectWithTag("TileSelection");
+        bool tileMatched = false;
         foreach (Tilemap terrainTilemap in terrainTilemaps)
         {
             Vector3Int cellPosition = terrainTilemap.WorldToCell(mousePosition);
             TileBase tile = terrainTilemap.GetTile(cellPosition);
             if (tile != null)
             {
-                GameObject tileSelection = GameObject.FindGameObjectWithTag("TileSelection");
+                tileMatched = true;
                 Vector3 localCellPosition = terrainTilemap.CellToLocal(cellPosition);
-                
                 if (tileSelection.transform.position != localCellPosition)
                 {
                     StopDigging();
                 }
                 tileSelection.transform.position = localCellPosition;
+                tileSelection.GetComponent<SpriteRenderer>().enabled = true;
             }
+        }
+        if (!tileMatched)
+        {
+            tileSelection.GetComponent<SpriteRenderer>().enabled = false;
         }
     }
 
@@ -129,7 +141,7 @@ public class PlayerAction : MonoBehaviour {
             TileBase tile = terrainTilemap.GetTile(cellPosition);
             if (tile != null)
             {
-                Vector3 tileDistanceVector = cellPosition - transform.position;
+                Vector3 tileDistanceVector = mousePosition - transform.position;
                 float tileDistance = Mathf.Sqrt(Mathf.Pow(tileDistanceVector.x, 2) + Mathf.Pow(tileDistanceVector.y, 2));
                 if (tileDistance <= actionRange)
                 {
@@ -138,7 +150,10 @@ public class PlayerAction : MonoBehaviour {
                         switch (uiHotbarCanvas.GetComponent<UIHotbar>().GetSwitch())
                         {
                             case 1:
-                                Dig(cellPosition);
+                                if (terrainTilemap.GetComponent<TilemapRenderer>().sortingOrder >= waterTilemap.GetComponent<TilemapRenderer>().sortingOrder)
+                                {
+                                    Dig(cellPosition);
+                                }
                                 break;
                             case 2:
                                 TryReplenish(cellPosition);
