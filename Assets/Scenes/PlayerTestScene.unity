@@ -218,7 +218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87cba75432f733344ab971db00054190, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundTileMap: {fileID: 1394768636}
+  groundTileMap: {fileID: 0}
   sandTiles:
   - {fileID: 11400000, guid: 422ab6c6ada474643a45f6a92c6c6e0f, type: 2}
   - {fileID: 11400000, guid: 67d89065816db474586346bfccd560fb, type: 2}
@@ -227,7 +227,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e798bee14cddab540922700f9cbd8f11, type: 2}
   - {fileID: 11400000, guid: e798bee14cddab540922700f9cbd8f11, type: 2}
   - {fileID: 11400000, guid: e798bee14cddab540922700f9cbd8f11, type: 2}
-  stoneTiles: []
+  stoneTiles:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   mapSize: 40
   seed: 15.23
 --- !u!156049354 &126636718
