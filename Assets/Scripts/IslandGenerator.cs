@@ -11,6 +11,10 @@ public class IslandGenerator : MonoBehaviour
     [SerializeField]
     private Tilemap groundTileMap;
 
+
+    [SerializeField]
+    private Tilemap waterTilemap;
+
     [SerializeField]
     private Tile[] sandTiles;
 
@@ -82,13 +86,16 @@ public class IslandGenerator : MonoBehaviour
             sandLayer.AddComponent<Tilemap>();
             sandLayer.AddComponent<TilemapRenderer>().sortingLayerName = "Terrain";
             sandLayer.GetComponent<TilemapRenderer>().sortingOrder = l;
-            sandLayer.GetComponent<Tilemap>().tileAnchor = Vector3.zero;
+            sandLayer.GetComponent<Tilemap>().tileAnchor = new Vector3(0.5f,0f);
+            sandLayer.GetComponent<Tilemap>().orientation = Tilemap.Orientation.Custom;
+            sandLayer.transform.position = new Vector3(0f, l/10f, 0f);
+            
             sandLayer.tag = "TerrainTilemap";
             
             sandLayer.name = "SandLayer" + l;
             sandLayer.GetComponent<TilemapRenderer>().sortOrder = TilemapRenderer.SortOrder.TopLeft;
             sandLayer.transform.SetParent(groundTileMap.transform);
-            
+           
         }
 
         
@@ -108,19 +115,22 @@ public class IslandGenerator : MonoBehaviour
                 float xCoord = xOrg + x / perlinSizeX * scale;
                 float yCoord = yOrg + y / perlinSizeY * scale;
                 Debug.Log(Mathf.PerlinNoise(xCoord + seed, yCoord + seed));
-                if (Mathf.PerlinNoise(xCoord + seed, yCoord + seed) < 0.25f)
-                {
-                    groundTileMap.transform.Find("SandLayer" + map[i, j]).GetComponent<Tilemap>().SetTile(vectorPosition, stoneTiles[map[i, j]]);
-                }
-                else
-                {
-
-                    groundTileMap.transform.Find("SandLayer" + map[i, j]).GetComponent<Tilemap>().SetTile(vectorPosition, sandTiles[map[i, j]]);
-                }
+               /* if (Mathf.PerlinNoise(xCoord + seed, yCoord + seed) < 0.25f)
+                {*/
+                    
+                    Tile tile = sandTiles[0];
                 
-                if(map[i, j] < 3)
-                {
+                groundTileMap.transform.Find("SandLayer" + map[i, j]).GetComponent<Tilemap>().SetTile(vectorPosition, tile);
+                /* }
+                 else
+                 {
 
+                     groundTileMap.transform.Find("SandLayer" + map[i, j]).GetComponent<Tilemap>().SetTile(vectorPosition, sandTiles[map[i, j]]);
+                 }*/
+
+                if (map[i, j] < 2)
+                {
+                
                 }
              
 
