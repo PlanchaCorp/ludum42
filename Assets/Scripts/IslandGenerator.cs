@@ -122,10 +122,9 @@ public class IslandGenerator : MonoBehaviour
                 {
 
                 }
+             
 
-                x++;
             }
-            y++;
         }
     }
 
@@ -138,10 +137,10 @@ public class IslandGenerator : MonoBehaviour
         float[,] map = new float[perlinSizeX, perlinSizeY];
         float y = 0.0F;
 
-        while (y < perlinSizeY)
+        while (y < perlinSizeX)
         {
             float x = 0.0F;
-            while (x < perlinSizeX)
+            while (x < perlinSizeY)
             {
                 float xCoord = xOrg + x / perlinSizeX * scale;
                 float yCoord = yOrg + y / perlinSizeY * scale;
