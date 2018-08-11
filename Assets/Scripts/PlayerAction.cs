@@ -35,6 +35,12 @@ public class PlayerAction : MonoBehaviour {
     private Canvas uiHotbarCanvas;
 
     /// <summary>
+    /// Max amount of sand in inventory
+    /// </summary>
+    [SerializeField]
+    private int maxSandInInventory = 10;
+
+    /// <summary>
     /// Tilemaps of the terrains
     /// </summary>
     private List<Tilemap> terrainTilemaps = new List<Tilemap>();
@@ -58,6 +64,11 @@ public class PlayerAction : MonoBehaviour {
     /// Current replenishing cooldown elapsed (0 = can replenish)
     /// </summary>
     private float replenishTime = 0;
+
+    /// <summary>
+    /// Amount of sand in inventory
+    /// </summary>
+    private int sandInInventory = 0;
 
     // Use this for initialization
     void Start()
@@ -150,13 +161,17 @@ public class PlayerAction : MonoBehaviour {
                         switch (uiHotbarCanvas.GetComponent<UIHotbar>().GetSwitch())
                         {
                             case 1:
-                                if (terrainTilemap.GetComponent<TilemapRenderer>().sortingOrder >= waterTilemap.GetComponent<TilemapRenderer>().sortingOrder)
+                                if (terrainTilemap.GetComponent<TilemapRenderer>().sortingOrder >= waterTilemap.GetComponent<TilemapRenderer>().sortingOrder
+                                    && sandInInventory < maxSandInInventory)
                                 {
                                     Dig(cellPosition);
                                 }
                                 break;
                             case 2:
-                                TryReplenish(cellPosition);
+                                if (sandInInventory > 0)
+                                {
+                                    TryReplenish(cellPosition);
+                                }
                                 break;
                         }
                         actionDone = true;
@@ -227,6 +242,7 @@ public class PlayerAction : MonoBehaviour {
             }
             i--;
         }
+        sandInInventory++;
     }
 
     /// <summary>
@@ -270,5 +286,6 @@ public class PlayerAction : MonoBehaviour {
             }
             i++;
         }
+        sandInInventory--;
     }
 }
