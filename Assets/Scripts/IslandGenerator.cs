@@ -34,7 +34,7 @@ public class IslandGenerator : MonoBehaviour
     private float xOrg;
     private float yOrg;
 
-    public Tile[] getSandTiles()
+    public Tile[] GetSandTiles()
     {
         return sandTiles;
     }
