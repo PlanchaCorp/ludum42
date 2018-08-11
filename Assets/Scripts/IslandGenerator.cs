@@ -86,7 +86,7 @@ public class IslandGenerator : MonoBehaviour
             sandLayer.tag = "TerrainTilemap";
             
             sandLayer.name = "SandLayer" + l;
-            sandLayer.GetComponent<TilemapRenderer>().sortOrder = TilemapRenderer.SortOrder.BottomLeft;
+            sandLayer.GetComponent<TilemapRenderer>().sortOrder = TilemapRenderer.SortOrder.TopLeft;
             sandLayer.transform.SetParent(groundTileMap.transform);
             
         }
@@ -114,6 +114,7 @@ public class IslandGenerator : MonoBehaviour
                 }
                 else
                 {
+
                     groundTileMap.transform.Find("SandLayer" + map[i, j]).GetComponent<Tilemap>().SetTile(vectorPosition, sandTiles[map[i, j]]);
                 }
                 
@@ -127,6 +128,7 @@ public class IslandGenerator : MonoBehaviour
             y++;
         }
     }
+
     /// <summary>
     /// Generate a perlin noise for a 64*64 map size
     /// </summary>
