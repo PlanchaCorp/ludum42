@@ -12,7 +12,10 @@ public class IslandGenerator : MonoBehaviour
     private Tilemap groundTileMap;
 
     [SerializeField]
-    private Tile[] sandTile;
+    private Tile[] sandTiles;
+
+    [SerializeField]
+    private Tile[] stoneTiles;
 
     private int perlinSizeX ;// Longueur du tableau
     private int perlinSizeY ;// Largeur du tableau 
@@ -25,21 +28,29 @@ public class IslandGenerator : MonoBehaviour
 
     public float seed;
 
+    public int[,] map;
+
     // The origin of the sampled area in the plane.
-    public float xOrg;
-    public float yOrg;
+    private float xOrg;
+    private float yOrg;
 
 
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
-
+        Debug.Log("awake");
         perlinSizeX = mapSize;// Longueur du tableau
         perlinSizeY = mapSize;// Largeur du tableau 
         K = mapSize / 2;
         seed = Random.Range(0, 999);
-        GenerateIsland(GaussianMask(GeneratePerlin()));
+        map = GaussianMask(GeneratePerlin());
+    }
+
+    private void Start()
+    {
+        Debug.Log("start");
+        GenerateIsland(map);
     }
 
 
@@ -55,7 +66,6 @@ public class IslandGenerator : MonoBehaviour
             for (int y = 0; y < perlinSizeY; y++)
             {
                 mask[x, y] = Mathf.Max(Mathf.RoundToInt(map[x, y] * (-Mathf.Sqrt((x - X0) * (x - X0) + (y - Y0) * (y - Y0)) / K + 1) * 7), 0);
-              
             }
 
         }
@@ -78,6 +88,7 @@ public class IslandGenerator : MonoBehaviour
             
         }
 
+   
 
         Vector3Int vectorPosition = Vector3Int.zero;
         for (int i = 0; i < perlinSizeX; i++)
@@ -86,7 +97,7 @@ public class IslandGenerator : MonoBehaviour
             {
                 vectorPosition.x = mapSize/2-  i;
                 vectorPosition.y = mapSize / 2 - j;
-                groundTileMap.transform.Find("SandLayer"+ map[i,j]).GetComponent<Tilemap>().SetTile(vectorPosition, sandTile[map[i, j]]);
+                groundTileMap.transform.Find("SandLayer"+ map[i,j]).GetComponent<Tilemap>().SetTile(vectorPosition, sandTiles[map[i, j]]);
                 if(map[i, j] < 3)
                 {
 
@@ -122,31 +133,5 @@ public class IslandGenerator : MonoBehaviour
         return map;
 
     }
-
-    private void ReadImage()
-    {
-        Texture2D image = (Texture2D)Resources.Load("texture");
-        Debug.Log(image);
-
-        // Iterate through it's pixels
-        for (int i = 0; i < image.width; i++)
-        {
-            for (int j = 0; j < image.height; j++)
-            {
-                Color pixel = image.GetPixel(i, j);
-
-                // if it's a white color then just debug...
-                if (pixel == Color.white)
-                {
-                    Debug.Log("Im white");
-                }
-                else
-                {
-                    Debug.Log("Im black");
-                }
-            }
-        }
-    }
-
 
 }
