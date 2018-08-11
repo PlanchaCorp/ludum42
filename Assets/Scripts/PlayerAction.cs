@@ -11,15 +11,27 @@ public class PlayerAction : MonoBehaviour {
     private float actionRange = 3.5f;
 
     /// <summary>
-    /// Tilemaps of the terrains
-    /// </summary>
-    private List<Tilemap> terrainTilemaps = new List<Tilemap>();
-
-    /// <summary>
     /// Sprites of the digging bar
     /// </summary>
     [SerializeField]
     private Sprite[] digBarSprites;
+
+    /// <summary>
+    /// Time for digging a sand tile
+    /// </summary>
+    [SerializeField]
+    private float maxDiggingTime = 1.00f;
+
+    /// <summary>
+    /// Canvas with hotbar
+    /// </summary>
+    [SerializeField]
+    private Canvas uiHotbarCanvas;
+
+    /// <summary>
+    /// Tilemaps of the terrains
+    /// </summary>
+    private List<Tilemap> terrainTilemaps = new List<Tilemap>();
 
     /// <summary>
     /// Grid object containing all tilesets
@@ -30,12 +42,6 @@ public class PlayerAction : MonoBehaviour {
     /// Current dig time
     /// </summary>
     private float diggingTime = 0;
-
-    /// <summary>
-    /// Time for digging a sand tile
-    /// </summary>
-    [SerializeField]
-    private float maxDiggingTime = 1.00f;
 
     // Use this for initialization
     void Start()
@@ -54,6 +60,16 @@ public class PlayerAction : MonoBehaviour {
 	void Update ()
     {
         InteractWithEnvironment();
+        CheckHotbar();
+    }
+
+    private void CheckHotbar()
+    {
+        int switchHotbar = uiHotbarCanvas.GetComponent<UIHotbar>().GetSwitch();
+        if (switchHotbar != 1)
+        {
+            StopDigging();
+        }
     }
 
     /// <summary>
@@ -113,7 +129,7 @@ public class PlayerAction : MonoBehaviour {
                 float tileDistance = Mathf.Sqrt(Mathf.Pow(tileDistanceVector.x, 2) + Mathf.Pow(tileDistanceVector.y, 2));
                 if (tileDistance <= actionRange)
                 {
-                    if (!actionDone)
+                    if (!actionDone && uiHotbarCanvas.GetComponent<UIHotbar>().GetSwitch() == 1)
                     {
                         Dig(cellPosition);
                         actionDone = true;

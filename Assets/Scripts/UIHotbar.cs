@@ -78,4 +78,9 @@ public class UIHotbar : MonoBehaviour {
         switchSelector3.sprite = Sprite2;
         switchStat = 3;
     }
+
+    public int GetSwitch()
+    {
+        return switchStat;
+    }
 }
