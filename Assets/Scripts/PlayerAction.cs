@@ -20,7 +20,13 @@ public class PlayerAction : MonoBehaviour {
     /// Time for digging a sand tile
     /// </summary>
     [SerializeField]
-    private float maxDiggingTime = 1.00f;
+    private float maxDiggingTime = 0.3f;
+
+    /// <summary>
+    /// Cooldown for replenishing sand
+    /// </summary>
+    [SerializeField]
+    private float maxReplenishCooldown = 0.05f;
 
     /// <summary>
     /// Canvas with hotbar
@@ -43,6 +49,11 @@ public class PlayerAction : MonoBehaviour {
     /// </summary>
     private float diggingTime = 0;
 
+    /// <summary>
+    /// Current replenishing cooldown elapsed (0 = can replenish)
+    /// </summary>
+    private float replenishTime = 0;
+
     // Use this for initialization
     void Start()
     {
@@ -59,7 +70,17 @@ public class PlayerAction : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        InteractWithEnvironment();
+        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mouseWorldPosition.z = 0;
+        HoverTile(mouseWorldPosition);
+        if (Input.GetMouseButton(0))
+        {
+            InteractWithTerrain(mouseWorldPosition);
+        }
+        else
+        {
+            StopDigging();
+        }
         CheckHotbar();
     }
 
@@ -96,23 +117,6 @@ public class PlayerAction : MonoBehaviour {
     }
 
     /// <summary>
-    /// Handle click interaction
-    /// </summary>
-    private void InteractWithEnvironment()
-    {
-        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mouseWorldPosition.z = 0;
-        HoverTile(mouseWorldPosition);
-        if (Input.GetMouseButton(0))
-        {
-            InteractWithTerrain(mouseWorldPosition);
-        } else
-        {
-            StopDigging();
-        }
-    }
-
-    /// <summary>
     /// Handle interaction with terrain
     /// </summary>
     /// <param name="mousePosition">Position where to interact</param>
@@ -129,9 +133,17 @@ public class PlayerAction : MonoBehaviour {
                 float tileDistance = Mathf.Sqrt(Mathf.Pow(tileDistanceVector.x, 2) + Mathf.Pow(tileDistanceVector.y, 2));
                 if (tileDistance <= actionRange)
                 {
-                    if (!actionDone && uiHotbarCanvas.GetComponent<UIHotbar>().GetSwitch() == 1)
+                    if (!actionDone)
                     {
-                        Dig(cellPosition);
+                        switch (uiHotbarCanvas.GetComponent<UIHotbar>().GetSwitch())
+                        {
+                            case 1:
+                                Dig(cellPosition);
+                                break;
+                            case 2:
+                                TryReplenish(cellPosition);
+                                break;
+                        }
                         actionDone = true;
                     }
                 }
@@ -199,6 +211,22 @@ public class PlayerAction : MonoBehaviour {
                 terrainTilemap.SetTile(diggingPosition, tiles[i]);
             }
             i--;
+        }
+    }
+
+    /// <summary>
+    /// Try to replenish if cooldown available
+    /// </summary>
+    /// <param name="diggingPosition">Tile position of the sand tile to replenish</param>
+    private void TryReplenish(Vector3Int replenishPosition)
+    {
+        if (replenishTime <= 0)
+        {
+            Replenish(replenishPosition);
+            replenishTime = maxReplenishCooldown;
+        } else
+        {
+            replenishTime -= Time.deltaTime;
         }
     }
 
