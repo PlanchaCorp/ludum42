@@ -53,7 +53,7 @@ public class UIHotbar : MonoBehaviour {
         {
             IconDigBar.SetActive(false);
         }
-        if (BreathBar.value > 0)
+        if (BreathBar.value < 100)
         {
             IconBreathBar.SetActive(true);
         }
