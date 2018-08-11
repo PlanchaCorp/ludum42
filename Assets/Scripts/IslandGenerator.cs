@@ -66,6 +66,7 @@ public class IslandGenerator : MonoBehaviour
     }
 
 
+
     private int[,] GaussianMask(float[,] map)
     {
         int X0 = perlinSizeX / 2;//2;
@@ -102,11 +103,6 @@ public class IslandGenerator : MonoBehaviour
             sandLayer.transform.SetParent(groundTileMap.transform);
            
         }
-
-        
-
-   
-
         Vector3Int vectorPosition = Vector3Int.zero;
         float y = 0.0F;
         for (int i = 0; i < perlinSizeX; i++)
@@ -120,32 +116,44 @@ public class IslandGenerator : MonoBehaviour
                 float xCoord = xOrg + x / perlinSizeX * scale;
                 float yCoord = yOrg + y / perlinSizeY * scale;
                
-               /* if (Mathf.PerlinNoise(xCoord + seed, yCoord + seed) < 0.25f)
-                {*/
+                if (Mathf.PerlinNoise(xCoord + seed, yCoord + seed) < 0.25f)
+                {
                     
                     Tile tile = sandTiles[map[i, j]];
                 
                 groundTileMap.transform.Find("SandLayer" + map[i, j]).GetComponent<Tilemap>().SetTile(vectorPosition, tile);
-                /* }
+                 }
                  else
                  {
-
                      groundTileMap.transform.Find("SandLayer" + map[i, j]).GetComponent<Tilemap>().SetTile(vectorPosition, sandTiles[map[i, j]]);
-                 }*/
+                 }
 
-                if (map[i, j] < 2)
-                {
-                    waterTilemap.SetTile(vectorPosition, waterTile);
-                } else
-                {
-                    waterTilemap.SetTile(vectorPosition, wall);
-                }
+               
              
-
             }
         }
     }
 
+    public void SetWater(int level)
+    {
+        Vector3Int vectorPosition = Vector3Int.zero;
+        for (int i = 0; i < perlinSizeX; i++)
+        {
+            for (int j = 0; j < perlinSizeY; j++)
+            {
+                vectorPosition.x = mapSize / 2 - i;
+                vectorPosition.y = mapSize / 2 - j;
+                if (map[i, j] < level)
+                {
+                    waterTilemap.SetTile(vectorPosition, waterTile);
+                }
+                else
+                {
+                    waterTilemap.SetTile(vectorPosition, wall);
+                }
+            }
+        }
+    }
     /// <summary>
     /// Generate a perlin noise for a 64*64 map size
     /// </summary>

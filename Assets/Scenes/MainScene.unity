@@ -528,8 +528,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  actualLayer: 0
-  water: {fileID: 0}
+  actualLayer: 2
+  water: {fileID: 516068903}
   risingTimer: 0
   maxLayer: 6
   minLayer: 0
@@ -710,9 +710,8 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 'Next Wave : 0.0'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: fe22716e29330d84ba8e13bf7fe3c5e0, type: 2}
-  m_sharedMaterial: {fileID: 21344302438034214, guid: fe22716e29330d84ba8e13bf7fe3c5e0,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -754,7 +753,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 0
+  m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -943,7 +942,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundTileMap: {fileID: 1145731435}
-  waterTilemap: {fileID: 0}
+  waterTilemap: {fileID: 516068906}
   sandTiles:
   - {fileID: 11400000, guid: 422ab6c6ada474643a45f6a92c6c6e0f, type: 2}
   - {fileID: 11400000, guid: 67d89065816db474586346bfccd560fb, type: 2}
