@@ -49,7 +49,7 @@ public class IslandGenerator : MonoBehaviour
         Debug.Log("awake");
         perlinSizeX = mapSize;// Longueur du tableau
         perlinSizeY = mapSize;// Largeur du tableau 
-        K = mapSize / 2;
+        K = 0.01f;
         seed = Random.Range(0, 999);
         map = GaussianMask(GeneratePerlin());
     }
@@ -72,7 +72,7 @@ public class IslandGenerator : MonoBehaviour
         {
             for (int y = 0; y < perlinSizeY; y++)
             {
-                mask[x, y] = Mathf.Max(Mathf.RoundToInt(map[x, y] * (-Mathf.Sqrt((x - X0) * (x - X0) + (y - Y0) * (y - Y0)) / K + 1) * 7), 0);
+                mask[x, y] = Mathf.RoundToInt(map[x, y] * 7 * Mathf.Exp(-((x - X0) * (x - X0) + (y - Y0) * (y - Y0)) * K));
             }
 
         }
@@ -86,7 +86,7 @@ public class IslandGenerator : MonoBehaviour
             sandLayer.AddComponent<Tilemap>();
             sandLayer.AddComponent<TilemapRenderer>().sortingLayerName = "Terrain";
             sandLayer.GetComponent<TilemapRenderer>().sortingOrder = l;
-            sandLayer.GetComponent<Tilemap>().tileAnchor = new Vector3(0.5f,0f);
+            sandLayer.GetComponent<Tilemap>().tileAnchor = new Vector3(0f,0f);
             sandLayer.GetComponent<Tilemap>().orientation = Tilemap.Orientation.Custom;
             sandLayer.transform.position = new Vector3(0f, l/10f, 0f);
             
@@ -118,7 +118,7 @@ public class IslandGenerator : MonoBehaviour
                /* if (Mathf.PerlinNoise(xCoord + seed, yCoord + seed) < 0.25f)
                 {*/
                     
-                    Tile tile = sandTiles[0];
+                    Tile tile = sandTiles[map[i, j]];
                 
                 groundTileMap.transform.Find("SandLayer" + map[i, j]).GetComponent<Tilemap>().SetTile(vectorPosition, tile);
                 /* }
