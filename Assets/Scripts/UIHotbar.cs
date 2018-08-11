@@ -11,6 +11,11 @@ public class UIHotbar : MonoBehaviour {
     [SerializeField] Image switchSelector3;
     [SerializeField] Sprite Sprite1 ;
     [SerializeField] Sprite Sprite2 ;
+    [SerializeField] Slider BreathBar;
+    [SerializeField] Slider DigBar;
+    [SerializeField] GameObject IconDigBar;
+    [SerializeField] GameObject IconBreathBar;
+
 
     // Use this for initialization
     void Start () {
@@ -39,6 +44,22 @@ public class UIHotbar : MonoBehaviour {
             switchSelector1.sprite = Sprite1;
             switchSelector3.sprite = Sprite2;
             switchStat = 3;
+        }
+        if(DigBar.value > 0)
+        {
+            IconDigBar.SetActive(true);
+        }
+        else
+        {
+            IconDigBar.SetActive(false);
+        }
+        if (BreathBar.value < 100)
+        {
+            IconBreathBar.SetActive(true);
+        }
+        else
+        {
+            IconBreathBar.SetActive(false);
         }
     }
 }
