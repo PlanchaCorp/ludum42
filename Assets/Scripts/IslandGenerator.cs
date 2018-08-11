@@ -34,7 +34,10 @@ public class IslandGenerator : MonoBehaviour
     private float xOrg;
     private float yOrg;
 
-
+    public Tile[] getSandTiles()
+    {
+        return sandTiles;
+    }
 
     // Use this for initialization
     void Awake()
@@ -88,6 +91,8 @@ public class IslandGenerator : MonoBehaviour
             
         }
 
+        
+
    
 
         Vector3Int vectorPosition = Vector3Int.zero;
@@ -97,7 +102,15 @@ public class IslandGenerator : MonoBehaviour
             {
                 vectorPosition.x = mapSize/2-  i;
                 vectorPosition.y = mapSize / 2 - j;
-                groundTileMap.transform.Find("SandLayer"+ map[i,j]).GetComponent<Tilemap>().SetTile(vectorPosition, sandTiles[map[i, j]]);
+                if (Mathf.PerlinNoise(i + seed, j + seed) < 0.25f)
+                {
+                    groundTileMap.transform.Find("SandLayer" + map[i, j]).GetComponent<Tilemap>().SetTile(vectorPosition, stoneTiles[map[i, j]]);
+                }
+                else
+                {
+                    groundTileMap.transform.Find("SandLayer" + map[i, j]).GetComponent<Tilemap>().SetTile(vectorPosition, sandTiles[map[i, j]]);
+                }
+                
                 if(map[i, j] < 3)
                 {
 
