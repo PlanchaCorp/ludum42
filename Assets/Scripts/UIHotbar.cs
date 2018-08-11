@@ -18,32 +18,24 @@ public class UIHotbar : MonoBehaviour {
 
 
     // Use this for initialization
-    void Start () {
-		
-	}
+    void Start ()
+    {
+        SelectShovel();
+    }
 	
 	// Update is called once per frame
 	void Update () {
         if (Input.GetKey("1"))
         {
-            switchSelector1.sprite = Sprite2;
-            switchSelector2.sprite = Sprite1;
-            switchSelector3.sprite = Sprite1;
-            switchStat = 1;
+            SelectShovel();
         }
         if (Input.GetKey("2"))
         {
-            switchSelector2.sprite = Sprite2;
-            switchSelector1.sprite = Sprite1;
-            switchSelector3.sprite = Sprite1;
-            switchStat = 2;
+            SelectBucket();
         }
         if(Input.GetKey("3"))
         {
-            switchSelector2.sprite = Sprite1;
-            switchSelector1.sprite = Sprite1;
-            switchSelector3.sprite = Sprite2;
-            switchStat = 3;
+            SelectHammer();
         }
         if(DigBar.value > 0)
         {
@@ -61,5 +53,29 @@ public class UIHotbar : MonoBehaviour {
         {
             IconBreathBar.SetActive(false);
         }
+    }
+
+    private void SelectShovel()
+    {
+        switchSelector1.sprite = Sprite2;
+        switchSelector2.sprite = Sprite1;
+        switchSelector3.sprite = Sprite1;
+        switchStat = 1;
+    }
+
+    private void SelectBucket()
+    {
+        switchSelector2.sprite = Sprite2;
+        switchSelector1.sprite = Sprite1;
+        switchSelector3.sprite = Sprite1;
+        switchStat = 2;
+    }
+
+    private void SelectHammer()
+    {
+        switchSelector2.sprite = Sprite1;
+        switchSelector1.sprite = Sprite1;
+        switchSelector3.sprite = Sprite2;
+        switchStat = 3;
     }
 }

@@ -15,6 +15,9 @@ public class PlayerAction : MonoBehaviour {
     /// </summary>
     private List<Tilemap> terrainTilemaps = new List<Tilemap>();
 
+    /// <summary>
+    /// Sprites of the digging bar
+    /// </summary>
     [SerializeField]
     private Sprite[] digBarSprites;
 
@@ -22,6 +25,17 @@ public class PlayerAction : MonoBehaviour {
     /// Grid object containing all tilesets
     /// </summary>
     private Grid grid;
+
+    /// <summary>
+    /// Current dig time
+    /// </summary>
+    private float diggingTime = 0;
+
+    /// <summary>
+    /// Time for digging a sand tile
+    /// </summary>
+    [SerializeField]
+    private float maxDiggingTime = 1.00f;
 
     // Use this for initialization
     void Start()
@@ -113,10 +127,10 @@ public class PlayerAction : MonoBehaviour {
         }
     }
 
-    private float diggingTime = 0;
-    [SerializeField]
-    private float maxDiggingTime = 1.00f;
-
+    /// <summary>
+    /// Digging action, handling animation and action
+    /// </summary>
+    /// <param name="diggingPosition">Tile position of the sand tile to dig</param>
     private void Dig(Vector3Int diggingPosition)
     {
         SpriteRenderer digBar = GameObject.FindGameObjectWithTag("DigBar").GetComponent<SpriteRenderer>();
@@ -137,6 +151,9 @@ public class PlayerAction : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Stop digging right now
+    /// </summary>
     private void StopDigging()
     {
         SpriteRenderer digBar = GameObject.FindGameObjectWithTag("DigBar").GetComponent<SpriteRenderer>();
