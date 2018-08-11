@@ -18,11 +18,6 @@ public class PlayerAction : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        StartCoroutine(LateStart(0.1f));
-    }
-
-    IEnumerator LateStart(float waitTime) {
-        yield return new WaitForSeconds(waitTime);
         GameObject[] terrainsObjects = GameObject.FindGameObjectsWithTag("TerrainTilemap");
         int i = 0;
         foreach (GameObject terrainObject in terrainsObjects)
@@ -76,6 +71,7 @@ public class PlayerAction : MonoBehaviour {
     /// <param name="mousePosition">Position where to interact</param>
     private void InteractWithTerrain(Vector3 mousePosition)
     {
+        bool actionDone = false;
         foreach (Tilemap terrainTilemap in terrainTilemaps)
         {
             Vector3Int cellPosition = terrainTilemap.WorldToCell(mousePosition);
@@ -86,13 +82,71 @@ public class PlayerAction : MonoBehaviour {
                 float tileDistance = Mathf.Sqrt(Mathf.Pow(tileDistanceVector.x, 2) + Mathf.Pow(tileDistanceVector.y, 2));
                 if (tileDistance <= actionRange)
                 {
-                    Debug.Log("Interaction : " + tile.name);
+                    if (!actionDone)
+                    {
+                        Dig(cellPosition);
+                        actionDone = true;
+                    }
                 }
                 else
                 {
                     gameObject.GetComponent<PlayerMovement>().SetMouseClick(mousePosition);
                 }
             }
+        }
+    }
+
+    /// <summary>
+    /// Dig a case of sand, if possible
+    /// </summary>
+    /// <param name="diggingPosition">Position where to dig sand</param>
+    private void Dig(Vector3Int diggingPosition)
+    {
+        Tile[] tiles = GameObject.FindGameObjectWithTag("Grid").GetComponent<IslandGenerator>().GetSandTiles();
+        int i = terrainTilemaps.Count - 1;
+        int replacedTile = -1;
+        while (i >= 0)
+        {
+            Tilemap terrainTilemap = terrainTilemaps[i];
+            if (terrainTilemap.GetTile(diggingPosition) != null && i > 0)
+            {
+                terrainTilemap.SetTile(diggingPosition, null);
+                replacedTile = i - 1;
+            }
+            if (replacedTile == i)
+            {
+                terrainTilemap.SetTile(diggingPosition, tiles[i]);
+            }
+            i--;
+        }
+    }
+
+    /// <summary>
+    /// Replenish a case of sand, if possible
+    /// </summary>
+    /// <param name="replenishPosition">Position where to replenish sand</param>
+    private void Replenish(Vector3Int replenishPosition)
+    {
+        Tile[] tiles = GameObject.FindGameObjectWithTag("Grid").GetComponent<IslandGenerator>().GetSandTiles();
+        int i = 0;
+        int replacedTile = -1;
+        bool tileReplaced = false;
+        while (i < terrainTilemaps.Count)
+        {
+            Tilemap terrainTilemap = terrainTilemaps[i];
+            if (terrainTilemap.GetTile(replenishPosition) != null && i < terrainTilemaps.Count - 2)
+            {
+                Debug.Log("tileReplacement");
+                terrainTilemap.SetTile(replenishPosition, null);
+                replacedTile = i + 1;
+            }
+            if (replacedTile == i && !tileReplaced)
+            {
+                Debug.Log("tileReplaced");
+                terrainTilemap.SetTile(replenishPosition, tiles[i]);
+                tileReplaced = true;
+            }
+            i++;
         }
     }
 }
