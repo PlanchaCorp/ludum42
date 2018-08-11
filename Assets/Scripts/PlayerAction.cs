@@ -23,28 +23,40 @@ public class PlayerAction : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        InteractWithTerrain();
+        InteractWithEnvironment();
     }
 
     /// <summary>
-    /// Handle interaction with the terrain
+    /// Handle click interaction
     /// </summary>
-    private void InteractWithTerrain()
+    private void InteractWithEnvironment()
     {
         if (Input.GetMouseButtonDown(0))
         {
             Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mouseWorldPosition.z = 0;
-            Vector3Int cellPosition = terrainTilemap.WorldToCell(mouseWorldPosition);
-            TileBase tile = terrainTilemap.GetTile(cellPosition);
-            if (tile != null)
+            InteractWithTerrain(mouseWorldPosition);
+        }
+    }
+
+    /// <summary>
+    /// Handle interaction with terrain
+    /// </summary>
+    /// <param name="mousePosition">Position where to interact</param>
+    private void InteractWithTerrain(Vector3 mousePosition)
+    {
+        Vector3Int cellPosition = terrainTilemap.WorldToCell(mousePosition);
+        TileBase tile = terrainTilemap.GetTile(cellPosition);
+        if (tile != null)
+        {
+            Vector3 tileDistanceVector = cellPosition - transform.position;
+            float tileDistance = Mathf.Sqrt(Mathf.Pow(tileDistanceVector.x, 2) + Mathf.Pow(tileDistanceVector.y, 2));
+            if (tileDistance <= actionRange)
             {
-                Vector3 tileDistanceVector = cellPosition - transform.position;
-                float tileDistance = Mathf.Sqrt(Mathf.Pow(tileDistanceVector.x, 2) + Mathf.Pow(tileDistanceVector.y, 2));
-                if (tileDistance <= actionRange)
-                {
-                    Debug.Log("Interaction");
-                }
+                Debug.Log("Interaction");
+            } else
+            {
+                gameObject.GetComponent<PlayerMovement>().SetMouseClick(mousePosition);
             }
         }
     }
