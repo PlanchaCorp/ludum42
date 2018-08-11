@@ -176,7 +176,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1502706335
-  m_SortingLayer: 1
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -420,7 +420,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1125569257
-  m_SortingLayer: 3
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -598,12 +598,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundTileMap: {fileID: 1145731435}
-  sandTile: {fileID: 11400000, guid: ed3962e9a90c6fc4bbfb1b4dfd3eeff6, type: 2}
-  waterTile: {fileID: 11400000, guid: f675243b986e55f4f9fdacb5b74b5089, type: 2}
-  perlinSizeX: 64
-  perlinSizeY: 64
-  K: 0.13
-  scale: 7
+  sandTile:
+  - {fileID: 11400000, guid: 422ab6c6ada474643a45f6a92c6c6e0f, type: 2}
+  - {fileID: 11400000, guid: 67d89065816db474586346bfccd560fb, type: 2}
+  - {fileID: 11400000, guid: 6691b36905143944f87deece2ed518ea, type: 2}
+  - {fileID: 11400000, guid: 6a05962c5801f024497a7373d5602839, type: 2}
+  - {fileID: 11400000, guid: e798bee14cddab540922700f9cbd8f11, type: 2}
+  - {fileID: 11400000, guid: e798bee14cddab540922700f9cbd8f11, type: 2}
+  - {fileID: 11400000, guid: e798bee14cddab540922700f9cbd8f11, type: 2}
+  mapSize: 40
   seed: 15.23
   xOrg: 0
   yOrg: 0
