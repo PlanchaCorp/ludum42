@@ -8,6 +8,7 @@ public class UIHotbar : MonoBehaviour {
     [SerializeField] int switchStat;
     [SerializeField] Image switchSelector1;
     [SerializeField] Image switchSelector2;
+    [SerializeField] Image switchSelector3;
     [SerializeField] Sprite Sprite1 ;
     [SerializeField] Sprite Sprite2 ;
 
@@ -22,14 +23,22 @@ public class UIHotbar : MonoBehaviour {
         {
             switchSelector1.sprite = Sprite2;
             switchSelector2.sprite = Sprite1;
-                
+            switchSelector3.sprite = Sprite1;
             switchStat = 1;
         }
         if (Input.GetKey("2"))
         {
             switchSelector2.sprite = Sprite2;
             switchSelector1.sprite = Sprite1;
+            switchSelector3.sprite = Sprite1;
             switchStat = 2;
+        }
+        if(Input.GetKey("3"))
+        {
+            switchSelector2.sprite = Sprite1;
+            switchSelector1.sprite = Sprite1;
+            switchSelector3.sprite = Sprite2;
+            switchStat = 3;
         }
     }
 }
