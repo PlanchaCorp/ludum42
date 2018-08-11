@@ -46,6 +46,7 @@ public class PlayerMovement : MonoBehaviour {
     /// <param name="position">Position of the new direction of the player</param>
     public void SetMouseClick(Vector3 position)
     {
+        gameObject.GetComponent<Animator>().SetBool("isMoving", true);
         mouseClickPosition = position;
         isMoving = true;
     }
@@ -70,6 +71,9 @@ public class PlayerMovement : MonoBehaviour {
             {
                 isMoving = false;
             }
+        } else
+        {
+            gameObject.GetComponent<Animator>().SetBool("isMoving", false);
         }
     }
 }

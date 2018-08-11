@@ -162,7 +162,7 @@ public class PlayerAction : MonoBehaviour {
                         {
                             case 1:
                                 if (terrainTilemap.GetComponent<TilemapRenderer>().sortingOrder >= waterTilemap.GetComponent<TilemapRenderer>().sortingOrder
-                                    && sandInInventory < maxSandInInventory)
+                                    && sandInInventory < maxSandInInventory && terrainTilemap.GetComponent<TilemapRenderer>().sortingOrder > 0)
                                 {
                                     Dig(cellPosition);
                                 }
