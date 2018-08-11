@@ -595,3 +595,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundTileMap: {fileID: 1145731435}
   sandTile: {fileID: 11400000, guid: ed3962e9a90c6fc4bbfb1b4dfd3eeff6, type: 2}
+  heigtmap: {fileID: 2800000, guid: 51c9ab1e59e027d43ac4168c1eebb307, type: 3}
