@@ -15,24 +15,58 @@ public class MapManager : MonoBehaviour
     /// MapData of the tiles Height
     /// </summary>
 	[SerializeField] private GameObject grid;
+    [SerializeField] private GameObject water;
+    [SerializeField] private AnimatedTile waterTile;
+    /// <summary>
+    /// MapData of the tiles Height
+    /// </summary>
+	[SerializeField] private Tile tower;
+
+    /// <summary>
+    /// MapData of the tiles Height
+    /// </summary>
+	[SerializeField] private Tile wallLeft;
+
+    /// <summary>
+    /// MapData of the tiles Height
+    /// </summary>
+	[SerializeField] private Tile wallRight;
+
+    /// <summary>
+    /// MapData of the tiles Height
+    /// </summary>
+	[SerializeField] private Tile wallHorizontal;
 
     /// <summary>
     /// MapData
     /// </summary>
     int[,] mapData;
 
+    private enum DIRECTION
+    {
+        TOP_LEFT,
+        TOP_RIGHT,
+        RIGHT,
+        BOTTOM_RIGHT,
+        BOTTOM_LEFT,
+        LEFT
+    }
+
     private void Start()
     {
+        TileInfo.SetTileMapWater( water.GetComponent<Tilemap>(), 40);
+        TileInfo.SetWaterTile(waterTile);
         // Get the map data
         mapData = grid.GetComponent<IslandGenerator>().map;
         terrainInfo = new TileInfo[mapData.GetLength(0),mapData.GetLength(1)];
+        
         for(int k = 0;k< mapData.GetLength(0);k++ ){
             for(int j = 0; j < mapData.GetLength(1); j++ ){
                 Vector3Int vect = new Vector3Int(k, j, 0);
-                if (mapData[k,j]<2){
-                    terrainInfo[k,j] = new TileInfo(vect,true, true);
+                if (mapData[k,j]<1){
+                    terrainInfo[k,j] = new TileInfo(vect,mapData[k,j],true, true);
                 }else{
-                    terrainInfo[k,j] = new TileInfo(vect,false, false);
+                    terrainInfo[k,j] = new TileInfo(vect,mapData[k,j],false, false);
                 }
             }
         }
@@ -98,15 +132,12 @@ public class MapManager : MonoBehaviour
     /// The DiggingPosition param shall range from 0 to MapSize - 1
     /// </summary>
     /// <param name="tileCoordinates"></param>
-
-
-
-
     public void Dig(Vector3Int diggingPosition)
     {
         // On modifie les données de la map
         mapData[diggingPosition.x, diggingPosition.y]--;
 
+        // On affiche la nouvelle Tile
         Tile[] tiles = grid.GetComponent<IslandGenerator>().GetSandTiles();
         int i = terrainTilemaps.Count - 1;
         int replacedTile = -1;
@@ -118,6 +149,7 @@ public class MapManager : MonoBehaviour
             {
                 terrainTilemap.SetTile(diggingPosition, null);
                 replacedTile = i - 1;
+				terrainInfo[diggingPosition.x,diggingPosition.y].Dig();
             }
             if (replacedTile == i)
             {
@@ -139,6 +171,7 @@ public class MapManager : MonoBehaviour
         // On modifie les données de la map
         mapData[replenishPosition.x, replenishPosition.y]++;
 
+        // On affiche la nouvelle Tile
         Tile[] tiles = grid.GetComponent<IslandGenerator>().GetSandTiles();
         int i = 0;
         int replacedTile = -1;
@@ -152,6 +185,7 @@ public class MapManager : MonoBehaviour
             {
                 terrainTilemap.SetTile(replenishPosition, null);
                 replacedTile = i + 1;
+				terrainInfo[replenishPosition.x,replenishPosition.y].Rep();
             }
             if (replacedTile == i && !tileReplaced)
             {
@@ -161,5 +195,157 @@ public class MapManager : MonoBehaviour
             i++;
         }
     }
+    
+    /// <summary>
+    /// Build a sand castle
+    /// </summary>
+    /// <param name="buildingPosition"></param>
+    public void Build(Vector3Int buildingPosition)
+    {
+        // On verifie si l'on est sur du sable et qu'il n'y a rien
+        if ( !terrainInfo[buildingPosition.x, buildingPosition.y].GetIsFlooded() &&
+             terrainInfo[buildingPosition.x, buildingPosition.y].GetWallState() == TileInfo.WallSate.NOTHING ) 
+        {
+            // On modifie les données
+            terrainInfo[buildingPosition.x, buildingPosition.y].SetWallState(TileInfo.WallSate.TOWER);
+            TryCreateWalls(buildingPosition);
 
+            // On affiche un chateau            
+            DisplayCastleSprite(buildingPosition);
+
+        } else
+        {
+            Debug.LogWarning("Can't build on water");
+            return;
+        }
+    }
+
+    /// <summary>
+    /// Check in every direction if there in less than 2 distant
+    /// </summary>
+    /// <param name="position"></param>
+    private void TryCreateWalls(Vector3Int position)
+    {
+        int distanceLeft = 4;
+
+        TryCreateWalls_rec(position, DIRECTION.TOP_LEFT, distanceLeft);
+        TryCreateWalls_rec(position, DIRECTION.TOP_RIGHT, distanceLeft);
+        TryCreateWalls_rec(position, DIRECTION.RIGHT, distanceLeft);
+        TryCreateWalls_rec(position, DIRECTION.BOTTOM_RIGHT, distanceLeft);
+        TryCreateWalls_rec(position, DIRECTION.BOTTOM_LEFT, distanceLeft);
+        TryCreateWalls_rec(position, DIRECTION.LEFT, distanceLeft);
+    }
+
+    /// <summary>
+    ///  Reccursive function to create walls
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="direction"></param>
+    /// <param name="distanceLeft"></param>
+    private bool TryCreateWalls_rec(Vector3Int position, DIRECTION dir, int distanceLeft)
+    {
+        if ( distanceLeft <= 0 )
+        {
+            return false;
+        }
+
+        Vector3Int direction;
+        switch (dir)
+        {
+            case DIRECTION.TOP_LEFT:
+                direction = TileInfo.GetTopLeft(position);
+                break;
+            case DIRECTION.TOP_RIGHT:
+                direction = TileInfo.GetTopRight(position);
+                break;
+            case DIRECTION.RIGHT:
+                direction = TileInfo.GetRight(position);
+                break;
+            case DIRECTION.BOTTOM_LEFT:
+                direction = TileInfo.GetBottomLeft(position);
+                break;
+            case DIRECTION.BOTTOM_RIGHT:
+                direction = TileInfo.GetBottomRight(position);
+                break;
+            case DIRECTION.LEFT:
+                direction = TileInfo.GetLeft(position);
+                break;
+            default:
+                direction = new Vector3Int(0, 0, 0);
+                break;
+        }
+
+        position = direction;
+
+        // Avoid Out of Bound
+        if (position.x >= 0 &&
+            position.x <= terrainInfo.GetLength(0) &&
+            position.y >= 0 &&
+            position.y <= terrainInfo.GetLength(1))
+        {
+            TileInfo currentTile = terrainInfo[position.x, position.y];
+
+            // Check the next tile
+            if ( TryCreateWalls_rec(position, dir, distanceLeft - 1) )
+            {
+                // Create a wall
+                if ( dir == DIRECTION.TOP_LEFT || dir == DIRECTION.BOTTOM_RIGHT )
+                {
+                    currentTile.SetWallState(TileInfo.WallSate.WALL_RIGHT);
+                } else if (dir == DIRECTION.TOP_RIGHT || dir == DIRECTION.BOTTOM_LEFT)
+                {
+                    currentTile.SetWallState(TileInfo.WallSate.WALL_LEFT);
+                } else
+                {
+                    currentTile.SetWallState(TileInfo.WallSate.WALL_HORIZONTAL);
+                }
+                DisplayCastleSprite(position);
+                return true;
+            }
+
+            // Check if there is a Wall a the current place
+            if (currentTile.GetWallState() == TileInfo.WallSate.WALL_HORIZONTAL ||
+                currentTile.GetWallState() == TileInfo.WallSate.WALL_RIGHT ||
+                currentTile.GetWallState() == TileInfo.WallSate.WALL_LEFT)
+            {
+                return false;
+            }
+            // Check if there is a tower
+            else if ( currentTile.GetWallState() == TileInfo.WallSate.TOWER )
+            {
+                return true;
+            }
+        } 
+        return false;       
+    }
+
+
+    /// <summary>
+    /// On suppose la position non nulle
+    /// On affiche le sprite
+    /// </summary>
+    /// <param name="position"></param>
+    public void DisplayCastleSprite(Vector3Int position)
+    {
+        Tilemap tilemap = GameObject.FindGameObjectWithTag("StructureTilemap").GetComponent<Tilemap>();
+        Vector3Int tilePosition = DataToTilesCoordinates(position);
+        switch ( terrainInfo[position.x, position.y].GetWallState() )
+        {
+            case TileInfo.WallSate.NOTHING:
+                Debug.Log("Not a castle sprite");
+                break;
+            case TileInfo.WallSate.TOWER:
+                tilemap.SetTile(tilePosition, tower);
+                break;
+            case TileInfo.WallSate.WALL_HORIZONTAL:
+                tilemap.SetTile(tilePosition, wallHorizontal);
+                break;
+            case TileInfo.WallSate.WALL_LEFT:
+                tilemap.SetTile(tilePosition, wallLeft);
+                break;
+            case TileInfo.WallSate.WALL_RIGHT:
+                tilemap.SetTile(tilePosition, wallRight);
+                break;
+        }
+    }
 }

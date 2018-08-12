@@ -113,6 +113,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &26502641
 --- !u!1 &7998669
 GameObject:
   m_ObjectHideFlags: 0
@@ -1420,6 +1421,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grid: {fileID: 957858886}
+  tower: {fileID: 11400000, guid: 5388373603bc99c4eaab1258db43db9f, type: 2}
+  wallLeft: {fileID: 11400000, guid: d3ed64f6756fcd44c8da9d18072c2ecd, type: 2}
+  wallRight: {fileID: 11400000, guid: 7acb454a74b676e4b9d7a4be1d55f7a9, type: 2}
+  wallHorizontal: {fileID: 11400000, guid: 6c455e28a1cec5644aea6981193f0d39, type: 2}
 --- !u!114 &886327454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1756,7 +1761,7 @@ GameObject:
   - component: {fileID: 1493529064}
   m_Layer: 0
   m_Name: Structure
-  m_TagString: Untagged
+  m_TagString: StructureTilemap
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1813,7 +1818,7 @@ TilemapRenderer:
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
-  m_SortOrder: 0
+  m_SortOrder: 2
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
 --- !u!1839735485 &1493529065
@@ -1861,7 +1866,7 @@ Tilemap:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -20, y: -14, z: 0}
   m_Size: {x: 43, y: 31, z: 1}
-  m_TileAnchor: {x: 0, y: 0, z: 0}
+  m_TileAnchor: {x: 0, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
     e00: 1
