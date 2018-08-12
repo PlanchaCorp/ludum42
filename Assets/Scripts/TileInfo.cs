@@ -40,9 +40,19 @@ public class TileInfo{
         return neighbours;
     }
 
-    public void decreaseDurability( float value )
+    public void DecreaseDurability(float value)
     {
         this.durability -= value;
+    }
+
+    public float GetDurability()
+    {
+        return this.durability;
+    }
+
+    public void ResetDurability()
+    {
+        this.durability = 1.0f;
     }
 
 }

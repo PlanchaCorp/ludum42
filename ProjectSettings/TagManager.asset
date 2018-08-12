@@ -9,6 +9,7 @@ TagManager:
   - Grid
   - TileSelection
   - DigBar
+  - ErosionManager
   layers:
   - Default
   - TransparentFX
