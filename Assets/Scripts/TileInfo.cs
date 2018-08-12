@@ -8,7 +8,7 @@ public class TileInfo{
     private int x, y;
     private bool isFlooded, isSea;
     private float durability;
-
+    
 
     public TileInfo(Vector3Int vector){
         this.durability = 1.0f;

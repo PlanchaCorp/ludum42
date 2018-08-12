@@ -13,6 +13,7 @@ public class WaterTide : MonoBehaviour {
         STILL
     }
 
+    [SerializeField] private AnimatedTile waterTile;
     [SerializeField] private TideState state;
     [SerializeField] private int actualLayer;
     [SerializeField] private GameObject water;
@@ -64,6 +65,8 @@ public class WaterTide : MonoBehaviour {
 	void Update () {
         CheatyStateSettings();
         Tide();
+		Flood();
+        RefreshWater();
     }   
 
     private void ChangeTide()
@@ -173,8 +176,9 @@ public class WaterTide : MonoBehaviour {
     public void Flood(){
         List<TileInfo> submergedTiles = new List<TileInfo>();
         submergedTiles.AddRange(seaTiles);
-        int[,] DataMap = gameObject.GetComponent<MapManager>().GetMapDataCoordinates();
-        TileInfo[,]terrainTileInfo = gameObject.GetComponent<MapManager>().GetTerrainInfo(); 
+        int[,] DataMap = mapManager.GetComponent<MapManager>().GetMapDataCoordinates();
+        terrainTilesInfo = mapManager.GetComponent<MapManager>().GetTerrainInfo(); 
+        List<TileInfo> tileDone = new List<TileInfo>();
         while(submergedTiles.Count() != 0){
             TileInfo tile = submergedTiles[0];
             submergedTiles.RemoveAt(0);
@@ -183,15 +187,19 @@ public class WaterTide : MonoBehaviour {
                  tile.GetCoordinates()[1] == 0 ||
                  tile.GetCoordinates()[1] == DataMap.GetLength(1) - 1)
             {
+
+            }else{
                 Vector3Int[] neighbours = tile.GetNeighboursCoordinates();
                 foreach(Vector3Int neighbour in neighbours){
-                    if(terrainTileInfo[neighbour.x,neighbour.y].GetIsFlooded()){
-                        if(!submergedTiles.Contains(terrainTileInfo[neighbour.x,neighbour.y])){
-                            submergedTiles.Add(terrainTileInfo[neighbour.x,neighbour.y]);
+                    if(terrainTilesInfo[neighbour.x,neighbour.y].GetIsFlooded()){
+                        if(!tileDone.Contains(terrainTilesInfo[neighbour.x,neighbour.y])){
+                            submergedTiles.Add(terrainTilesInfo[neighbour.x,neighbour.y]);
+                            tileDone.Add(terrainTilesInfo[neighbour.x,neighbour.y]);
                         }
                    }else{
-                       if(DataMap[neighbour.x,neighbour.y]<actualLayer){
-                           terrainTileInfo[neighbour.x,neighbour.y].SetIsFlooded(true);
+                       if(DataMap[neighbour.x,neighbour.y]<3){
+                           terrainTilesInfo[neighbour.x,neighbour.y].SetIsFlooded(true);
+                           tileDone.Add(terrainTilesInfo[neighbour.x,neighbour.y]);
                        }
                    }
                  }
@@ -201,4 +209,24 @@ public class WaterTide : MonoBehaviour {
 
 
     }
+	
+	public void RefreshWater(){
+		Tilemap waterTileMap = water.GetComponent<Tilemap>();
+		terrainTilesInfo = mapManager.GetComponent<MapManager>().GetTerrainInfo(); 
+		waterTileMap.ClearAllTiles();
+		int mapSize=40;
+        for(int i=0; i < terrainTilesInfo.GetLength(0);i++){
+			for(int j=0; j < terrainTilesInfo.GetLength(1);j++){
+				if(terrainTilesInfo[i,j].GetIsFlooded()){
+                    
+                    Debug.Log("h,jxdbc,nkh fgbxdwjkhfvbgjkxdf;");
+					Vector3Int vectorPosition = new Vector3Int(0,0,0);
+                    vectorPosition.x = mapSize / 2 - i;
+                    vectorPosition.y = mapSize / 2 - j;
+					waterTileMap.SetTile(vectorPosition,waterTile);
+				}
+			}
+		}
+    }
+		
 }

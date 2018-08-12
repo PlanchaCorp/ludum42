@@ -577,11 +577,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ab695eeaf30fb84fb867fe4d4de956f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterTile: {fileID: 11400000, guid: f675243b986e55f4f9fdacb5b74b5089, type: 2}
   state: 0
   actualLayer: 0
   water: {fileID: 516068903}
   erosion: {fileID: 1005183825}
   risingTimer: 0
+  mapManager: {fileID: 1005183825}
   maxLayer: 6
   minLayer: 0
   period: 5
@@ -747,6 +749,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageMultiplier: 0
+  mapManager: {fileID: 1005183825}
 --- !u!1 &1145731432
 GameObject:
   m_ObjectHideFlags: 0
@@ -1176,3 +1179,5 @@ MonoBehaviour:
   waterTile: {fileID: 11400000, guid: f675243b986e55f4f9fdacb5b74b5089, type: 2}
   mapSize: 40
   seed: 15.23
+  PickUps: []
+  WaterLayerPostions: []
