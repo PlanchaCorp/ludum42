@@ -33,6 +33,8 @@ public class WaterTide : MonoBehaviour {
     private readonly string managerTag = "Manager";
     // Use this for initialization
     void Start () {
+        TileInfo.SetTileMapWater( water.GetComponent<Tilemap>(), 40);
+        TileInfo.SetWaterTile(waterTile);
         terrainTilesInfo = mapManager.GetComponent<MapManager>().GetTerrainInfo();
         for(int i = 0; i<terrainTilesInfo.GetLength(0);i++ ){
            for(int j = 0; j<terrainTilesInfo.GetLength(1);j++ ){
@@ -66,7 +68,6 @@ public class WaterTide : MonoBehaviour {
         CheatyStateSettings();
         Tide();
 		Flood();
-        RefreshWater();
     }   
 
     private void ChangeTide()
@@ -209,24 +210,4 @@ public class WaterTide : MonoBehaviour {
 
 
     }
-	
-	public void RefreshWater(){
-		Tilemap waterTileMap = water.GetComponent<Tilemap>();
-		terrainTilesInfo = mapManager.GetComponent<MapManager>().GetTerrainInfo(); 
-		waterTileMap.ClearAllTiles();
-		int mapSize=40;
-        for(int i=0; i < terrainTilesInfo.GetLength(0);i++){
-			for(int j=0; j < terrainTilesInfo.GetLength(1);j++){
-				if(terrainTilesInfo[i,j].GetIsFlooded()){
-                    
-                    Debug.Log("h,jxdbc,nkh fgbxdwjkhfvbgjkxdf;");
-					Vector3Int vectorPosition = new Vector3Int(0,0,0);
-                    vectorPosition.x = mapSize / 2 - i;
-                    vectorPosition.y = mapSize / 2 - j;
-					waterTileMap.SetTile(vectorPosition,waterTile);
-				}
-			}
-		}
-    }
-		
 }
