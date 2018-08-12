@@ -38,7 +38,7 @@ public class TileInfo{
         this.x = vector.x;
         this.y = vector.y;
         this.state = WallSate.NOTHING;
-         if(flooded){
+         if(isSea){
             Vector3Int vectorPosition = new Vector3Int(0,0,0);
             vectorPosition.x = TileInfo.mapSize / 2 - this.x;
             vectorPosition.y = TileInfo.mapSize / 2 - this.y;
@@ -64,12 +64,12 @@ public class TileInfo{
     {
         Vector3Int pos = new Vector3Int(this.x, this.y, 0);
         Vector3Int[] neighbours = new Vector3Int[6];
-        neighbours[0] = GetTopLeft(pos);
-        neighbours[1] = GetTopRight(pos);
-        neighbours[2] = GetLeft(pos);
-        neighbours[3] = GetRight(pos);
-        neighbours[4] = GetBottomLeft(pos);
-        neighbours[5] = GetBottomRight(pos);
+        neighbours[0] = new Vector3Int(this.x, this.y+1,0);
+        neighbours[1] = new Vector3Int(this.x, this.y-1,0);
+        neighbours[2] = new Vector3Int(this.x-1, this.y,0);
+        neighbours[3] = new Vector3Int(this.x+1, this.y,0);
+        neighbours[4] = new Vector3Int(this.x-1+this.y%2,this.y+1,0);
+        neighbours[5] = new Vector3Int(this.x-1+this.y%2,this.y-1,0);
         return neighbours;
     }
 
@@ -84,11 +84,13 @@ public class TileInfo{
     public void SetIsFlooded(bool value){
         this.isFlooded = value;
         this.isSea = false;
+        Vector3Int vectorPosition = new Vector3Int(0,0,0);
+        vectorPosition.x = TileInfo.mapSize / 2 - this.x;
+        vectorPosition.y = TileInfo.mapSize / 2 - this.y;
         if(value){
-            Vector3Int vectorPosition = new Vector3Int(0,0,0);
-            vectorPosition.x = TileInfo.mapSize / 2 - this.x;
-            vectorPosition.y = TileInfo.mapSize / 2 - this.y;
             TileInfo.waterTileMap.SetTile(vectorPosition,waterTile);
+        }else{
+            TileInfo.waterTileMap.SetTile(vectorPosition,null);
         }
     }
 	public void Dig(){
