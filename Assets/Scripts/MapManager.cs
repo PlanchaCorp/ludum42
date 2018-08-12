@@ -15,7 +15,8 @@ public class MapManager : MonoBehaviour
     /// MapData of the tiles Height
     /// </summary>
 	[SerializeField] private GameObject grid;
-
+    [SerializeField] private GameObject water;
+    [SerializeField] private AnimatedTile waterTile;
     /// <summary>
     /// MapData
     /// </summary>
@@ -23,16 +24,19 @@ public class MapManager : MonoBehaviour
 
     private void Start()
     {
+        TileInfo.SetTileMapWater( water.GetComponent<Tilemap>(), 40);
+        TileInfo.SetWaterTile(waterTile);
         // Get the map data
         mapData = grid.GetComponent<IslandGenerator>().map;
         terrainInfo = new TileInfo[mapData.GetLength(0),mapData.GetLength(1)];
+        
         for(int k = 0;k< mapData.GetLength(0);k++ ){
             for(int j = 0; j < mapData.GetLength(1); j++ ){
                 Vector3Int vect = new Vector3Int(k, j, 0);
-                if (mapData[k,j]<2){
-                    terrainInfo[k,j] = new TileInfo(vect,true, true);
+                if (mapData[k,j]<1){
+                    terrainInfo[k,j] = new TileInfo(vect,mapData[k,j],true, true);
                 }else{
-                    terrainInfo[k,j] = new TileInfo(vect,false, false);
+                    terrainInfo[k,j] = new TileInfo(vect,mapData[k,j],false, false);
                 }
             }
         }
@@ -118,6 +122,7 @@ public class MapManager : MonoBehaviour
             {
                 terrainTilemap.SetTile(diggingPosition, null);
                 replacedTile = i - 1;
+				terrainInfo[diggingPosition.x,diggingPosition.y].Dig();
             }
             if (replacedTile == i)
             {
@@ -152,6 +157,7 @@ public class MapManager : MonoBehaviour
             {
                 terrainTilemap.SetTile(replenishPosition, null);
                 replacedTile = i + 1;
+				terrainInfo[replenishPosition.x,replenishPosition.y].Rep();
             }
             if (replacedTile == i && !tileReplaced)
             {

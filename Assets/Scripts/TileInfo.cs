@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class TileInfo{
 
-    private int x, y;
+    private int x, y, height;
     private bool isFlooded, isSea;
     private float durability;
 
@@ -19,12 +19,22 @@ public class TileInfo{
         this.x = vector.x;
         this.y = vector.y;
     }
-     public TileInfo(Vector3Int vector, bool flooded, bool isSea){
+     public TileInfo(Vector3Int vector, int height, bool flooded, bool isSea){
         this.durability = 1.0f;
         this.isFlooded = flooded;
         this.isSea = isSea;
+		this.height = height;
         this.x = vector.x;
         this.y = vector.y;
+         if(flooded){
+            Vector3Int vectorPosition = new Vector3Int(0,0,0);
+            vectorPosition.x = TileInfo.mapSize / 2 - this.x;
+            vectorPosition.y = TileInfo.mapSize / 2 - this.y;
+            TileInfo.waterTileMap.SetTile(vectorPosition,waterTile);
+        }
+    }
+    public int GetHeight(){
+        return this.height;
     }
     public static void SetTileMapWater(Tilemap wtm, int size){
         TileInfo.waterTileMap = wtm;
@@ -65,7 +75,13 @@ public class TileInfo{
             TileInfo.waterTileMap.SetTile(vectorPosition,waterTile);
         }
     }
-    public void DecreaseDurability(float value)
+	public void Dig(){
+		this.height -= 1;
+	}
+	public void Rep(){
+		this.height += 1;
+	}
+	public void DecreaseDurability(float value)
     {
         this.durability -= value;
     }
