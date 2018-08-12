@@ -275,6 +275,8 @@ public class PlayerAction : MonoBehaviour {
             digBar.enabled = false;
             diggingTime = maxDiggingTime;
             FinishDigging(diggingPosition);
+            gameObject.GetComponent<Animator>().SetBool("isDigging", false);
+            gameObject.GetComponent<SpriteRenderer>().flipX = false;
         } else
         {
             digBar.enabled = true;
@@ -283,6 +285,11 @@ public class PlayerAction : MonoBehaviour {
             if (digBarCurrentSprite >= 0)
             {
                 digBar.sprite = digBarSprites[digBarCurrentSprite];
+            }
+            gameObject.GetComponent<Animator>().SetBool("isDigging", true);
+            if (diggingPosition.x < transform.position.x)
+            {
+                gameObject.GetComponent<SpriteRenderer>().flipX = true;
             }
         }
     }
@@ -294,6 +301,8 @@ public class PlayerAction : MonoBehaviour {
     {
         SpriteRenderer digBar = GameObject.FindGameObjectWithTag("DigBar").GetComponent<SpriteRenderer>();
         digBar.enabled = false;
+        gameObject.GetComponent<Animator>().SetBool("isDigging", false);
+        gameObject.GetComponent<SpriteRenderer>().flipX = false;
         diggingTime = maxDiggingTime;
     }
 
@@ -351,7 +360,7 @@ public class PlayerAction : MonoBehaviour {
             i++;
         }*/
         MapManager mapManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<MapManager>();
-        mapManager.Dig(mapManager.TilesToDataCoordinates(replenishPosition));
+        mapManager.Replenish(mapManager.TilesToDataCoordinates(replenishPosition));
         sandInInventory--;
     }
 
