@@ -23,9 +23,10 @@ GameObject:
   - component: {fileID: 114780517994361118}
   - component: {fileID: 114000526253318714}
   - component: {fileID: 95416255136765956}
+  - component: {fileID: 114607035816088494}
   m_Layer: 0
   m_Name: CharacterCrab
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -241,6 +242,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2.5
+--- !u!114 &114607035816088494
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1356562346446660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c79c96658577944ea019043f1e3c588, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114780517994361118
 MonoBehaviour:
   m_ObjectHideFlags: 1

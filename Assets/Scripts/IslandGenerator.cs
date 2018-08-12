@@ -58,11 +58,11 @@ public class IslandGenerator : MonoBehaviour
         K = 0.01f;
         seed = Random.Range(0, 999);
         map = GaussianMask(GeneratePerlin());
+        GenerateIsland(map);
     }
 
     private void Start()
     {
-        GenerateIsland(map);
     }
 
 
