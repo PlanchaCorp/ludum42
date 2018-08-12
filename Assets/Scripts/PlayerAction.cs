@@ -87,6 +87,16 @@ public class PlayerAction : MonoBehaviour {
     /// </summary>
     private float currentDrowningTime = 0;
 
+    /// <summary>
+    /// Active boost of respiration
+    /// </summary>
+    private bool respirationBoost = false;
+
+    /// <summary>
+    /// Active boost of construction
+    /// </summary>
+    private bool diggingBoost = false;
+
     // Use this for initialization
     void Start()
     {
@@ -150,7 +160,7 @@ public class PlayerAction : MonoBehaviour {
         if (isDrowning)
         {
             breathBar.enabled = true;
-            currentDrowningTime += Time.deltaTime;
+            currentDrowningTime += (respirationBoost) ? Time.deltaTime * 0.5f : Time.deltaTime;
             int breathBarCurrentSprite = Mathf.FloorToInt(currentDrowningTime * breathBarSprites.Length / drowningTime);
             if (breathBarCurrentSprite >= 0 && breathBarCurrentSprite < breathBarSprites.Length)
             {
@@ -162,8 +172,19 @@ public class PlayerAction : MonoBehaviour {
             }
         } else
         {
-            breathBar.enabled = false;
-            currentDrowningTime = 0;
+            currentDrowningTime -= Time.deltaTime * 2;
+            if (currentDrowningTime < 0)
+            {
+                breathBar.enabled = false;
+                currentDrowningTime = 0;
+            } else
+            {
+                int breathBarCurrentSprite = Mathf.FloorToInt(currentDrowningTime * breathBarSprites.Length / drowningTime);
+                if (breathBarCurrentSprite >= 0 && breathBarCurrentSprite < breathBarSprites.Length)
+                {
+                    breathBar.sprite = breathBarSprites[breathBarCurrentSprite];
+                }
+            }
         }
     }
 
@@ -257,7 +278,7 @@ public class PlayerAction : MonoBehaviour {
         } else
         {
             digBar.enabled = true;
-            diggingTime -= Time.deltaTime;
+            diggingTime -= (diggingBoost) ? Time.deltaTime * 1.5f : Time.deltaTime;
             int digBarCurrentSprite = Mathf.FloorToInt(diggingTime * digBarSprites.Length / maxDiggingTime);
             if (digBarCurrentSprite >= 0)
             {
@@ -344,5 +365,23 @@ public class PlayerAction : MonoBehaviour {
             i++;
         }
         sandInInventory--;
+    }
+
+    /// <summary>
+    /// Activate or deactivate respiration boost
+    /// </summary>
+    /// <param name="value">Activation or deactivation</param>
+    public void SetRespirationBoost(bool value)
+    {
+        this.respirationBoost = value;
+    }
+
+    /// <summary>
+    /// Activate or deactivate digging boost
+    /// </summary>
+    /// <param name="value">Activation or deactivation</param>
+    public void SetDiggingBoost(bool value)
+    {
+        this.diggingBoost = value;
     }
 }

@@ -499,6 +499,7 @@ MonoBehaviour:
   state: 0
   actualLayer: 0
   water: {fileID: 0}
+  erosion: {fileID: 0}
   risingTimer: 0
   maxLayer: 6
   minLayer: 0
@@ -1656,6 +1657,48 @@ RectTransform:
   m_AnchoredPosition: {x: -47.7445, y: 0.9242401}
   m_SizeDelta: {x: -55.489, y: 8.15152}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1663000111
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1663000113}
+  - component: {fileID: 1663000112}
+  m_Layer: 0
+  m_Name: ErosionManager
+  m_TagString: ErosionManager
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1663000112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1663000111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c15acea5fdadac344a4965003b1a6806, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  terrain: {fileID: 957858886}
+  damageMultiplier: 2
+--- !u!4 &1663000113
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1663000111}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.3411717, y: 6.8966036, z: 20.420965}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1798107066
 GameObject:
   m_ObjectHideFlags: 0
