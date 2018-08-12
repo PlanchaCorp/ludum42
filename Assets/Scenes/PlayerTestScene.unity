@@ -599,6 +599,11 @@ Prefab:
       propertyPath: uiHotbarCanvas
       value: 
       objectReference: {fileID: 17754803}
+    - target: {fileID: 114780517994361118, guid: cbd418fa49bbc31498ca7cfbe3cdddf0,
+        type: 2}
+      propertyPath: maxSandInInventory
+      value: 60
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbd418fa49bbc31498ca7cfbe3cdddf0, type: 2}
   m_IsPrefabAsset: 0
@@ -1150,7 +1155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ab695eeaf30fb84fb867fe4d4de956f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waterTile: {fileID: 0}
+  waterTile: {fileID: 11400000, guid: f675243b986e55f4f9fdacb5b74b5089, type: 2}
   state: 0
   actualLayer: 0
   water: {fileID: 755508713}

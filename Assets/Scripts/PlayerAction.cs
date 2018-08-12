@@ -149,7 +149,6 @@ public class PlayerAction : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("enter" + collision.name);
         if(collision.name== "Water")
         {
             holdRespiration = true;
@@ -157,7 +156,6 @@ public class PlayerAction : MonoBehaviour {
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log("exit" + collision.name);
         if (collision.name == "Water")
         {
             holdRespiration = false;
@@ -169,15 +167,6 @@ public class PlayerAction : MonoBehaviour {
     /// </summary>
     private void CheckWater(bool isDrowning)
     {
-      /*  foreach (Tilemap terrainTilemap in terrainTilemaps)
-        {
-            Vector3Int cellPosition = terrainTilemap.WorldToCell(gameObject.transform.position);
-            TileBase tile = terrainTilemap.GetTile(cellPosition);
-            if (tile != null)
-            {
-                isDrowning = terrainTilemap.GetComponent<TilemapRenderer>().sortingOrder < waterTilemap.GetComponent<TilemapRenderer>().sortingOrder;
-            }
-        }*/
         SpriteRenderer breathBar = GameObject.FindGameObjectWithTag("BreathBar").GetComponent<SpriteRenderer>();
         if (isDrowning)
         {
@@ -251,7 +240,7 @@ public class PlayerAction : MonoBehaviour {
         {
             Vector3Int cellPosition = terrainTilemap.WorldToCell(mousePosition);
             TileBase tile = terrainTilemap.GetTile(cellPosition);
-            if (tile != null && ! tile.name.Contains("Stone"))
+            if (tile != null && ! tile.name.Contains("Stone") && tile.name != "tileSand_0")
             {
                 Vector3 tileDistanceVector = mousePosition - transform.position;
                 float tileDistance = Mathf.Sqrt(Mathf.Pow(tileDistanceVector.x, 2) + Mathf.Pow(tileDistanceVector.y, 2));
@@ -262,9 +251,7 @@ public class PlayerAction : MonoBehaviour {
                         switch (uiHotbarCanvas.GetComponent<UIHotbar>().GetSwitch())
                         {
                             case 1:
-                                if (terrainTilemap.GetComponent<TilemapRenderer>().sortingOrder >= waterTilemap.GetComponent<TilemapRenderer>().sortingOrder &&
-                                    sandInInventory < maxSandInInventory &&
-                                    terrainTilemap.GetComponent<TilemapRenderer>().sortingOrder > 0)
+                                if (sandInInventory < maxSandInInventory)
                                 {
                                     Dig(cellPosition);
                                 }

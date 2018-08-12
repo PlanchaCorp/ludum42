@@ -139,23 +139,15 @@ public class MapManager : MonoBehaviour
 
         // On affiche la nouvelle Tile
         Tile[] tiles = grid.GetComponent<IslandGenerator>().GetSandTiles();
-        int i = terrainTilemaps.Count - 1;
-        int replacedTile = -1;
-        diggingPosition = DataToTilesCoordinates(diggingPosition);
-        while (i >= 0)
+        Vector3Int tilesDiggingPosition = DataToTilesCoordinates(diggingPosition);
+        foreach (Tilemap terrainTilemap in terrainTilemaps)
         {
-            Tilemap terrainTilemap = terrainTilemaps[i];
-            if (terrainTilemap.GetTile(diggingPosition) != null && i > 0)
+            int height = terrainInfo[diggingPosition.x, diggingPosition.y].GetHeight();
+            if (terrainTilemap.GetTile(tilesDiggingPosition) != null && height > 0)
             {
-                terrainTilemap.SetTile(diggingPosition, null);
-                replacedTile = i - 1;
-				terrainInfo[diggingPosition.x,diggingPosition.y].Dig();
+                terrainInfo[diggingPosition.x, diggingPosition.y].Dig();
+                terrainTilemap.SetTile(tilesDiggingPosition, tiles[height - 1]);
             }
-            if (replacedTile == i)
-            {
-                terrainTilemap.SetTile(diggingPosition, tiles[i]);
-            }
-            i--;
         }
     }
 
@@ -171,25 +163,15 @@ public class MapManager : MonoBehaviour
         // On affiche la nouvelle Tile
         Tile[] tiles = grid.GetComponent<IslandGenerator>().GetSandTiles();
         int i = 0;
-        int replacedTile = -1;
-        bool tileReplaced = false;
-        replenishPosition = DataToTilesCoordinates(replenishPosition);
-
-        while (i < terrainTilemaps.Count)
+        Vector3Int tilesReplenishPosition = DataToTilesCoordinates(replenishPosition);
+        foreach (Tilemap terrainTilemap in terrainTilemaps)
         {
-            Tilemap terrainTilemap = terrainTilemaps[i];
-            if (terrainTilemap.GetTile(replenishPosition) != null && i < terrainTilemaps.Count - 2)
+            int height = terrainInfo[replenishPosition.x, replenishPosition.y].GetHeight();
+            if (terrainTilemap.GetTile(tilesReplenishPosition) != null && height+1 < tiles.Length)
             {
-                terrainTilemap.SetTile(replenishPosition, null);
-                replacedTile = i + 1;
-				terrainInfo[replenishPosition.x,replenishPosition.y].Rep();
+                terrainInfo[replenishPosition.x, replenishPosition.y].Rep();
+                terrainTilemap.SetTile(tilesReplenishPosition, tiles[height + 1]);
             }
-            if (replacedTile == i && !tileReplaced)
-            {
-                terrainTilemap.SetTile(replenishPosition, tiles[i]);
-                tileReplaced = true;
-            }
-            i++;
         }
     }
     
