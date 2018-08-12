@@ -15,7 +15,8 @@ public class MapManager : MonoBehaviour
     /// MapData of the tiles Height
     /// </summary>
 	[SerializeField] private GameObject grid;
-
+    [SerializeField] private GameObject water;
+    [SerializeField] private AnimatedTile waterTile;
     /// <summary>
     /// MapData of the tiles Height
     /// </summary>
@@ -53,16 +54,19 @@ public class MapManager : MonoBehaviour
 
     private void Start()
     {
+        TileInfo.SetTileMapWater( water.GetComponent<Tilemap>(), 40);
+        TileInfo.SetWaterTile(waterTile);
         // Get the map data
         mapData = grid.GetComponent<IslandGenerator>().map;
         terrainInfo = new TileInfo[mapData.GetLength(0),mapData.GetLength(1)];
+        
         for(int k = 0;k< mapData.GetLength(0);k++ ){
             for(int j = 0; j < mapData.GetLength(1); j++ ){
                 Vector3Int vect = new Vector3Int(k, j, 0);
-                if (mapData[k,j]<2){
-                    terrainInfo[k,j] = new TileInfo(vect,true, true);
+                if (mapData[k,j]<1){
+                    terrainInfo[k,j] = new TileInfo(vect,mapData[k,j],true, true);
                 }else{
-                    terrainInfo[k,j] = new TileInfo(vect,false, false);
+                    terrainInfo[k,j] = new TileInfo(vect,mapData[k,j],false, false);
                 }
             }
         }
@@ -145,6 +149,7 @@ public class MapManager : MonoBehaviour
             {
                 terrainTilemap.SetTile(diggingPosition, null);
                 replacedTile = i - 1;
+				terrainInfo[diggingPosition.x,diggingPosition.y].Dig();
             }
             if (replacedTile == i)
             {
@@ -180,6 +185,7 @@ public class MapManager : MonoBehaviour
             {
                 terrainTilemap.SetTile(replenishPosition, null);
                 replacedTile = i + 1;
+				terrainInfo[replenishPosition.x,replenishPosition.y].Rep();
             }
             if (replacedTile == i && !tileReplaced)
             {
@@ -202,14 +208,10 @@ public class MapManager : MonoBehaviour
         {
             // On modifie les données
             terrainInfo[buildingPosition.x, buildingPosition.y].SetWallState(TileInfo.WallState.TOWER);
-
-            //Vector3Int newPos = GetLeft(buildingPosition);
-            //terrainInfo[newPos.x, newPos.y].SetWallState(TileInfo.WallState.TOWER);
             TryCreateWalls(buildingPosition);
 
             // On affiche un chateau            
             DisplayCastleSprite(buildingPosition);
-            //DisplayCastleSprite(newPos);
 
         } else
         {
@@ -251,22 +253,22 @@ public class MapManager : MonoBehaviour
         switch (dir)
         {
             case DIRECTION.TOP_LEFT:
-                direction = GetTopLeft(position);
+                direction = TileInfo.GetTopLeft(position);
                 break;
             case DIRECTION.TOP_RIGHT:
-                direction = GetTopRight(position);
+                direction = TileInfo.GetTopRight(position);
                 break;
             case DIRECTION.RIGHT:
-                direction = GetRight(position);
+                direction = TileInfo.GetRight(position);
                 break;
             case DIRECTION.BOTTOM_LEFT:
-                direction = GetBottomLeft(position);
+                direction = TileInfo.GetBottomLeft(position);
                 break;
             case DIRECTION.BOTTOM_RIGHT:
-                direction = GetBottomRight(position);
+                direction = TileInfo.GetBottomRight(position);
                 break;
             case DIRECTION.LEFT:
-                direction = GetLeft(position);
+                direction = TileInfo.GetLeft(position);
                 break;
             default:
                 direction = new Vector3Int(0, 0, 0);
@@ -345,90 +347,5 @@ public class MapManager : MonoBehaviour
                 tilemap.SetTile(tilePosition, wallRight);
                 break;
         }
-    }
-
-    /// <summary>
-    /// Return the Top Left position
-    /// </summary>
-    /// <param name="pos"></param>
-    public Vector3Int GetTopLeft(Vector3Int pos)
-    {
-        if ( pos.y%2 == 0 )
-        {
-            return pos + new Vector3Int(0, 1, 0);
-        } else
-        {
-            return pos + new Vector3Int(-1, 1, 0);
-
-        }
-    }
-
-    /// <summary>
-    /// Return the Top Right position
-    /// </summary>
-    /// <param name="pos"></param>
-    public Vector3Int GetTopRight(Vector3Int pos)
-    {
-        if (pos.y % 2 == 0)
-        {
-            return pos + new Vector3Int(1, 1, 0);
-        }
-        else
-        {
-            return pos + new Vector3Int(0, 1, 0);
-
-        }
-    }
-
-    /// <summary>
-    /// Return the Bottom Left position
-    /// </summary>
-    /// <param name="pos"></param>
-    public Vector3Int GetBottomLeft(Vector3Int pos)
-    {
-        if (pos.y % 2 == 0)
-        {
-            return pos + new Vector3Int(0, -1, 0);
-        }
-        else
-        {
-            return pos + new Vector3Int(-1, -1, 0);
-
-        }
-    }
-
-    /// <summary>
-    /// Return the Bottom Right position
-    /// </summary>
-    /// <param name="pos"></param>
-    public Vector3Int GetBottomRight(Vector3Int pos)
-    {
-        if (pos.y % 2 == 0)
-        {
-            return pos + new Vector3Int(1, -1, 0);
-        }
-        else
-        {
-            return pos + new Vector3Int(0, -1, 0);
-
-        }
-    }
-
-    /// <summary>
-    /// Return the Right
-    /// </summary>
-    /// <param name="pos"></param>
-    public Vector3Int GetRight(Vector3Int pos)
-    {
-        return pos + new Vector3Int(1, 0, 0);
-    }
-
-    /// <summary>
-    /// Return the Right
-    /// </summary>
-    /// <param name="pos"></param>
-    public Vector3Int GetLeft(Vector3Int pos)
-    {
-        return pos + new Vector3Int(-1, 0, 0);
     }
 }
