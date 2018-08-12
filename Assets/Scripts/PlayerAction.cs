@@ -228,7 +228,7 @@ public class PlayerAction : MonoBehaviour {
         {
             Vector3Int cellPosition = terrainTilemap.WorldToCell(mousePosition);
             TileBase tile = terrainTilemap.GetTile(cellPosition);
-            if (tile != null && !   tile.name.Contains("Stone"))
+            if (tile != null && ! tile.name.Contains("Stone"))
             {
                 Vector3 tileDistanceVector = mousePosition - transform.position;
                 float tileDistance = Mathf.Sqrt(Mathf.Pow(tileDistanceVector.x, 2) + Mathf.Pow(tileDistanceVector.y, 2));
