@@ -216,9 +216,10 @@ public class WaterTide : MonoBehaviour {
         }
         justUnderWater.AddRange(notDone);
         Invoke("Unflood",0.5f);
+    }
     */    
         
-    }
+    
 
     public void  Flood(){
         terrainTilesInfo = mapManager.GetComponent<MapManager>().GetTerrainInfo(); 
