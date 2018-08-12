@@ -11,7 +11,7 @@ public class ErosionManager : MonoBehaviour {
     /// Set to 10.0f to make the erosion insane
     /// </summary>
     [SerializeField] private float damageMultiplier;
-
+    [SerializeField] private GameObject mapManager;
     /// <summary>
     /// List of all the tiles that aren't water
     /// </summary>
@@ -19,7 +19,15 @@ public class ErosionManager : MonoBehaviour {
 
 
     void Start () { 
-        int[,] mapData = gameObject.GetComponent<MapManager>().GetMapDataCoordinates();
+        TileInfo[,] terrainTilesInfo = mapManager.GetComponent<MapManager>().GetTerrainInfo();
+        for(int i = 0; i<terrainTilesInfo.GetLength(0);i++ ){
+           for(int j = 0; j<terrainTilesInfo.GetLength(1);j++ ){
+                if(!terrainTilesInfo[i,j].GetIsFlooded()){
+                    notEmptyTiles.Add(terrainTilesInfo[i,j]);
+                }
+           }
+        }
+        /*int[,] mapData = gameObject.GetComponent<MapManager>().GetMapDataCoordinates();
 
 		for(int x=0; x<mapData.GetLength(0); x++){
 			for(int y=0; y<mapData.GetLength(1); y++){
@@ -29,7 +37,7 @@ public class ErosionManager : MonoBehaviour {
 					notEmptyTiles.Add(tile);
 				};
 			};
-		};
+		};*/
     }
 
 	// Update is called once per frame
