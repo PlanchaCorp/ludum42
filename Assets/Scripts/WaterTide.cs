@@ -16,25 +16,28 @@ public class WaterTide : MonoBehaviour {
     [SerializeField] private TideState state;
     [SerializeField] private int actualLayer;
     [SerializeField] private GameObject water;
+    [SerializeField] private GameObject erosion;
     [SerializeField] private float risingTimer;
 
     private int startingLayer = 2;
     public int maxLayer = 6;
     public int minLayer = 0;
-    public float period = 5.0f;
+    public float period = 2.0f;
     private bool gonnaRise = false;
     private float timeLeft;
 
     private readonly string waterTag = "WaterTilemap";
+    private readonly string managerTag = "Manager";
 
     // Use this for initialization
     void Start () {
         water = GameObject.FindGameObjectWithTag(waterTag);
+        erosion = GameObject.FindGameObjectWithTag(managerTag);
         if (water != null)
         {
             startingLayer = water.GetComponent<TilemapRenderer>().sortingOrder;
             state = TideState.STILL;
-            risingTimer = 10.0f;
+            risingTimer = 4.0f;
             timeLeft = risingTimer;
             actualLayer = startingLayer;
             GameObject.FindGameObjectsWithTag("Grid").First().GetComponent<IslandGenerator>().SetWater(actualLayer);
@@ -57,17 +60,14 @@ public class WaterTide : MonoBehaviour {
         switch(state)
         {
             case TideState.STILL:
-                Debug.Log("Tide staying still.");
                 break;
             case TideState.FALLING:
-                Debug.Log("Tide is falling.");
                 if (actualLayer > minLayer)
                 {
                     actualLayer--;
                 }
                 break;
             case TideState.RISING:
-                Debug.Log("Tide is rising, carefull!");
                 if (actualLayer < maxLayer)
                 {
                     actualLayer++;
@@ -75,6 +75,8 @@ public class WaterTide : MonoBehaviour {
                 break;
         }
         UpdateTideLayer();
+        erosion.GetComponent<ErosionManager>().Erode();
+
         // Act as a clock, re invoke this method after 'period' seconds
         Invoke("ChangeTide", period);
     }
@@ -103,6 +105,11 @@ public class WaterTide : MonoBehaviour {
     public void SetTideState(TideState state)
     {
         this.state = state;
+    }
+
+    public float GetRisingTimer()
+    {
+        return this.risingTimer;
     }
 
     private void CheatyStateSettings()

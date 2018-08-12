@@ -24,20 +24,49 @@ public class UIHotbar : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
+        int choice = switchStat;
+        if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+        {
+            choice--;
+            if (choice < 1)
+            {
+                choice = 3;
+            }
+        } else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+        {
+            choice++;
+            if (choice > 3)
+            {
+                choice = 1;
+            }
+        }
         if (Input.GetKey("1"))
         {
-            SelectShovel();
+            choice = 1;
         }
         if (Input.GetKey("2"))
         {
-            SelectBucket();
+            choice = 2;
         }
         if(Input.GetKey("3"))
         {
-            SelectHammer();
+            choice = 3;
         }
-        if(DigBar.value > 0)
+        switch (choice)
+        {
+            case 1:
+                SelectShovel();
+                break;
+            case 2:
+                SelectBucket();
+                break;
+            case 3:
+            SelectHammer();
+                break;
+        }
+        if (DigBar.value > 0)
         {
             IconDigBar.SetActive(true);
         }

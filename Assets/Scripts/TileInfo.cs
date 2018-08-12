@@ -1,48 +1,50 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Tilemaps;
+
 public class TileInfo{
 
     private int x, y;
     private float durability;
-    private bool flagEroded;
 
-    public TileInfo(int x, int y){
+
+    public TileInfo(Vector3Int vector){
         this.durability = 1.0f;
-        this.flagEroded = false;
-        this.x = x;
-        this.y = y;
+        this.x = vector.x;
+        this.y = vector.y;
     }
 
-    public int[] GetCoordinates()
+    public Vector3Int GetCoordinates()
     {
-        return new int[2] {x, y};
+        return new Vector3Int(x, y, 0);
     }
 
-    public int[,] GetNeighboursCoordinates()
+    public Vector3Int[] GetNeighboursCoordinates()
     {
-        int[,] neighbours = new int [6,2];
-        neighbours[0, 0] = this.x+1;
-        neighbours[0, 1] = this.y-1;
-
-        neighbours[1, 0] = this.x+1;
-        neighbours[1, 1] = this.y;
-
-        neighbours[2, 0] = this.x;
-        neighbours[2, 1] = this.y+1;
-
-        neighbours[3, 0] = this.x-1;
-        neighbours[3, 1] = this.y+1;
-
-        neighbours[4, 0] = this.x-1;
-        neighbours[4, 1] = this.y;
-
-        neighbours[5, 0] = this.x;
-        neighbours[5, 1] = this.y-1;
-
+        Vector3Int[] neighbours = new Vector3Int[6];
+        neighbours[0] = new Vector3Int(this.x + 1, this.y - 1, 0);
+        neighbours[1] = new Vector3Int(this.x + 1, this.y, 0);
+        neighbours[2] = new Vector3Int(this.x, this.y + 1, 0);
+        neighbours[3] = new Vector3Int(this.x - 1, this.y + 1, 0);
+        neighbours[4] = new Vector3Int(this.x - 1, this.y, 0);
+        neighbours[5] = new Vector3Int(this.x, this.y - 1, 0);
         return neighbours;
     }
 
-    public void decreaseDurability( float value )
+    public void DecreaseDurability(float value)
     {
         this.durability -= value;
+    }
+
+    public float GetDurability()
+    {
+        return this.durability;
+    }
+
+    public void ResetDurability()
+    {
+        this.durability = 1.0f;
     }
 
 }

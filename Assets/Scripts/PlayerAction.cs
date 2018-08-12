@@ -17,6 +17,12 @@ public class PlayerAction : MonoBehaviour {
     private Sprite[] digBarSprites;
 
     /// <summary>
+    /// Sprites of the breath bar
+    /// </summary>
+    [SerializeField]
+    private Sprite[] breathBarSprites;
+
+    /// <summary>
     /// Time for digging a sand tile
     /// </summary>
     [SerializeField]
@@ -39,6 +45,12 @@ public class PlayerAction : MonoBehaviour {
     /// </summary>
     [SerializeField]
     private int maxSandInInventory = 10;
+
+    /// <summary>
+    /// Amount of time needed to die from drowning
+    /// </summary>
+    [SerializeField]
+    private float drowningTime = 5f;
 
     /// <summary>
     /// Tilemaps of the terrains
@@ -70,6 +82,21 @@ public class PlayerAction : MonoBehaviour {
     /// </summary>
     private int sandInInventory = 0;
 
+    /// <summary>
+    /// Current time from which the player began drowning
+    /// </summary>
+    private float currentDrowningTime = 0;
+
+    /// <summary>
+    /// Active boost of respiration
+    /// </summary>
+    private bool respirationBoost = false;
+
+    /// <summary>
+    /// Active boost of construction
+    /// </summary>
+    private bool diggingBoost = false;
+
     // Use this for initialization
     void Start()
     {
@@ -99,14 +126,65 @@ public class PlayerAction : MonoBehaviour {
             StopDigging();
         }
         CheckHotbar();
+        CheckWater();
     }
 
+    /// <summary>
+    /// Forbid digging while hotbar not equal one
+    /// </summary>
     private void CheckHotbar()
     {
         int switchHotbar = uiHotbarCanvas.GetComponent<UIHotbar>().GetSwitch();
         if (switchHotbar != 1)
         {
             StopDigging();
+        }
+    }
+
+    /// <summary>
+    /// Check that player is in water and activates breath bar
+    /// </summary>
+    private void CheckWater()
+    {
+        bool isDrowning = false;
+        foreach (Tilemap terrainTilemap in terrainTilemaps)
+        {
+            Vector3Int cellPosition = terrainTilemap.WorldToCell(gameObject.transform.position);
+            TileBase tile = terrainTilemap.GetTile(cellPosition);
+            if (tile != null)
+            {
+                isDrowning = terrainTilemap.GetComponent<TilemapRenderer>().sortingOrder < waterTilemap.GetComponent<TilemapRenderer>().sortingOrder;
+            }
+        }
+        SpriteRenderer breathBar = GameObject.FindGameObjectWithTag("BreathBar").GetComponent<SpriteRenderer>();
+        if (isDrowning)
+        {
+            breathBar.enabled = true;
+            currentDrowningTime += (respirationBoost) ? Time.deltaTime * 0.5f : Time.deltaTime;
+            int breathBarCurrentSprite = Mathf.FloorToInt(currentDrowningTime * breathBarSprites.Length / drowningTime);
+            if (breathBarCurrentSprite >= 0 && breathBarCurrentSprite < breathBarSprites.Length)
+            {
+                breathBar.sprite = breathBarSprites[breathBarCurrentSprite];
+            }
+            if (currentDrowningTime > drowningTime)
+            {
+                Debug.Log("You just drowned !");
+            }
+        } else
+        {
+            currentDrowningTime -= Time.deltaTime * 2;
+            if (currentDrowningTime < 0)
+            {
+                breathBar.enabled = false;
+                currentDrowningTime = 0;
+            } else
+            {
+                int breathBarCurrentSprite = Mathf.FloorToInt(currentDrowningTime * breathBarSprites.Length / drowningTime);
+                if (breathBarCurrentSprite >= 0 && breathBarCurrentSprite < breathBarSprites.Length)
+                {
+                    breathBar.sprite = breathBarSprites[breathBarCurrentSprite];
+                }
+            }
         }
     }
 
@@ -162,7 +240,7 @@ public class PlayerAction : MonoBehaviour {
                         {
                             case 1:
                                 if (terrainTilemap.GetComponent<TilemapRenderer>().sortingOrder >= waterTilemap.GetComponent<TilemapRenderer>().sortingOrder
-                                    && sandInInventory < maxSandInInventory)
+                                    && sandInInventory < maxSandInInventory && terrainTilemap.GetComponent<TilemapRenderer>().sortingOrder > 0)
                                 {
                                     Dig(cellPosition);
                                 }
@@ -200,7 +278,7 @@ public class PlayerAction : MonoBehaviour {
         } else
         {
             digBar.enabled = true;
-            diggingTime -= Time.deltaTime;
+            diggingTime -= (diggingBoost) ? Time.deltaTime * 1.5f : Time.deltaTime;
             int digBarCurrentSprite = Mathf.FloorToInt(diggingTime * digBarSprites.Length / maxDiggingTime);
             if (digBarCurrentSprite >= 0)
             {
@@ -226,22 +304,8 @@ public class PlayerAction : MonoBehaviour {
     private void FinishDigging(Vector3Int diggingPosition)
     {
         Tile[] tiles = GameObject.FindGameObjectWithTag("Grid").GetComponent<IslandGenerator>().GetSandTiles();
-        int i = terrainTilemaps.Count - 1;
-        int replacedTile = -1;
-        while (i >= 0)
-        {
-            Tilemap terrainTilemap = terrainTilemaps[i];
-            if (terrainTilemap.GetTile(diggingPosition) != null && i > 0)
-            {
-                terrainTilemap.SetTile(diggingPosition, null);
-                replacedTile = i - 1;
-            }
-            if (replacedTile == i)
-            {
-                terrainTilemap.SetTile(diggingPosition, tiles[i]);
-            }
-            i--;
-        }
+        MapManager mapManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<MapManager>();
+        mapManager.Dig(mapManager.TilesToDataCoordinates(diggingPosition));
         sandInInventory++;
     }
 
@@ -267,7 +331,7 @@ public class PlayerAction : MonoBehaviour {
     /// <param name="replenishPosition">Position where to replenish sand</param>
     private void Replenish(Vector3Int replenishPosition)
     {
-        Tile[] tiles = GameObject.FindGameObjectWithTag("Grid").GetComponent<IslandGenerator>().GetSandTiles();
+        /*Tile[] tiles = GameObject.FindGameObjectWithTag("Grid").GetComponent<IslandGenerator>().GetSandTiles();
         int i = 0;
         int replacedTile = -1;
         bool tileReplaced = false;
@@ -285,7 +349,27 @@ public class PlayerAction : MonoBehaviour {
                 tileReplaced = true;
             }
             i++;
-        }
+        }*/
+        MapManager mapManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<MapManager>();
+        mapManager.Dig(mapManager.TilesToDataCoordinates(replenishPosition));
         sandInInventory--;
+    }
+
+    /// <summary>
+    /// Activate or deactivate respiration boost
+    /// </summary>
+    /// <param name="value">Activation or deactivation</param>
+    public void SetRespirationBoost(bool value)
+    {
+        this.respirationBoost = value;
+    }
+
+    /// <summary>
+    /// Activate or deactivate digging boost
+    /// </summary>
+    /// <param name="value">Activation or deactivation</param>
+    public void SetDiggingBoost(bool value)
+    {
+        this.diggingBoost = value;
     }
 }
