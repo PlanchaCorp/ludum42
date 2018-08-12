@@ -7,6 +7,8 @@ TextureImporter:
     21300004: tileStone_2
     21300006: tileStone_3
     21300008: tileStone_4
+    21300010: tileStone_5
+    21300012: tileStone_6
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -95,7 +97,7 @@ TextureImporter:
         x: 0
         y: 0
         width: 32
-        height: 40
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -103,7 +105,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 96bbdd4210d6a474598c16dfc44802b1
+      spriteID: da64bc99d5095054fbe22b1cc54d8289
       vertices: []
       indices: 
       edges: []
@@ -115,7 +117,7 @@ TextureImporter:
         x: 32
         y: 0
         width: 32
-        height: 40
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -123,7 +125,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 16334a8d31250eb4b9eb14a76650fda4
+      spriteID: dc9f061dd422b3048a6f5d145dfa656c
       vertices: []
       indices: 
       edges: []
@@ -135,7 +137,7 @@ TextureImporter:
         x: 64
         y: 0
         width: 32
-        height: 40
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -143,7 +145,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 805280299cc873a4db8357bd1eed9cc1
+      spriteID: bd90329c59802704491fcea64dae8f6a
       vertices: []
       indices: 
       edges: []
@@ -155,7 +157,7 @@ TextureImporter:
         x: 96
         y: 0
         width: 32
-        height: 40
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -163,7 +165,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f13b583463055304d8114706c31f274d
+      spriteID: bd3213c2ec2b07342bece25b2948aed9
       vertices: []
       indices: 
       edges: []
@@ -175,7 +177,7 @@ TextureImporter:
         x: 128
         y: 0
         width: 32
-        height: 40
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -183,7 +185,47 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 37517ab3292bec54e81375ff535dce24
+      spriteID: c16cab05a282646488f885b3552468f0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tileStone_5
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f317b2f92356afe4c9cb92ca00062ab4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tileStone_6
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd94f2cc47f83524a8c438b57051f77e
       vertices: []
       indices: 
       edges: []
