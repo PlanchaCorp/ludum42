@@ -6,11 +6,20 @@ using UnityEngine.Tilemaps;
 public class TileInfo{
 
     private int x, y;
+    private bool isFlooded, isSea;
     private float durability;
 
 
     public TileInfo(Vector3Int vector){
         this.durability = 1.0f;
+        this.isFlooded = false;
+        this.x = vector.x;
+        this.y = vector.y;
+    }
+     public TileInfo(Vector3Int vector, bool flooded, bool isSea){
+        this.durability = 1.0f;
+        this.isFlooded = flooded;
+        this.isSea = isSea;
         this.x = vector.x;
         this.y = vector.y;
     }
@@ -31,7 +40,16 @@ public class TileInfo{
         neighbours[5] = new Vector3Int(this.x, this.y - 1, 0);
         return neighbours;
     }
-
+    public bool GetIsFlooded(){
+        return this.isFlooded;
+    }
+    public bool GetIsSea(){
+        return this.isSea;
+    }
+    public void SetIsFlooded(bool value){
+        this.isFlooded = value;
+        this.isSea = false;
+    }
     public void DecreaseDurability(float value)
     {
         this.durability -= value;
