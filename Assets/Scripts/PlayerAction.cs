@@ -17,6 +17,12 @@ public class PlayerAction : MonoBehaviour {
     private Sprite[] digBarSprites;
 
     /// <summary>
+    /// Sprites of the breath bar
+    /// </summary>
+    [SerializeField]
+    private Sprite[] breathBarSprites;
+
+    /// <summary>
     /// Time for digging a sand tile
     /// </summary>
     [SerializeField]
@@ -39,6 +45,12 @@ public class PlayerAction : MonoBehaviour {
     /// </summary>
     [SerializeField]
     private int maxSandInInventory = 10;
+
+    /// <summary>
+    /// Amount of time needed to die from drowning
+    /// </summary>
+    [SerializeField]
+    private float drowningTime = 5f;
 
     /// <summary>
     /// Tilemaps of the terrains
@@ -70,6 +82,11 @@ public class PlayerAction : MonoBehaviour {
     /// </summary>
     private int sandInInventory = 0;
 
+    /// <summary>
+    /// Current time from which the player began drowning
+    /// </summary>
+    private float currentDrowningTime = 0;
+
     // Use this for initialization
     void Start()
     {
@@ -99,14 +116,54 @@ public class PlayerAction : MonoBehaviour {
             StopDigging();
         }
         CheckHotbar();
+        CheckWater();
     }
 
+    /// <summary>
+    /// Forbid digging while hotbar not equal one
+    /// </summary>
     private void CheckHotbar()
     {
         int switchHotbar = uiHotbarCanvas.GetComponent<UIHotbar>().GetSwitch();
         if (switchHotbar != 1)
         {
             StopDigging();
+        }
+    }
+
+    /// <summary>
+    /// Check that player is in water and activates breath bar
+    /// </summary>
+    private void CheckWater()
+    {
+        bool isDrowning = false;
+        foreach (Tilemap terrainTilemap in terrainTilemaps)
+        {
+            Vector3Int cellPosition = terrainTilemap.WorldToCell(gameObject.transform.position);
+            TileBase tile = terrainTilemap.GetTile(cellPosition);
+            if (tile != null)
+            {
+                isDrowning = terrainTilemap.GetComponent<TilemapRenderer>().sortingOrder < waterTilemap.GetComponent<TilemapRenderer>().sortingOrder;
+            }
+        }
+        SpriteRenderer breathBar = GameObject.FindGameObjectWithTag("BreathBar").GetComponent<SpriteRenderer>();
+        if (isDrowning)
+        {
+            breathBar.enabled = true;
+            currentDrowningTime += Time.deltaTime;
+            int breathBarCurrentSprite = Mathf.FloorToInt(currentDrowningTime * breathBarSprites.Length / drowningTime);
+            if (breathBarCurrentSprite >= 0 && breathBarCurrentSprite < breathBarSprites.Length)
+            {
+                breathBar.sprite = breathBarSprites[breathBarCurrentSprite];
+            }
+            if (currentDrowningTime > drowningTime)
+            {
+                Debug.Log("You just drowned !");
+            }
+        } else
+        {
+            breathBar.enabled = false;
+            currentDrowningTime = 0;
         }
     }
 
