@@ -31,6 +31,12 @@ public class BonusHandler : MonoBehaviour {
     [SerializeField]
     private float respirationBoostDuration = 20f;
 
+    /// <summary>
+    /// Pickup distance from which a bonus can be picked up
+    /// </summary>
+    [SerializeField]
+    private float pickupDistance = 1.0f;
+
     GameObject[] terrains;
 
     // Use this for initialization
@@ -98,6 +104,10 @@ public class BonusHandler : MonoBehaviour {
         }
         if (state)
         {
+            if (activeBonuses.ContainsKey(bonus))
+            {
+                activeBonuses.Remove(bonus);
+            }
             activeBonuses.Add(bonus, Time.time + value);
         } else
         {
@@ -110,6 +120,25 @@ public class BonusHandler : MonoBehaviour {
     /// </summary>
     private void LookBeneath()
     {
-
+        GameObject[] bonuses = GameObject.FindGameObjectsWithTag("Bonus");
+        foreach (GameObject bonus in bonuses)
+        {
+            float distance = Mathf.Sqrt(Mathf.Pow(player.transform.position.x - bonus.transform.position.x, 2) + Mathf.Pow(player.transform.position.y - bonus.transform.position.y, 2));
+            if (distance < pickupDistance)
+            {
+                Debug.Log(bonus.name);
+                if (bonus.name.Contains("TileBoots"))
+                {
+                    ActivateSpeedBoost();
+                } else if (bonus.name.Contains("TileMarteauPiqueur"))
+                {
+                    ActivateDiggingBoost();
+                } else if (bonus.name.Contains("TileScaphandre"))
+                {
+                    ActivateRespirationBoost();
+                }
+                Destroy(bonus);
+            }
+        }
     }
 }

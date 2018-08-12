@@ -179,7 +179,7 @@ public class IslandGenerator : MonoBehaviour
     }
     private void SetPickup(int x,int y)
     {
-        Vector3 position = waterTilemap.GetCellCenterWorld(new Vector3Int(x, y,0));
+        Vector3 position = waterTilemap.WorldToCell(new Vector3Int(x, y,0));
         if (pickUpsPool.Count == 0)
         {
             SetPool();
@@ -202,7 +202,9 @@ public class IslandGenerator : MonoBehaviour
             int rd = Random.Range(0, WaterLayerPostions.Count - 1);
             Vector2Int position = WaterLayerPostions[rd];
             WaterLayerPostions.RemoveAt(rd);
-            SetPickup(position.x, position.y);
+            Vector3Int positionVector3 = new Vector3Int(position.x, position.y, 0);
+            Vector3Int realPosition = GameObject.FindGameObjectWithTag("Manager").GetComponent<MapManager>().DataToTilesCoordinates(positionVector3);
+            SetPickup(realPosition.x, realPosition.y);
         }
     }
     public void SetWater(int level)
