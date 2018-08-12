@@ -18,34 +18,55 @@ public class UIHotbar : MonoBehaviour {
 
 
     // Use this for initialization
-    void Start () {
-		
-	}
+    void Start ()
+    {
+        SelectShovel();
+    }
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
+        int choice = switchStat;
+        if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+        {
+            choice--;
+            if (choice < 1)
+            {
+                choice = 3;
+            }
+        } else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+        {
+            choice++;
+            if (choice > 3)
+            {
+                choice = 1;
+            }
+        }
         if (Input.GetKey("1"))
         {
-            switchSelector1.sprite = Sprite2;
-            switchSelector2.sprite = Sprite1;
-            switchSelector3.sprite = Sprite1;
-            switchStat = 1;
+            choice = 1;
         }
         if (Input.GetKey("2"))
         {
-            switchSelector2.sprite = Sprite2;
-            switchSelector1.sprite = Sprite1;
-            switchSelector3.sprite = Sprite1;
-            switchStat = 2;
+            choice = 2;
         }
         if(Input.GetKey("3"))
         {
-            switchSelector2.sprite = Sprite1;
-            switchSelector1.sprite = Sprite1;
-            switchSelector3.sprite = Sprite2;
-            switchStat = 3;
+            choice = 3;
         }
-        if(DigBar.value > 0)
+        switch (choice)
+        {
+            case 1:
+                SelectShovel();
+                break;
+            case 2:
+                SelectBucket();
+                break;
+            case 3:
+            SelectHammer();
+                break;
+        }
+        if (DigBar.value > 0)
         {
             IconDigBar.SetActive(true);
         }
@@ -61,5 +82,34 @@ public class UIHotbar : MonoBehaviour {
         {
             IconBreathBar.SetActive(false);
         }
+    }
+
+    private void SelectShovel()
+    {
+        switchSelector1.sprite = Sprite2;
+        switchSelector2.sprite = Sprite1;
+        switchSelector3.sprite = Sprite1;
+        switchStat = 1;
+    }
+
+    private void SelectBucket()
+    {
+        switchSelector2.sprite = Sprite2;
+        switchSelector1.sprite = Sprite1;
+        switchSelector3.sprite = Sprite1;
+        switchStat = 2;
+    }
+
+    private void SelectHammer()
+    {
+        switchSelector2.sprite = Sprite1;
+        switchSelector1.sprite = Sprite1;
+        switchSelector3.sprite = Sprite2;
+        switchStat = 3;
+    }
+
+    public int GetSwitch()
+    {
+        return switchStat;
     }
 }
