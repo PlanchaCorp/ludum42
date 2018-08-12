@@ -239,8 +239,9 @@ public class PlayerAction : MonoBehaviour {
                         switch (uiHotbarCanvas.GetComponent<UIHotbar>().GetSwitch())
                         {
                             case 1:
-                                if (terrainTilemap.GetComponent<TilemapRenderer>().sortingOrder >= waterTilemap.GetComponent<TilemapRenderer>().sortingOrder
-                                    && sandInInventory < maxSandInInventory && terrainTilemap.GetComponent<TilemapRenderer>().sortingOrder > 0)
+                                if (terrainTilemap.GetComponent<TilemapRenderer>().sortingOrder >= waterTilemap.GetComponent<TilemapRenderer>().sortingOrder &&
+                                    sandInInventory < maxSandInInventory &&
+                                    terrainTilemap.GetComponent<TilemapRenderer>().sortingOrder > 0)
                                 {
                                     Dig(cellPosition);
                                 }
@@ -249,6 +250,12 @@ public class PlayerAction : MonoBehaviour {
                                 if (sandInInventory > 0)
                                 {
                                     TryReplenish(cellPosition);
+                                }
+                                break;
+                            case 3:
+                                if (sandInInventory > 0)
+                                {
+                                    TryBuild(cellPosition);
                                 }
                                 break;
                         }
@@ -340,28 +347,29 @@ public class PlayerAction : MonoBehaviour {
     /// <param name="replenishPosition">Position where to replenish sand</param>
     private void Replenish(Vector3Int replenishPosition)
     {
-        /*Tile[] tiles = GameObject.FindGameObjectWithTag("Grid").GetComponent<IslandGenerator>().GetSandTiles();
-        int i = 0;
-        int replacedTile = -1;
-        bool tileReplaced = false;
-        while (i < terrainTilemaps.Count)
-        {
-            Tilemap terrainTilemap = terrainTilemaps[i];
-            if (terrainTilemap.GetTile(replenishPosition) != null && i < terrainTilemaps.Count - 2)
-            {
-                terrainTilemap.SetTile(replenishPosition, null);
-                replacedTile = i + 1;
-            }
-            if (replacedTile == i && !tileReplaced)
-            {
-                terrainTilemap.SetTile(replenishPosition, tiles[i]);
-                tileReplaced = true;
-            }
-            i++;
-        }*/
         MapManager mapManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<MapManager>();
         mapManager.Replenish(mapManager.TilesToDataCoordinates(replenishPosition));
         sandInInventory--;
+    }
+
+    /// <summary>
+    /// Try to Build a sand castle
+    /// </summary>
+    /// <param name="buildingPosition"></param>
+    private void TryBuild(Vector3Int buildingPosition)
+    {
+        if (replenishTime <= 0)
+        {
+            MapManager mapManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<MapManager>();
+            mapManager.Build(mapManager.TilesToDataCoordinates(buildingPosition));
+            replenishTime = maxReplenishCooldown;
+            sandInInventory--;
+        }
+        else
+        {
+            replenishTime -= Time.deltaTime;
+        }
+
     }
 
     /// <summary>

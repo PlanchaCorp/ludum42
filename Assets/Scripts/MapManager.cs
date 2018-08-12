@@ -17,6 +17,11 @@ public class MapManager : MonoBehaviour
 	[SerializeField] private GameObject grid;
 
     /// <summary>
+    /// MapData of the tiles Height
+    /// </summary>
+	[SerializeField] private Tile tower;
+
+    /// <summary>
     /// MapData
     /// </summary>
     int[,] mapData;
@@ -98,15 +103,12 @@ public class MapManager : MonoBehaviour
     /// The DiggingPosition param shall range from 0 to MapSize - 1
     /// </summary>
     /// <param name="tileCoordinates"></param>
-
-
-
-
     public void Dig(Vector3Int diggingPosition)
     {
         // On modifie les données de la map
         mapData[diggingPosition.x, diggingPosition.y]--;
 
+        // On affiche la nouvelle Tile
         Tile[] tiles = grid.GetComponent<IslandGenerator>().GetSandTiles();
         int i = terrainTilemaps.Count - 1;
         int replacedTile = -1;
@@ -139,6 +141,7 @@ public class MapManager : MonoBehaviour
         // On modifie les données de la map
         mapData[replenishPosition.x, replenishPosition.y]++;
 
+        // On affiche la nouvelle Tile
         Tile[] tiles = grid.GetComponent<IslandGenerator>().GetSandTiles();
         int i = 0;
         int replacedTile = -1;
@@ -159,6 +162,29 @@ public class MapManager : MonoBehaviour
                 tileReplaced = true;
             }
             i++;
+        }
+    }
+    
+    /// <summary>
+    /// Build a sand castle
+    /// </summary>
+    /// <param name="buildingPosition"></param>
+    public void Build(Vector3Int buildingPosition)
+    {
+        // On verifie si l'on est sur du sable
+        if ( !terrainInfo[buildingPosition.x, buildingPosition.y].GetIsFlooded() ) 
+        {
+            // On modifie les données
+            terrainInfo[buildingPosition.x, buildingPosition.y].SetWallState(TileInfo.WallSate.TOWER);
+
+            // On affiche un chateau
+            buildingPosition = DataToTilesCoordinates(buildingPosition);
+            GameObject.FindGameObjectWithTag("StructureTilemap").GetComponent<Tilemap>().SetTile(buildingPosition, tower);
+
+        } else
+        {
+            Debug.LogWarning("Can't build on water");
+            return;
         }
     }
 

@@ -8,13 +8,22 @@ public class TileInfo{
     private int x, y;
     private bool isFlooded, isSea;
     private float durability;
-
+    public enum WallSate
+    {
+        NOTHING,
+        TOWER,
+        WALL_HORIZONTAL,
+        WALL_LEFT,
+        WALL_RIGHT
+    }
+    private WallSate state;
 
     public TileInfo(Vector3Int vector){
         this.durability = 1.0f;
         this.isFlooded = false;
         this.x = vector.x;
         this.y = vector.y;
+        this.state = WallSate.NOTHING;
     }
      public TileInfo(Vector3Int vector, bool flooded, bool isSea){
         this.durability = 1.0f;
@@ -22,6 +31,7 @@ public class TileInfo{
         this.isSea = isSea;
         this.x = vector.x;
         this.y = vector.y;
+        this.state = WallSate.NOTHING;
     }
 
     public Vector3Int GetCoordinates()
@@ -40,16 +50,20 @@ public class TileInfo{
         neighbours[5] = new Vector3Int(this.x, this.y - 1, 0);
         return neighbours;
     }
+
     public bool GetIsFlooded(){
         return this.isFlooded;
     }
+
     public bool GetIsSea(){
         return this.isSea;
     }
+
     public void SetIsFlooded(bool value){
         this.isFlooded = value;
         this.isSea = false;
     }
+
     public void DecreaseDurability(float value)
     {
         this.durability -= value;
@@ -63,6 +77,16 @@ public class TileInfo{
     public void ResetDurability()
     {
         this.durability = 1.0f;
+    }
+
+    public void SetWallState( WallSate state)
+    {
+        this.state = state;
+    }
+
+    public WallSate GetWallState()
+    {
+        return state;
     }
 
 }
