@@ -13,6 +13,16 @@ public class TileInfo{
     private static AnimatedTile waterTile;
     private static int mapSize;
 
+    public enum WallSate
+    {
+        NOTHING,
+        TOWER,
+        WALL_HORIZONTAL,
+        WALL_LEFT,
+        WALL_RIGHT
+    }
+    private WallSate state;
+
     public TileInfo(Vector3Int vector){
         this.durability = 1.0f;
         this.isFlooded = false;
