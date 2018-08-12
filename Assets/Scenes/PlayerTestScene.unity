@@ -1157,13 +1157,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waterTile: {fileID: 11400000, guid: f675243b986e55f4f9fdacb5b74b5089, type: 2}
   state: 0
-  actualLayer: 0
+  actualLayer: 2
   water: {fileID: 755508713}
   erosion: {fileID: 886327452}
   risingTimer: 0
   mapManager: {fileID: 886327452}
   maxLayer: 6
-  minLayer: 0
+  minLayer: 1
   period: 5
 --- !u!483693784 &755508716
 TilemapRenderer:
