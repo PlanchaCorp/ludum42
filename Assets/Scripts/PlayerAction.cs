@@ -351,7 +351,7 @@ public class PlayerAction : MonoBehaviour {
             i++;
         }*/
         MapManager mapManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<MapManager>();
-        mapManager.Dig(mapManager.TilesToDataCoordinates(replenishPosition));
+        mapManager.Replenish(mapManager.TilesToDataCoordinates(replenishPosition));
         sandInInventory--;
     }
 

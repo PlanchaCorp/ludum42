@@ -31,13 +31,18 @@ public class BonusHandler : MonoBehaviour {
     [SerializeField]
     private float respirationBoostDuration = 20f;
 
+    GameObject[] terrains;
+
     // Use this for initialization
     void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
+        terrains = GameObject.FindGameObjectsWithTag("TerrainTilemap");
+        Debug.Log(terrains.Length);
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 		foreach(KeyValuePair<string, float> activeBonus in activeBonuses)
         {
             if (activeBonus.Value < Time.time)
@@ -45,7 +50,8 @@ public class BonusHandler : MonoBehaviour {
                 TriggerBonus(false, activeBonus.Key);
             }
         }
-	}
+        LookBeneath();
+    }
 
     /// <summary>
     /// Activate speed boost bonus !
@@ -98,5 +104,13 @@ public class BonusHandler : MonoBehaviour {
         {
             activeBonuses.Remove(bonus);
         }
+    }
+
+    /// <summary>
+    /// Check under the player if an object is present
+    /// </summary>
+    private void LookBeneath()
+    {
+
     }
 }
