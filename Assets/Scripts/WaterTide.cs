@@ -30,7 +30,7 @@ public class WaterTide : MonoBehaviour {
     // Use this for initialization
     void Start () {
         water = GameObject.FindGameObjectWithTag(waterTag);
-        erosion = GameObject.FindGameObjectWithTag("ErosionManager");
+        erosion = GameObject.FindGameObjectWithTag("Manager");
         if (water != null)
         {
             startingLayer = water.GetComponent<TilemapRenderer>().sortingOrder;
