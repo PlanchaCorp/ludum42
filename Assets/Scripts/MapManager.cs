@@ -35,7 +35,20 @@ public class MapManager : MonoBehaviour
         }
     }
 
-      
+
+    /// <summary>
+    /// Get the TILE map
+    /// </summary>
+    /// <returns></returns>
+    public List<Tilemap> GetTileMap()
+    {
+        return terrainTilemaps;
+    }
+
+    /// <summary>
+    /// Get the DATA map
+    /// </summary>
+    /// <returns></returns>
     public int[,] GetMapDataCoordinates()
     {
         return this.mapData;
@@ -73,10 +86,9 @@ public class MapManager : MonoBehaviour
     public void Dig(Vector3Int diggingPosition)
     {
         // On modifie les données de la map
-        int[,] mapData = GetMapDataCoordinates();
         mapData[diggingPosition.x, diggingPosition.y]--;
 
-        Tile[] tiles = GameObject.FindGameObjectWithTag("Grid").GetComponent<IslandGenerator>().GetSandTiles();
+        Tile[] tiles = grid.GetComponent<IslandGenerator>().GetSandTiles();
         int i = terrainTilemaps.Count - 1;
         int replacedTile = -1;
         diggingPosition = DataToTilesCoordinates(diggingPosition);
@@ -103,10 +115,9 @@ public class MapManager : MonoBehaviour
     public void Replenish(Vector3Int replenishPosition)
     {
         // On modifie les données de la map
-        int[,] mapData = GetMapDataCoordinates();
         mapData[replenishPosition.x, replenishPosition.y]++;
 
-        Tile[] tiles = GameObject.FindGameObjectWithTag("Grid").GetComponent<IslandGenerator>().GetSandTiles();
+        Tile[] tiles = grid.GetComponent<IslandGenerator>().GetSandTiles();
         int i = 0;
         int replacedTile = -1;
         bool tileReplaced = false;

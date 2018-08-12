@@ -37,6 +37,9 @@ public class ErosionManager : MonoBehaviour {
 
 	}
 
+    /// <summary>
+    /// Move Look through all the sand tiles and erode the ones that are near the sea level
+    /// </summary>
     public void Erode()
     {
         int[,] mapData = gameObject.GetComponent<MapManager>().GetMapDataCoordinates();
@@ -87,7 +90,15 @@ public class ErosionManager : MonoBehaviour {
             }
         }
     }
-
+    
+    /// <summary>
+    /// Helper function for Erode
+    /// </summary>
+    /// <param name="currentTile"></param>
+    /// <param name="mapData"></param>
+    /// <param name="neighbours"></param>
+    /// <param name="currentTileCoordinates"></param>
+    /// <returns></returns>
     private Vector3Int FindNeighbour(TileInfo currentTile, int[,] mapData, Vector3Int[] neighbours, Vector3Int currentTileCoordinates)
     {
         Vector3Int higherNeighbour = new Vector3Int();

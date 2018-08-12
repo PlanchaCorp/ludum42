@@ -26,11 +26,12 @@ public class WaterTide : MonoBehaviour {
     private float timeLeft;
 
     private readonly string waterTag = "WaterTilemap";
+    private readonly string managerTag = "Manager";
 
     // Use this for initialization
     void Start () {
         water = GameObject.FindGameObjectWithTag(waterTag);
-        erosion = GameObject.FindGameObjectWithTag("Manager");
+        erosion = GameObject.FindGameObjectWithTag(managerTag);
         if (water != null)
         {
             startingLayer = water.GetComponent<TilemapRenderer>().sortingOrder;
