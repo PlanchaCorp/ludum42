@@ -172,6 +172,8 @@ public class IslandGenerator : MonoBehaviour
               
             }
         }
+        groundTileMap.GetComponent<TilemapCollider2D>().enabled = false;
+        groundTileMap.GetComponent<TilemapCollider2D>().enabled = true;
     }
     private void SetPickup(int x,int y)
     {
