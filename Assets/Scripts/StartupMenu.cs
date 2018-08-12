@@ -14,10 +14,10 @@ public class StartupMenu : MonoBehaviour {
 
     private float timeStart;
 
-    private float firstCanvasApparitionDelay = 0.5f;
-    private float secondCanvasApparitionDelay = 1;
-    private float thirdCanvasApparitionDelay = 1.5f;
-    private float nextSceneDelay = 2;
+    private float firstCanvasApparitionDelay = 2.75f;
+    private float secondCanvasApparitionDelay = 3f;
+    private float thirdCanvasApparitionDelay = 3.25f;
+    private float nextSceneDelay = 4;
 
     private bool loadScene = false;
     [SerializeField] int scene;
