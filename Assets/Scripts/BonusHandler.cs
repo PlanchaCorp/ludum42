@@ -37,7 +37,6 @@ public class BonusHandler : MonoBehaviour {
     void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
         terrains = GameObject.FindGameObjectsWithTag("TerrainTilemap");
-        Debug.Log(terrains.Length);
     }
 	
 	// Update is called once per frame

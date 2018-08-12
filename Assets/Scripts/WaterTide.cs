@@ -151,7 +151,6 @@ public class WaterTide : MonoBehaviour {
         if ( timeLeft <= 0 )
         {
             timeLeft = risingTimer;
-            Debug.Log("Change the water state.");
             switch (state)
             {
                 case TideState.STILL:

@@ -122,7 +122,8 @@ public class IslandGenerator : MonoBehaviour
             sandLayer.GetComponent<TilemapRenderer>().sortingOrder = l;
             sandLayer.GetComponent<Tilemap>().tileAnchor = new Vector3(0f, 0f);
             sandLayer.GetComponent<Tilemap>().orientation = Tilemap.Orientation.Custom;
-          
+            sandLayer.transform.position = new Vector3(0f, l / 10f, 0f);
+
             sandLayer.tag = "TerrainTilemap";
 
             sandLayer.name = "SandLayer" + l;
@@ -167,9 +168,15 @@ public class IslandGenerator : MonoBehaviour
         {
             SetPool();
         }
-        GameObject pickup = pickUpsPool.Dequeue();
-        Instantiate(pickup);
-        pickup.transform.position = position;
+        if (pickUpsPool.Count > 0)
+        {
+            GameObject pickup = pickUpsPool.Dequeue();
+            Instantiate(pickup);
+            pickup.transform.position = position;
+        } else
+        {
+            Debug.LogWarning("No pickup found in pool !");
+        }
     }
 
     public void PlacePickupOnMap()
@@ -177,7 +184,7 @@ public class IslandGenerator : MonoBehaviour
         for(int i = 0; i< 3; i++)
         {
             int rd = Random.Range(0, WaterLayerPostions.Count - 1);
-           Vector2Int position = WaterLayerPostions[rd];
+            Vector2Int position = WaterLayerPostions[rd];
             WaterLayerPostions.RemoveAt(rd);
             SetPickup(position.x, position.y);
         }
@@ -185,18 +192,29 @@ public class IslandGenerator : MonoBehaviour
     public void SetWater(int level)
     {
         waterLevel = level;
-       
+        Vector3Int vectorPosition = Vector3Int.zero;
         WaterLayerPostions.Clear();
         for (int i = 0; i < perlinSizeX; i++)
         {
             for (int j = 0; j < perlinSizeY; j++)
             {
+                vectorPosition.x = mapSize / 2 - i;
+                vectorPosition.y = mapSize / 2 - j;
                 if (map[i, j] == level)
                 {
                     WaterLayerPostions.Add(new Vector2Int(i, j));
                 }
+                if (map[i, j] <= level)
+                {
+                    waterTilemap.SetTile(vectorPosition, waterTile);
+                }
+                else
+                {
+                    waterTilemap.SetTile(vectorPosition, wall);
+                }
             }
         }
+        PlacePickupOnMap();
     }
     /// <summary>
     /// Generate a perlin noise for a 64*64 map size
