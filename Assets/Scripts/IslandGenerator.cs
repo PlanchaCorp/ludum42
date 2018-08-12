@@ -11,7 +11,8 @@ public class IslandGenerator : MonoBehaviour
 
     [SerializeField]
     private Tilemap groundTileMap;
-
+    [SerializeField]
+    private Tilemap decorationTileMap;
 
     [SerializeField]
     private Tilemap waterTilemap;
@@ -27,6 +28,9 @@ public class IslandGenerator : MonoBehaviour
 
     [SerializeField]
     private AnimatedTile waterTile;
+
+    [SerializeField]
+    private List<Decoration> decorations;
 
     private int perlinSizeX;// Longueur du tableau
     private int perlinSizeY;// Largeur du tableau 
@@ -114,7 +118,7 @@ public class IslandGenerator : MonoBehaviour
 
     private void GenerateIsland(int[,] map)
     {
-        for (int l = 0; l < scale; l++)
+       /* for (int l = 0; l < scale; l++)
         {
             GameObject sandLayer = new GameObject();
             sandLayer.AddComponent<Tilemap>();
@@ -130,7 +134,7 @@ public class IslandGenerator : MonoBehaviour
             sandLayer.GetComponent<TilemapRenderer>().sortOrder = TilemapRenderer.SortOrder.TopLeft;
             sandLayer.transform.SetParent(groundTileMap.transform);
 
-        }
+        }*/
         Vector3Int vectorPosition = Vector3Int.zero;
         
         for (int i = 0; i < perlinSizeX; i++)
@@ -154,8 +158,16 @@ public class IslandGenerator : MonoBehaviour
                 {
                     tile = stoneTiles[map[i, j]];
                 }
-                groundTileMap.transform.Find("SandLayer" + map[i, j]).GetComponent<Tilemap>().SetTile(vectorPosition, tile);
+                groundTileMap.SetTile(vectorPosition, tile);
 
+                if (Random.Range(0, 20) < 1)
+                {
+                   if(!(decorations.FirstOrDefault(x => x.MinHeigth < map[i, j])== null))
+                    {
+                        decorationTileMap.SetTile(vectorPosition, decorations.FirstOrDefault(x => x.MinHeigth < map[i, j]).tile);
+                    }
+                
+                }
 
               
             }
