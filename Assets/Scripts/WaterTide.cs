@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class WaterTide : MonoBehaviour {
-    List<TileInfo> seaTiles = new List<TileInfo>();
+    public List<TileInfo> seaTiles = new List<TileInfo>();
     public enum TideState
     {
         RISING,
@@ -24,30 +24,37 @@ public class WaterTide : MonoBehaviour {
     private int startingLayer = 2;
     public int maxLayer = 6;
     public int minLayer = 0;
-    public float period = 2.0f;
+    public float period = 20.0f;
     private bool gonnaRise = false;
     private float timeLeft;
     private TileInfo[,] terrainTilesInfo;
+    private List<TileInfo> submergedTiles = new List<TileInfo>();
+    private List<TileInfo> justUnderWater = new List<TileInfo>();
 
     private readonly string waterTag = "WaterTilemap";
     private readonly string managerTag = "Manager";
     // Use this for initialization
     void Start () {
-        TileInfo.SetTileMapWater( water.GetComponent<Tilemap>(), 40);
-        TileInfo.SetWaterTile(waterTile);
         terrainTilesInfo = mapManager.GetComponent<MapManager>().GetTerrainInfo();
         for(int i = 0; i<terrainTilesInfo.GetLength(0);i++ ){
            for(int j = 0; j<terrainTilesInfo.GetLength(1);j++ ){
                 if(terrainTilesInfo[i,j].GetIsSea()){
                     seaTiles.Add(terrainTilesInfo[i,j]);
-                }
+                }else if(terrainTilesInfo[i,j].GetHeight() > actualLayer - 1 && terrainTilesInfo[i,j].GetIsFlooded()){
+                    justUnderWater.Add(terrainTilesInfo[i,j]);
+                }  
            }
         }
-
+        
         water = GameObject.FindGameObjectWithTag(waterTag);
         erosion = GameObject.FindGameObjectWithTag(managerTag);
-
-        if (water != null)
+        submergedTiles.AddRange(seaTiles);
+        Invoke("Unflood", 0.5f);
+		Invoke("Flood",0.5f);
+        Invoke("ChangeTide", period);
+	}
+		/* 
+	if (water != null)
         {
             startingLayer = water.GetComponent<TilemapRenderer>().sortingOrder;
             state = TideState.STILL;
@@ -56,18 +63,16 @@ public class WaterTide : MonoBehaviour {
             actualLayer = startingLayer;
             GameObject.FindGameObjectsWithTag("Grid").First().GetComponent<IslandGenerator>().SetWater(actualLayer);
             // Change the state of the tide with the current state selected (after 'period' seconds)
-            Invoke("ChangeTide", period);
+            
         } else
         {
             Debug.LogError("Could not get Water with Tag " + waterTag);
         }
     }
-	
+*/	
 	// Update is called once per frame
 	void Update () {
         CheatyStateSettings();
-        Tide();
-		Flood();
     }   
 
     private void ChangeTide()
@@ -79,27 +84,30 @@ public class WaterTide : MonoBehaviour {
             case TideState.FALLING:
                 if (actualLayer > minLayer)
                 {
-                    actualLayer--;
+                actualLayer--;
+                for(int i = 0; i<terrainTilesInfo.GetLength(0);i++ ){
+                    for(int j = 0; j<terrainTilesInfo.GetLength(1);j++ ){
+                            if(terrainTilesInfo[i,j].GetHeight() > actualLayer - 1 && terrainTilesInfo[i,j].GetIsFlooded()){
+                                justUnderWater.Add(terrainTilesInfo[i,j]);
+                            }  
+                        }
+                    }
                 }
                 break;
             case TideState.RISING:
                 if (actualLayer < maxLayer)
                 {
                     actualLayer++;
+                    submergedTiles.AddRange(seaTiles);
                 }
                 break;
         }
-        UpdateTideLayer();
+        //UpdateTideLayer();
         erosion.GetComponent<ErosionManager>().Erode();
+        Tide();
 
         // Act as a clock, re invoke this method after 'period' seconds
         Invoke("ChangeTide", period);
-    }
-
-    private void UpdateTideLayer()
-    {
-        GameObject.FindGameObjectsWithTag("Grid").First().GetComponent<IslandGenerator>().SetWater(actualLayer);
-        water.GetComponent<TilemapRenderer>().sortingOrder = actualLayer;
     }
 
     public float GetTimeLeft()
@@ -174,19 +182,55 @@ public class WaterTide : MonoBehaviour {
         } 
     }
 
-    public void Flood(){
-        List<TileInfo> submergedTiles = new List<TileInfo>();
-        submergedTiles.AddRange(seaTiles);
-        int[,] DataMap = mapManager.GetComponent<MapManager>().GetMapDataCoordinates();
+    public void UnFlood(){
+        
+        List<TileInfo> notDone = new List<TileInfo>();
+        
+        while(justUnderWater.Count() != 0){
+            TileInfo tile = justUnderWater[0];
+            justUnderWater.RemoveAt(0);
+            if (tile.GetCoordinates()[0] == 0 ||
+                 tile.GetCoordinates()[0] == terrainTilesInfo.GetLength(0) - 1 ||
+                 tile.GetCoordinates()[1] == 0 ||
+                 tile.GetCoordinates()[1] == terrainTilesInfo.GetLength(1) - 1)
+            {
+
+            }else{
+                Debug.Log("hs,dbf,sdnfbg");
+                Vector3Int[] neighbours = tile.GetNeighboursCoordinates();
+                int S = 0;
+                foreach(Vector3Int neighbour in neighbours){
+                    if(terrainTilesInfo[neighbour.x,neighbour.y].GetIsFlooded()){
+                        if(terrainTilesInfo[neighbour.x,neighbour.y].GetHeight() > actualLayer - 1 ){
+                            notDone.Add(terrainTilesInfo[neighbour.x,neighbour.y]);
+                            S += 1;
+                        }
+                   }
+                   
+                }
+                if(S < 6){
+                    tile.SetIsFlooded(false);
+                }
+
+            }
+        }
+        justUnderWater.AddRange(notDone);
+        Invoke("Unflood",0.5f);
+        
+        
+    }
+
+    public void  Flood(){
         terrainTilesInfo = mapManager.GetComponent<MapManager>().GetTerrainInfo(); 
         List<TileInfo> tileDone = new List<TileInfo>();
+        List<TileInfo> tileModified = new List<TileInfo>();
         while(submergedTiles.Count() != 0){
             TileInfo tile = submergedTiles[0];
             submergedTiles.RemoveAt(0);
             if (tile.GetCoordinates()[0] == 0 ||
-                 tile.GetCoordinates()[0] == DataMap.GetLength(0) - 1 ||
+                 tile.GetCoordinates()[0] == terrainTilesInfo.GetLength(0) - 1 ||
                  tile.GetCoordinates()[1] == 0 ||
-                 tile.GetCoordinates()[1] == DataMap.GetLength(1) - 1)
+                 tile.GetCoordinates()[1] == terrainTilesInfo.GetLength(1) - 1)
             {
 
             }else{
@@ -198,14 +242,17 @@ public class WaterTide : MonoBehaviour {
                             tileDone.Add(terrainTilesInfo[neighbour.x,neighbour.y]);
                         }
                    }else{
-                       if(DataMap[neighbour.x,neighbour.y]<3){
+                       if(terrainTilesInfo[neighbour.x,neighbour.y].GetHeight()<actualLayer){
                            terrainTilesInfo[neighbour.x,neighbour.y].SetIsFlooded(true);
                            tileDone.Add(terrainTilesInfo[neighbour.x,neighbour.y]);
+                           tileModified.Add(terrainTilesInfo[neighbour.x,neighbour.y]);
                        }
                    }
                  }
             }
         }
+        submergedTiles = tileModified;
+        Invoke("Flood",0.5f);
        
 
 

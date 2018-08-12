@@ -11,6 +11,9 @@ TagManager:
   - DigBar
   - BreathBar
   - Manager
+  - StructureTilemap
+  - ErosionManager
+  - Bonus
   layers:
   - Default
   - TransparentFX
