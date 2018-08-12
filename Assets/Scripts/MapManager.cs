@@ -9,6 +9,7 @@ public class MapManager : MonoBehaviour
     /// Tilemaps of the terrains
     /// </summary>
     private List<Tilemap> terrainTilemaps = new List<Tilemap>();
+    private TileInfo[,] terrainInfo;
 
     /// <summary>
     /// MapData of the tiles Height
@@ -24,6 +25,17 @@ public class MapManager : MonoBehaviour
     {
         // Get the map data
         mapData = grid.GetComponent<IslandGenerator>().map;
+        terrainInfo = new TileInfo[mapData.GetLength(0),mapData.GetLength(1)];
+        for(int k = 0;k< mapData.GetLength(0);k++ ){
+            for(int j = 0; j < mapData.GetLength(1); j++ ){
+                Vector3Int vect = new Vector3Int(k, j, 0);
+                if (mapData[k,j]<0){
+                    terrainInfo[k,j] = new TileInfo(vect,true, true);
+                }else{
+                    terrainInfo[k,j] = new TileInfo(vect,false, false);
+                }
+            }
+        }
 
         // Get the tile map
         GameObject[] terrainsObjects = GameObject.FindGameObjectsWithTag("TerrainTilemap");
@@ -35,6 +47,9 @@ public class MapManager : MonoBehaviour
         }
     }
 
+    public TileInfo[,] GetTerrainInfo(){
+        return this.terrainInfo;
+    }
 
     /// <summary>
     /// Get the TILE map
@@ -83,6 +98,10 @@ public class MapManager : MonoBehaviour
     /// The DiggingPosition param shall range from 0 to MapSize - 1
     /// </summary>
     /// <param name="tileCoordinates"></param>
+
+
+
+
     public void Dig(Vector3Int diggingPosition)
     {
         // On modifie les données de la map
