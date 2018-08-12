@@ -122,8 +122,7 @@ public class IslandGenerator : MonoBehaviour
             sandLayer.GetComponent<TilemapRenderer>().sortingOrder = l;
             sandLayer.GetComponent<Tilemap>().tileAnchor = new Vector3(0f, 0f);
             sandLayer.GetComponent<Tilemap>().orientation = Tilemap.Orientation.Custom;
-            sandLayer.transform.position = new Vector3(0f, l / 10f, 0f);
-
+          
             sandLayer.tag = "TerrainTilemap";
 
             sandLayer.name = "SandLayer" + l;
@@ -186,25 +185,15 @@ public class IslandGenerator : MonoBehaviour
     public void SetWater(int level)
     {
         waterLevel = level;
-        Vector3Int vectorPosition = Vector3Int.zero;
+       
         WaterLayerPostions.Clear();
         for (int i = 0; i < perlinSizeX; i++)
         {
             for (int j = 0; j < perlinSizeY; j++)
             {
-                vectorPosition.x = mapSize / 2 - i;
-                vectorPosition.y = mapSize / 2 - j;
                 if (map[i, j] == level)
                 {
                     WaterLayerPostions.Add(new Vector2Int(i, j));
-                }
-                if (map[i, j] <= level)
-                {
-                    waterTilemap.SetTile(vectorPosition, waterTile);
-                }
-                else
-                {
-                    waterTilemap.SetTile(vectorPosition, wall);
                 }
             }
         }
