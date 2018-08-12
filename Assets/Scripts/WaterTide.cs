@@ -35,7 +35,7 @@ public class WaterTide : MonoBehaviour {
     private readonly string managerTag = "Manager";
     // Use this for initialization
     void Start () {
-                terrainTilesInfo = mapManager.GetComponent<MapManager>().GetTerrainInfo();
+        terrainTilesInfo = mapManager.GetComponent<MapManager>().GetTerrainInfo();
         for(int i = 0; i<terrainTilesInfo.GetLength(0);i++ ){
            for(int j = 0; j<terrainTilesInfo.GetLength(1);j++ ){
                 if(terrainTilesInfo[i,j].GetIsSea()){
@@ -85,7 +85,14 @@ public class WaterTide : MonoBehaviour {
             case TideState.FALLING:
                 if (actualLayer > minLayer)
                 {
-                    actualLayer--;
+                actualLayer--;
+                for(int i = 0; i<terrainTilesInfo.GetLength(0);i++ ){
+                    for(int j = 0; j<terrainTilesInfo.GetLength(1);j++ ){
+                            if(terrainTilesInfo[i,j].GetHeight() > actualLayer - 1 && terrainTilesInfo[i,j].GetIsFlooded()){
+                                justUnderWater.Add(terrainTilesInfo[i,j]);
+                            }  
+                        }
+                    }
                 }
                 break;
             case TideState.RISING:
@@ -194,6 +201,7 @@ public class WaterTide : MonoBehaviour {
             {
 
             }else{
+                Debug.Log("hs,dbf,sdnfbg");
                 Vector3Int[] neighbours = tile.GetNeighboursCoordinates();
                 int S = 0;
                 foreach(Vector3Int neighbour in neighbours){
