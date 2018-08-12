@@ -32,7 +32,7 @@ public class PlayerAction : MonoBehaviour {
     /// Cooldown for replenishing sand
     /// </summary>
     [SerializeField]
-    private float maxReplenishCooldown = 0.05f;
+    private float maxReplenishCooldown = 0.005f;
 
     /// <summary>
     /// Canvas with hotbar
@@ -80,7 +80,7 @@ public class PlayerAction : MonoBehaviour {
     /// <summary>
     /// Amount of sand in inventory
     /// </summary>
-    private int sandInInventory = 0;
+    private int sandInInventory = 50;
 
     /// <summary>
     /// Current time from which the player began drowning

@@ -23,7 +23,7 @@ public class WaterTide : MonoBehaviour {
     private int startingLayer = 2;
     public int maxLayer = 6;
     public int minLayer = 0;
-    public float period = 2.0f;
+    public float period = 20.0f;
     private bool gonnaRise = false;
     private float timeLeft;
     private TileInfo[,] terrainTilesInfo;

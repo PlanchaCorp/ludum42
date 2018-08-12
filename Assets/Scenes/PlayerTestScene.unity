@@ -706,6 +706,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grid: {fileID: 957858886}
   tower: {fileID: 11400000, guid: 5388373603bc99c4eaab1258db43db9f, type: 2}
+  wallLeft: {fileID: 11400000, guid: d3ed64f6756fcd44c8da9d18072c2ecd, type: 2}
+  wallRight: {fileID: 11400000, guid: 7acb454a74b676e4b9d7a4be1d55f7a9, type: 2}
+  wallHorizontal: {fileID: 11400000, guid: 6c455e28a1cec5644aea6981193f0d39, type: 2}
 --- !u!114 &886327454
 MonoBehaviour:
   m_ObjectHideFlags: 0
