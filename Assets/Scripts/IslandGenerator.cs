@@ -204,8 +204,40 @@ public class IslandGenerator : MonoBehaviour
                 }              
             }
         }
+        /*
         groundTileMap.GetComponent<TilemapCollider2D>().enabled = false;
         groundTileMap.GetComponent<TilemapCollider2D>().enabled = true;
+        */
+    }
+    private void SetPickup(int x,int y)
+    {
+        Vector3 position = waterTilemap.WorldToCell(new Vector3Int(x, y,0));
+        if (pickUpsPool.Count == 0)
+        {
+            SetPool();
+        }
+        if (pickUpsPool.Count > 0)
+        {
+            GameObject pickup = pickUpsPool.Dequeue();
+            Instantiate(pickup);
+            pickup.transform.position = position;
+        } else
+        {
+            Debug.LogWarning("No pickup found in pool !");
+        }
+    }
+
+    public void PlacePickupOnMap()
+    {
+        for(int i = 0; i< 3; i++)
+        {
+            int rd = Random.Range(0, WaterLayerPostions.Count - 1);
+            Vector2Int position = WaterLayerPostions[rd];
+            WaterLayerPostions.RemoveAt(rd);
+            Vector3Int positionVector3 = new Vector3Int(position.x, position.y, 0);
+            Vector3Int realPosition = GameObject.FindGameObjectWithTag("Manager").GetComponent<MapManager>().DataToTilesCoordinates(positionVector3);
+            SetPickup(realPosition.x, realPosition.y);
+        }
     }
 
     public void SetWater(int level)

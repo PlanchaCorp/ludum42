@@ -65,7 +65,7 @@ public class PlayerMovement : MonoBehaviour {
     {
         if (isMoving)
         {
-            float totalMoveAmount = (quarterSpeedBoost) ? elapsedTime * speed * 5f : elapsedTime * speed;
+            float totalMoveAmount = (quarterSpeedBoost) ? elapsedTime * speed * 1.5f : elapsedTime * speed;
             Vector3 distanceVector = mouseClickPosition - transform.position;
             float diagonalRatio = totalMoveAmount / (Mathf.Sqrt(Mathf.Pow(distanceVector.x, 2) + Mathf.Pow(distanceVector.y, 2)));
             float horizontalMoveAmount = diagonalRatio * distanceVector.x;
