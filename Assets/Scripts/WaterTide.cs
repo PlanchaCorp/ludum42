@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -49,7 +49,7 @@ public class WaterTide : MonoBehaviour {
         water = GameObject.FindGameObjectWithTag(waterTag);
         erosion = GameObject.FindGameObjectWithTag(managerTag);
         submergedTiles.AddRange(seaTiles);
-        Invoke("Unflood", 0.5f);
+       // Invoke("Unflood", 0.5f);
 		Invoke("Flood",0.5f);
         Invoke("ChangeTide", period);
 	}
@@ -88,7 +88,7 @@ public class WaterTide : MonoBehaviour {
                 for(int i = 0; i<terrainTilesInfo.GetLength(0);i++ ){
                     for(int j = 0; j<terrainTilesInfo.GetLength(1);j++ ){
                             if(terrainTilesInfo[i,j].GetHeight() > actualLayer - 1 && terrainTilesInfo[i,j].GetIsFlooded()){
-                                justUnderWater.Add(terrainTilesInfo[i,j]);
+                                terrainTilesInfo[i,j].SetIsFlooded(false);
                             }  
                         }
                     }
@@ -182,7 +182,7 @@ public class WaterTide : MonoBehaviour {
         } 
     }
 
-    public void UnFlood(){
+   /* public void UnFlood(){
         
         List<TileInfo> notDone = new List<TileInfo>();
         
@@ -216,9 +216,10 @@ public class WaterTide : MonoBehaviour {
         }
         justUnderWater.AddRange(notDone);
         Invoke("Unflood",0.5f);
-        
-        
     }
+    */    
+        
+    
 
     public void  Flood(){
         terrainTilesInfo = mapManager.GetComponent<MapManager>().GetTerrainInfo(); 
