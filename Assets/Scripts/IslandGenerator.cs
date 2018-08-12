@@ -208,7 +208,7 @@ public class IslandGenerator : MonoBehaviour
         waterLevel = level;
         Vector3Int vectorPosition = Vector3Int.zero;
         WaterLayerPostions.Clear();
-        for (int i = 0; i < perlinSizeX; i++)
+       /* for (int i = 0; i < perlinSizeX; i++)
         {
             for (int j = 0; j < perlinSizeY; j++)
             {
@@ -227,8 +227,8 @@ public class IslandGenerator : MonoBehaviour
                     waterTilemap.SetTile(vectorPosition, wall);
                 }
             }
-        }
-        PlacePickupOnMap();
+        }*/
+       
     }
     /// <summary>
     /// Generate a perlin noise for a 64*64 map size
