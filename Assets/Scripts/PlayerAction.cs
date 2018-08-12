@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using TMPro;
 
 public class PlayerAction : MonoBehaviour {
     /// <summary>
@@ -111,7 +112,7 @@ public class PlayerAction : MonoBehaviour {
         }
         waterTilemap = GameObject.FindGameObjectWithTag("WaterTilemap").GetComponent<Tilemap>();
         grid = GameObject.FindGameObjectWithTag("Grid").GetComponent<Grid>();
-       
+        ModifySandAmount(0);
     }
 	
 	// Update is called once per frame
@@ -332,7 +333,7 @@ public class PlayerAction : MonoBehaviour {
         Tile[] tiles = GameObject.FindGameObjectWithTag("Grid").GetComponent<IslandGenerator>().GetSandTiles();
         MapManager mapManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<MapManager>();
         mapManager.Dig(mapManager.TilesToDataCoordinates(diggingPosition));
-        sandInInventory++;
+        ModifySandAmount(1);
     }
 
     /// <summary>
@@ -359,7 +360,7 @@ public class PlayerAction : MonoBehaviour {
     {
         MapManager mapManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<MapManager>();
         mapManager.Replenish(mapManager.TilesToDataCoordinates(replenishPosition));
-        sandInInventory--;
+        ModifySandAmount(-1);
     }
 
     /// <summary>
@@ -373,7 +374,7 @@ public class PlayerAction : MonoBehaviour {
             MapManager mapManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<MapManager>();
             mapManager.Build(mapManager.TilesToDataCoordinates(buildingPosition));
             replenishTime = maxReplenishCooldown;
-            sandInInventory--;
+            ModifySandAmount(-1);
         }
         else
         {
@@ -398,5 +399,15 @@ public class PlayerAction : MonoBehaviour {
     public void SetDiggingBoost(bool value)
     {
         this.diggingBoost = value;
+    }
+
+    /// <summary>
+    /// Edit sand amount and display it
+    /// </summary>
+    /// <param name="deltaSand">Sand amount to add or remove</param>
+    private void ModifySandAmount(int deltaSand)
+    {
+        sandInInventory += deltaSand;
+        GameObject.FindGameObjectWithTag("SandCountText").GetComponent<TextMeshProUGUI>().SetText(sandInInventory.ToString());
     }
 }
