@@ -126,7 +126,6 @@ public class BonusHandler : MonoBehaviour {
             float distance = Mathf.Sqrt(Mathf.Pow(player.transform.position.x - bonus.transform.position.x, 2) + Mathf.Pow(player.transform.position.y - bonus.transform.position.y, 2));
             if (distance < pickupDistance)
             {
-                Debug.Log(bonus.name);
                 if (bonus.name.Contains("TileBoots"))
                 {
                     ActivateSpeedBoost();

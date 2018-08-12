@@ -20,6 +20,8 @@ public class WaterTide : MonoBehaviour {
     [SerializeField] private GameObject erosion;
     [SerializeField] private float risingTimer;
     [SerializeField] private GameObject mapManager;
+    [SerializeField] private List<GameObject> pickUps;
+    [SerializeField] private float bonusLuck = 0.01f;
 
     private int startingLayer = 2;
     public int maxLayer = 6;
@@ -87,7 +89,9 @@ public class WaterTide : MonoBehaviour {
                 actualLayer--;
                 for(int i = 0; i<terrainTilesInfo.GetLength(0);i++ ){
                     for(int j = 0; j<terrainTilesInfo.GetLength(1);j++ ){
-                            if(terrainTilesInfo[i,j].GetHeight() > actualLayer - 1 && terrainTilesInfo[i,j].GetIsFlooded()){
+                            if(terrainTilesInfo[i,j].GetHeight() > actualLayer - 1 && terrainTilesInfo[i,j].GetIsFlooded())
+                            {
+                                RollTheBonusDice(i, j);
                                 terrainTilesInfo[i,j].SetIsFlooded(false);
                             }  
                         }
@@ -109,6 +113,18 @@ public class WaterTide : MonoBehaviour {
 
         // Act as a clock, re invoke this method after 'period' seconds
         Invoke("ChangeTide", period);
+    }
+
+    private void RollTheBonusDice(int x, int y)
+    {
+        float dice = Random.Range(0f, 1f);
+        if (dice <= bonusLuck)
+        {
+            int pickUpNumber = Mathf.FloorToInt(Random.Range(0, pickUps.Capacity));
+            Vector3Int newTileVector = mapManager.GetComponent<MapManager>().DataToTilesCoordinates(new Vector3Int(x, y, 0));
+            pickUps[pickUpNumber].transform.position = newTileVector;
+            Instantiate(pickUps[pickUpNumber]);
+        }
     }
 
     public float GetTimeLeft()

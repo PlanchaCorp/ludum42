@@ -388,6 +388,11 @@ MonoBehaviour:
   erosion: {fileID: 886327452}
   risingTimer: 0
   mapManager: {fileID: 886327452}
+  pickUps:
+  - {fileID: 1861338057160268, guid: 2c06d6e2d88f13440bf6ac553fa43ee0, type: 2}
+  - {fileID: 1949362699186768, guid: d842edbbdacbdc648a423d165988190c, type: 2}
+  - {fileID: 1683848578763382, guid: a62353516786db445846b98f086753a0, type: 2}
+  bonusLuck: 0.05
   maxLayer: 6
   minLayer: 1
   period: 5
@@ -648,10 +653,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 81f6e7790073b204fb053dc8c791acfc, type: 2}
   mapSize: 40
   seed: 15.23
-  PickUps:
-  - {fileID: 1861338057160268, guid: 2c06d6e2d88f13440bf6ac553fa43ee0, type: 2}
-  - {fileID: 1949362699186768, guid: d842edbbdacbdc648a423d165988190c, type: 2}
-  - {fileID: 1683848578763382, guid: a62353516786db445846b98f086753a0, type: 2}
   WaterLayerPostions: []
 --- !u!156049354 &957858888
 Grid:

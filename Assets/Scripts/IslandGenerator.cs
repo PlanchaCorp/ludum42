@@ -51,9 +51,6 @@ public class IslandGenerator : MonoBehaviour
     private float xOrg;
     private float yOrg;
 
-    [SerializeField]
-    private List<GameObject> PickUps;
-
     private Queue<GameObject> pickUpsPool;
 
 
@@ -90,7 +87,7 @@ public class IslandGenerator : MonoBehaviour
        
     }
 
-    public void SetPool()
+    /*public void SetPool()
     {
         while(pickUpsPool.Count < PickUps.Count)
         {
@@ -99,9 +96,9 @@ public class IslandGenerator : MonoBehaviour
                 .ToList()
                 .ForEach(w => pickUpsPool.Enqueue(w));
         }
-    }
+    }*/
 
-    private void SetPickup(int x, int y)
+    /*private void SetPickup(int x, int y)
     {
         Vector3 position = waterTilemap.GetCellCenterWorld(new Vector3Int(x, y, 0));
         if (pickUpsPool.Count == 0)
@@ -118,7 +115,7 @@ public class IslandGenerator : MonoBehaviour
         {
             Debug.LogWarning("No pickup found in pool !");
         }
-    }
+    }*/
 
     public void PlacePickupOnMap()
     {
@@ -127,7 +124,7 @@ public class IslandGenerator : MonoBehaviour
             int rd = Random.Range(0, WaterLayerPostions.Count - 1);
             Vector2Int position = WaterLayerPostions[rd];
             WaterLayerPostions.RemoveAt(rd);
-            SetPickup(position.x, position.y);
+            //SetPickup(position.x, position.y);
         }
     }
 
