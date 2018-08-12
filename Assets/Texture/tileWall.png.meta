@@ -92,16 +92,16 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 31
-        height: 39
+        width: 32
+        height: 44
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 69683bcc250a7c94f85e426ee62561a5
+      spriteID: 527db3fecfb6b3e4ca97a3982c2fd9e0
       vertices: []
       indices: 
       edges: []
@@ -110,18 +110,18 @@ TextureImporter:
       name: tileWall_1
       rect:
         serializedVersion: 2
-        x: 40
+        x: 32
         y: 0
-        width: 16
-        height: 42
+        width: 32
+        height: 44
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b953e9c769d0da3439fa16870640938c
+      spriteID: e24a942557ea0184da7a3f626982ac83
       vertices: []
       indices: 
       edges: []
@@ -130,18 +130,18 @@ TextureImporter:
       name: tileWall_2
       rect:
         serializedVersion: 2
-        x: 65
+        x: 64
         y: 0
-        width: 31
-        height: 39
+        width: 32
+        height: 44
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dc26c5e35c615654c98a6198b901e123
+      spriteID: 66052f48598ecc849a581532e597c0f2
       vertices: []
       indices: 
       edges: []
