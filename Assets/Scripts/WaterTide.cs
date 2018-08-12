@@ -56,17 +56,14 @@ public class WaterTide : MonoBehaviour {
         switch(state)
         {
             case TideState.STILL:
-                Debug.Log("Tide staying still.");
                 break;
             case TideState.FALLING:
-                Debug.Log("Tide is falling.");
                 if (actualLayer > minLayer)
                 {
                     actualLayer--;
                 }
                 break;
             case TideState.RISING:
-                Debug.Log("Tide is rising, carefull!");
                 if (actualLayer < maxLayer)
                 {
                     actualLayer++;
