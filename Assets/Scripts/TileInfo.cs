@@ -13,7 +13,7 @@ public class TileInfo{
     private static AnimatedTile waterTile;
     private static int mapSize;
 
-    public enum WallSate
+    public enum WallState
     {
         NOTHING,
         TOWER,
@@ -21,14 +21,14 @@ public class TileInfo{
         WALL_LEFT,
         WALL_RIGHT
     }
-    private WallSate state;
+    private WallState state;
 
     public TileInfo(Vector3Int vector){
         this.durability = 1.0f;
         this.isFlooded = false;
         this.x = vector.x;
         this.y = vector.y;
-        this.state = WallSate.NOTHING;
+        this.state = WallState.NOTHING;
     }
      public TileInfo(Vector3Int vector, int height, bool flooded, bool isSea){
         this.durability = 1.0f;
@@ -37,7 +37,7 @@ public class TileInfo{
 		this.height = height;
         this.x = vector.x;
         this.y = vector.y;
-        this.state = WallSate.NOTHING;
+        this.state = WallState.NOTHING;
          if(isSea){
             Vector3Int vectorPosition = new Vector3Int(0,0,0);
             vectorPosition.x = TileInfo.mapSize / 2 - this.x;
@@ -114,12 +114,12 @@ public class TileInfo{
         this.durability = 1.0f;
     }
 
-    public void SetWallState( WallSate state)
+    public void SetWallState( WallState state)
     {
         this.state = state;
     }
 
-    public WallSate GetWallState()
+    public WallState GetWallState()
     {
         return state;
     }

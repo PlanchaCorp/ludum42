@@ -157,9 +157,6 @@ public class MapManager : MonoBehaviour
             }
             i--;
         }
-        // Refreshing the water level
-        IslandGenerator islandGenerator = GameObject.FindGameObjectWithTag("Grid").GetComponent<IslandGenerator>();
-        islandGenerator.SetWater(islandGenerator.GetWaterLevel());
     }
 
     /// <summary>
@@ -204,10 +201,10 @@ public class MapManager : MonoBehaviour
     {
         // On verifie si l'on est sur du sable et qu'il n'y a rien
         if ( !terrainInfo[buildingPosition.x, buildingPosition.y].GetIsFlooded() &&
-             terrainInfo[buildingPosition.x, buildingPosition.y].GetWallState() == TileInfo.WallSate.NOTHING ) 
+             terrainInfo[buildingPosition.x, buildingPosition.y].GetWallState() == TileInfo.WallState.NOTHING ) 
         {
             // On modifie les données
-            terrainInfo[buildingPosition.x, buildingPosition.y].SetWallState(TileInfo.WallSate.TOWER);
+            terrainInfo[buildingPosition.x, buildingPosition.y].SetWallState(TileInfo.WallState.TOWER);
             TryCreateWalls(buildingPosition);
 
             // On affiche un chateau            
@@ -291,27 +288,27 @@ public class MapManager : MonoBehaviour
                 // Create a wall
                 if ( dir == DIRECTION.TOP_LEFT || dir == DIRECTION.BOTTOM_RIGHT )
                 {
-                    currentTile.SetWallState(TileInfo.WallSate.WALL_RIGHT);
+                    currentTile.SetWallState(TileInfo.WallState.WALL_RIGHT);
                 } else if (dir == DIRECTION.TOP_RIGHT || dir == DIRECTION.BOTTOM_LEFT)
                 {
-                    currentTile.SetWallState(TileInfo.WallSate.WALL_LEFT);
+                    currentTile.SetWallState(TileInfo.WallState.WALL_LEFT);
                 } else
                 {
-                    currentTile.SetWallState(TileInfo.WallSate.WALL_HORIZONTAL);
+                    currentTile.SetWallState(TileInfo.WallState.WALL_HORIZONTAL);
                 }
                 DisplayCastleSprite(position);
                 return true;
             }
 
             // Check if there is a Wall a the current place
-            if (currentTile.GetWallState() == TileInfo.WallSate.WALL_HORIZONTAL ||
-                currentTile.GetWallState() == TileInfo.WallSate.WALL_RIGHT ||
-                currentTile.GetWallState() == TileInfo.WallSate.WALL_LEFT)
+            if (currentTile.GetWallState() == TileInfo.WallState.WALL_HORIZONTAL ||
+                currentTile.GetWallState() == TileInfo.WallState.WALL_RIGHT ||
+                currentTile.GetWallState() == TileInfo.WallState.WALL_LEFT)
             {
                 return false;
             }
             // Check if there is a tower
-            else if ( currentTile.GetWallState() == TileInfo.WallSate.TOWER )
+            else if ( currentTile.GetWallState() == TileInfo.WallState.TOWER )
             {
                 return true;
             }
@@ -331,19 +328,19 @@ public class MapManager : MonoBehaviour
         Vector3Int tilePosition = DataToTilesCoordinates(position);
         switch ( terrainInfo[position.x, position.y].GetWallState() )
         {
-            case TileInfo.WallSate.NOTHING:
+            case TileInfo.WallState.NOTHING:
                 Debug.Log("Not a castle sprite");
                 break;
-            case TileInfo.WallSate.TOWER:
+            case TileInfo.WallState.TOWER:
                 tilemap.SetTile(tilePosition, tower);
                 break;
-            case TileInfo.WallSate.WALL_HORIZONTAL:
+            case TileInfo.WallState.WALL_HORIZONTAL:
                 tilemap.SetTile(tilePosition, wallHorizontal);
                 break;
-            case TileInfo.WallSate.WALL_LEFT:
+            case TileInfo.WallState.WALL_LEFT:
                 tilemap.SetTile(tilePosition, wallLeft);
                 break;
-            case TileInfo.WallSate.WALL_RIGHT:
+            case TileInfo.WallState.WALL_RIGHT:
                 tilemap.SetTile(tilePosition, wallRight);
                 break;
         }
