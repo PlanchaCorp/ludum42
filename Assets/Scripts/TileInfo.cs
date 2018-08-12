@@ -92,6 +92,8 @@ public class TileInfo{
         }else{
             TileInfo.waterTileMap.SetTile(vectorPosition,null);
         }
+        waterTileMap.GetComponent<TilemapCollider2D>().enabled = false;
+        waterTileMap.GetComponent<TilemapCollider2D>().enabled = true;
     }
 	public void Dig(){
 		this.height -= 1;

@@ -23,4 +23,4 @@ MonoBehaviour:
   m_MinSpeed: 4
   m_MaxSpeed: 4
   m_AnimationStartTime: 0
-  m_TileColliderType: 0
+  m_TileColliderType: 2
