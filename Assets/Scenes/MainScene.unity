@@ -551,11 +551,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ab695eeaf30fb84fb867fe4d4de956f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterTile: {fileID: 11400000, guid: f675243b986e55f4f9fdacb5b74b5089, type: 2}
   state: 0
   actualLayer: 0
   water: {fileID: 516068903}
   erosion: {fileID: 1005183825}
   risingTimer: 0
+  mapManager: {fileID: 1005183825}
   maxLayer: 6
   minLayer: 0
   period: 5
@@ -613,6 +615,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageMultiplier: 0
+  mapManager: {fileID: 1005183825}
 --- !u!1 &1145731432
 GameObject:
   m_ObjectHideFlags: 0
@@ -754,8 +757,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -200, y: 300}
-  m_SizeDelta: {x: 400, y: 50}
+  m_AnchoredPosition: {x: -150, y: -75}
+  m_SizeDelta: {x: 400, y: -9.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1572440768
 MonoBehaviour:
@@ -832,7 +835,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 0
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -852,7 +855,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 52.253418, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 0}
     characterCount: 15
@@ -1032,19 +1035,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e798bee14cddab540922700f9cbd8f11, type: 2}
   - {fileID: 11400000, guid: e798bee14cddab540922700f9cbd8f11, type: 2}
   stoneTiles:
-  - {fileID: 11400000, guid: 1d223253ca4c34a4d8784499b39d223d, type: 2}
   - {fileID: 11400000, guid: 5663b2ca8e49cbe478bfdec19be2a463, type: 2}
   - {fileID: 11400000, guid: 748195071a52dff4caa14143fd2f539b, type: 2}
   - {fileID: 11400000, guid: 69f35adc1e1cd3e48b3afff32b6cedf8, type: 2}
-  - {fileID: 11400000, guid: 02ba47c436d6a9047b3f88ec01be29ba, type: 2}
-  - {fileID: 11400000, guid: 8efca2a25eab33b4b9dd810fa3900f8d, type: 2}
-  - {fileID: 11400000, guid: 8efca2a25eab33b4b9dd810fa3900f8d, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   wall: {fileID: 11400000, guid: 81b9333966e2b34459367a3c014d95e8, type: 2}
   waterTile: {fileID: 11400000, guid: f675243b986e55f4f9fdacb5b74b5089, type: 2}
   decorations:
   - {fileID: 11400000, guid: a3a1a2241b9b3c548b952011a601286c, type: 2}
   mapSize: 40
   seed: 15.23
-  PickUps:
-  - {fileID: 1116461004606852, guid: e79b65c111a1b2f47a2b484c20938da8, type: 2}
+  PickUps: []
   WaterLayerPostions: []

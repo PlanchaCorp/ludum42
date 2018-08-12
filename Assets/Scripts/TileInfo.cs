@@ -6,15 +6,33 @@ using UnityEngine.Tilemaps;
 public class TileInfo{
 
     private int x, y;
+    private bool isFlooded, isSea;
     private float durability;
 
+    private static Tilemap waterTileMap;
+    private static AnimatedTile waterTile;
+    private static int mapSize;
 
     public TileInfo(Vector3Int vector){
         this.durability = 1.0f;
+        this.isFlooded = false;
         this.x = vector.x;
         this.y = vector.y;
     }
-
+     public TileInfo(Vector3Int vector, bool flooded, bool isSea){
+        this.durability = 1.0f;
+        this.isFlooded = flooded;
+        this.isSea = isSea;
+        this.x = vector.x;
+        this.y = vector.y;
+    }
+    public static void SetTileMapWater(Tilemap wtm, int size){
+        TileInfo.waterTileMap = wtm;
+        TileInfo.mapSize = size;
+    }
+    public static void SetWaterTile(AnimatedTile Water){
+        TileInfo.waterTile = Water;
+    }
     public Vector3Int GetCoordinates()
     {
         return new Vector3Int(x, y, 0);
@@ -31,7 +49,22 @@ public class TileInfo{
         neighbours[5] = new Vector3Int(this.x, this.y - 1, 0);
         return neighbours;
     }
-
+    public bool GetIsFlooded(){
+        return this.isFlooded;
+    }
+    public bool GetIsSea(){
+        return this.isSea;
+    }
+    public void SetIsFlooded(bool value){
+        this.isFlooded = value;
+        this.isSea = false;
+        if(value){
+            Vector3Int vectorPosition = new Vector3Int(0,0,0);
+            vectorPosition.x = TileInfo.mapSize / 2 - this.x;
+            vectorPosition.y = TileInfo.mapSize / 2 - this.y;
+            TileInfo.waterTileMap.SetTile(vectorPosition,waterTile);
+        }
+    }
     public void DecreaseDurability(float value)
     {
         this.durability -= value;
