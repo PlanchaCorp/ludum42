@@ -22,6 +22,21 @@ public class MapManager : MonoBehaviour
 	[SerializeField] private Tile tower;
 
     /// <summary>
+    /// MapData of the tiles Height
+    /// </summary>
+	[SerializeField] private Tile wallLeft;
+
+    /// <summary>
+    /// MapData of the tiles Height
+    /// </summary>
+	[SerializeField] private Tile wallRight;
+
+    /// <summary>
+    /// MapData of the tiles Height
+    /// </summary>
+	[SerializeField] private Tile wallHorizontal;
+
+    /// <summary>
     /// MapData
     /// </summary>
     int[,] mapData;
@@ -178,13 +193,41 @@ public class MapManager : MonoBehaviour
             terrainInfo[buildingPosition.x, buildingPosition.y].SetWallState(TileInfo.WallSate.TOWER);
 
             // On affiche un chateau
-            buildingPosition = DataToTilesCoordinates(buildingPosition);
-            GameObject.FindGameObjectWithTag("StructureTilemap").GetComponent<Tilemap>().SetTile(buildingPosition, tower);
+            DisplayCastleSprite(DataToTilesCoordinates(buildingPosition));
 
         } else
         {
             Debug.LogWarning("Can't build on water");
             return;
+        }
+    }
+
+
+    /// <summary>
+    /// On suppose la position non nulle
+    /// On affiche le sprite
+    /// </summary>
+    /// <param name="position"></param>
+    public void DisplayCastleSprite(Vector3Int position)
+    {
+        Tilemap tilemap = GameObject.FindGameObjectWithTag("StructureTilemap").GetComponent<Tilemap>();
+        switch ( terrainInfo[position.x, position.y].GetWallState() )
+        {
+            case TileInfo.WallSate.NOTHING:
+                Debug.Log("Not a castle sprite");
+                break;
+            case TileInfo.WallSate.TOWER:
+                tilemap.SetTile(position, tower);
+                break;
+            case TileInfo.WallSate.WALL_HORIZONTAL:
+                tilemap.SetTile(position, wallHorizontal);
+                break;
+            case TileInfo.WallSate.WALL_LEFT:
+                tilemap.SetTile(position, wallLeft);
+                break;
+            case TileInfo.WallSate.WALL_RIGHT:
+                tilemap.SetTile(position, wallRight);
+                break;
         }
     }
 
