@@ -40,6 +40,8 @@ public class IslandGenerator : MonoBehaviour
 
     public int[,] map;
 
+    private int waterLevel;
+
     // The origin of the sampled area in the plane.
     private float xOrg;
     private float yOrg;
@@ -47,6 +49,11 @@ public class IslandGenerator : MonoBehaviour
     public Tile[] GetSandTiles()
     {
         return sandTiles;
+    }
+
+    public int GetWaterLevel()
+    {
+        return waterLevel;
     }
 
     // Use this for initialization
@@ -140,6 +147,7 @@ public class IslandGenerator : MonoBehaviour
 
     public void SetWater(int level)
     {
+        waterLevel = level;
         Vector3Int vectorPosition = Vector3Int.zero;
         for (int i = 0; i < perlinSizeX; i++)
         {
@@ -147,7 +155,7 @@ public class IslandGenerator : MonoBehaviour
             {
                 vectorPosition.x = mapSize / 2 - i;
                 vectorPosition.y = mapSize / 2 - j;
-                if (map[i, j] < level)
+                if (map[i, j] <= level)
                 {
                     waterTilemap.SetTile(vectorPosition, waterTile);
                 }
