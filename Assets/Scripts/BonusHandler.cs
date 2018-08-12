@@ -34,7 +34,6 @@ public class BonusHandler : MonoBehaviour {
     // Use this for initialization
     void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
-        ActivateRespirationBoost();
     }
 	
 	// Update is called once per frame
