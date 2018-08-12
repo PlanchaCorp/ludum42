@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 79950ffc5eec53d4a98ddcea788325a8, type: 3}
-  m_Name: GlassDecoration
+  m_Name: RockDecoration2
   m_EditorClassIdentifier: 
-  tile: {fileID: 11400000, guid: 6b8e2257df0e8a34fabe3afeb3de9ec9, type: 2}
-  MinHeigth: 2
+  tile: {fileID: 11400000, guid: 8564c3939a4bef24185905c08619f303, type: 2}
+  MinHeigth: 1

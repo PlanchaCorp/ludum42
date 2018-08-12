@@ -1529,8 +1529,16 @@ MonoBehaviour:
   wall: {fileID: 11400000, guid: 81b9333966e2b34459367a3c014d95e8, type: 2}
   waterTile: {fileID: 11400000, guid: f675243b986e55f4f9fdacb5b74b5089, type: 2}
   decorations:
+  - {fileID: 11400000, guid: 0221a11e8f1d47c4fb692e942905c5cb, type: 2}
+  - {fileID: 11400000, guid: 7b86b0ae33dd8044b87f58c4978ec731, type: 2}
+  - {fileID: 11400000, guid: 195299fc6c28b3845885c7825489b0f7, type: 2}
+  - {fileID: 11400000, guid: 44422f93346417543a7853b275dace14, type: 2}
   - {fileID: 11400000, guid: a3a1a2241b9b3c548b952011a601286c, type: 2}
+  - {fileID: 11400000, guid: aaac4c54661be4345bed99796a1dc30b, type: 2}
   - {fileID: 11400000, guid: 6cc7159bebbc51445b1252c0b158840e, type: 2}
+  - {fileID: 11400000, guid: cd98c2487c4cd704f9bd00184ca5a7c0, type: 2}
+  - {fileID: 11400000, guid: 3e0d2382d5206df4ea3500cc8117bcfb, type: 2}
+  - {fileID: 11400000, guid: 81f6e7790073b204fb053dc8c791acfc, type: 2}
   mapSize: 40
   seed: 15.23
   PickUps:
@@ -2415,7 +2423,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1125569257
   m_SortingLayer: 1
-  m_SortingOrder: 111
+  m_SortingOrder: 10
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16

@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Name: BottleDecoration
   m_EditorClassIdentifier: 
   tile: {fileID: 11400000, guid: 15c01ede684709845ab9983bb56edba0, type: 2}
-  MinHeigth: 0
+  MinHeigth: 2

@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Name: CoconutDecoration
   m_EditorClassIdentifier: 
   tile: {fileID: 11400000, guid: fc8e3a342ae5a434a9856eb9d4386e01, type: 2}
-  MinHeigth: 0
+  MinHeigth: 3

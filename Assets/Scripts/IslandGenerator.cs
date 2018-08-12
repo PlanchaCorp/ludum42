@@ -176,14 +176,15 @@ public class IslandGenerator : MonoBehaviour
                 groundTileMap.SetTile(vectorPosition, tile);
 
 
-                // Create a tree
-                float rng = Random.Range(0, 10);
+                // Create a decoration
+                float rng = Random.Range(0, 20);
                 if (rng < 1)
                 {
-                   if(!(decorations.FirstOrDefault(x => x.MinHeigth < map[i, j])== null))
+                    List<Decoration> deco = decorations.Where(x => x.MinHeigth < map[i, j]).ToList();
+                    if ( deco.Count > 0 )
                     {
-                        decorationTileMap.SetTile(vectorPosition, decorations.FirstOrDefault(x => x.MinHeigth < map[i, j]).tile);
-                    }                
+                        decorationTileMap.SetTile(vectorPosition, deco[Random.Range(0, deco.Count - 1)].tile);
+                    }
                 }              
             }
         }

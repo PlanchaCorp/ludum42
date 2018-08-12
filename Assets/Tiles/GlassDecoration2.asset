@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Name: GlassDecoration2
   m_EditorClassIdentifier: 
   tile: {fileID: 11400000, guid: 4f14fef6bc9bfb5458d7b6485db8a733, type: 2}
-  MinHeigth: 0
+  MinHeigth: 2
