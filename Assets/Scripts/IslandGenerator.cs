@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -46,10 +47,19 @@ public class IslandGenerator : MonoBehaviour
     private float xOrg;
     private float yOrg;
 
+    [SerializeField]
+    private List<GameObject> PickUps;
+
+    private Queue<GameObject> pickUpsPool;
+
+
     public Tile[] GetSandTiles()
     {
         return sandTiles;
     }
+
+
+    public List<Vector2Int> WaterLayerPostions;
 
     public int GetWaterLevel()
     {
@@ -59,19 +69,30 @@ public class IslandGenerator : MonoBehaviour
     // Use this for initialization
     void Awake()
     {
-
+        pickUpsPool = new Queue<GameObject>();
         perlinSizeX = mapSize;// Longueur du tableau
         perlinSizeY = mapSize;// Largeur du tableau 
         K = 0.01f;
         seed = Random.Range(0, 999);
         map = GaussianMask(GeneratePerlin());
         GenerateIsland(map);
+        WaterLayerPostions = new List<Vector2Int>();
+       
     }
+
 
     private void Start()
     {
+       
     }
 
+    public void SetPool()
+    {
+        while(pickUpsPool.Count < PickUps.Count)
+        {
+            (PickUps.OrderBy(x => Random.Range(0, PickUps.Count))).ToList().ForEach(w => pickUpsPool.Enqueue(w));
+        }
+    }
 
 
     private int[,] GaussianMask(float[,] map)
@@ -122,20 +143,16 @@ public class IslandGenerator : MonoBehaviour
 
                 float xCoord = (xOrg + i / (float) perlinSizeX)* scale;
                 float yCoord = (yOrg + j / (float) perlinSizeY) * scale;
-                
+
                 Tile tile;
-                Debug.Log(xCoord+" "+ yCoord +" "+Mathf.PerlinNoise((float)xCoord + seed, (float)yCoord + seed));
                 if (Mathf.PerlinNoise(xCoord + seed, yCoord + seed) > 0.25f)
                 {
 
                     tile = sandTiles[map[i, j]];
-
-
                 }
                 else
                 {
                     tile = stoneTiles[map[i, j]];
-
                 }
                 groundTileMap.transform.Find("SandLayer" + map[i, j]).GetComponent<Tilemap>().SetTile(vectorPosition, tile);
 
@@ -144,17 +161,43 @@ public class IslandGenerator : MonoBehaviour
             }
         }
     }
+    private void SetPickup(int x,int y)
+    {
+        Vector3 position = waterTilemap.GetCellCenterWorld(new Vector3Int(x, y,0));
+        if (pickUpsPool.Count == 0)
+        {
+            SetPool();
+        }
+        GameObject pickup = pickUpsPool.Dequeue();
+        Instantiate(pickup);
+        pickup.transform.position = position;
+    }
 
+    public void PlacePickupOnMap()
+    {
+        for(int i = 0; i< 3; i++)
+        {
+            int rd = Random.Range(0, WaterLayerPostions.Count - 1);
+           Vector2Int position = WaterLayerPostions[rd];
+            WaterLayerPostions.RemoveAt(rd);
+            SetPickup(position.x, position.y);
+        }
+    }
     public void SetWater(int level)
     {
         waterLevel = level;
         Vector3Int vectorPosition = Vector3Int.zero;
+        WaterLayerPostions.Clear();
         for (int i = 0; i < perlinSizeX; i++)
         {
             for (int j = 0; j < perlinSizeY; j++)
             {
                 vectorPosition.x = mapSize / 2 - i;
                 vectorPosition.y = mapSize / 2 - j;
+                if (map[i, j] == level)
+                {
+                    WaterLayerPostions.Add(new Vector2Int(i, j));
+                }
                 if (map[i, j] <= level)
                 {
                     waterTilemap.SetTile(vectorPosition, waterTile);
