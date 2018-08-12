@@ -11,7 +11,6 @@ public class ErosionManager : MonoBehaviour {
     /// Set to 10.0f to make the erosion insane
     /// </summary>
     [SerializeField] private float damageMultiplier;
-    [SerializeField] private GameObject mapManager;
     /// <summary>
     /// List of all the tiles that aren't water
     /// </summary>
@@ -19,7 +18,8 @@ public class ErosionManager : MonoBehaviour {
 
 
     void Start () { 
-        TileInfo[,] terrainTilesInfo = mapManager.GetComponent<MapManager>().GetTerrainInfo();
+        
+        TileInfo[,] terrainTilesInfo = gameObject.GetComponent<MapManager>().GetTerrainInfo();
         for(int i = 0; i<terrainTilesInfo.GetLength(0);i++ ){
            for(int j = 0; j<terrainTilesInfo.GetLength(1);j++ ){
                 if(!terrainTilesInfo[i,j].GetIsFlooded()){
