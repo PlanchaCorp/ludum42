@@ -157,9 +157,6 @@ public class MapManager : MonoBehaviour
             }
             i--;
         }
-        // Refreshing the water level
-        IslandGenerator islandGenerator = GameObject.FindGameObjectWithTag("Grid").GetComponent<IslandGenerator>();
-        islandGenerator.SetWater(islandGenerator.GetWaterLevel());
     }
 
     /// <summary>

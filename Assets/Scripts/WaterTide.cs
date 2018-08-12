@@ -73,7 +73,6 @@ public class WaterTide : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         CheatyStateSettings();
-        Tide();
     }   
 
     private void ChangeTide()
@@ -105,17 +104,12 @@ public class WaterTide : MonoBehaviour {
         }
         //UpdateTideLayer();
         erosion.GetComponent<ErosionManager>().Erode();
+        Tide();
 
         // Act as a clock, re invoke this method after 'period' seconds
         Invoke("ChangeTide", period);
     }
-/*
-    private void UpdateTideLayer()
-    {
-        GameObject.FindGameObjectsWithTag("Grid").First().GetComponent<IslandGenerator>().SetWater(actualLayer);
-        water.GetComponent<TilemapRenderer>().sortingOrder = actualLayer;
-    }
-*/
+
     public float GetTimeLeft()
     {
         return timeLeft;
@@ -187,6 +181,7 @@ public class WaterTide : MonoBehaviour {
             }
         } 
     }
+
     public void UnFlood(){
         
         List<TileInfo> notDone = new List<TileInfo>();
@@ -224,6 +219,7 @@ public class WaterTide : MonoBehaviour {
         
         
     }
+
     public void  Flood(){
         terrainTilesInfo = mapManager.GetComponent<MapManager>().GetTerrainInfo(); 
         List<TileInfo> tileDone = new List<TileInfo>();

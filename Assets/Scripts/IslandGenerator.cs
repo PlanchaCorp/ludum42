@@ -150,23 +150,6 @@ public class IslandGenerator : MonoBehaviour
 
     private void GenerateIsland(int[,] map)
     {
-       /* for (int l = 0; l < scale; l++)
-        {
-            GameObject sandLayer = new GameObject();
-            sandLayer.AddComponent<Tilemap>();
-            sandLayer.AddComponent<TilemapRenderer>().sortingLayerName = "Terrain";
-            sandLayer.GetComponent<TilemapRenderer>().sortingOrder = l;
-            sandLayer.GetComponent<Tilemap>().tileAnchor = new Vector3(0f, 0f);
-            sandLayer.GetComponent<Tilemap>().orientation = Tilemap.Orientation.Custom;
-            sandLayer.transform.position = new Vector3(0f, l / 10f, 0f);
-
-            sandLayer.tag = "TerrainTilemap";
-
-            sandLayer.name = "SandLayer" + l;
-            sandLayer.GetComponent<TilemapRenderer>().sortOrder = TilemapRenderer.SortOrder.TopLeft;
-            sandLayer.transform.SetParent(groundTileMap.transform);
-
-        }*/
         Vector3Int vectorPosition = Vector3Int.zero;
         
         for (int i = 0; i < perlinSizeX; i++)
@@ -204,69 +187,8 @@ public class IslandGenerator : MonoBehaviour
                 }              
             }
         }
-        /*
-        groundTileMap.GetComponent<TilemapCollider2D>().enabled = false;
-        groundTileMap.GetComponent<TilemapCollider2D>().enabled = true;
-        */
     }
-    private void SetPickup(int x,int y)
-    {
-        Vector3 position = waterTilemap.WorldToCell(new Vector3Int(x, y,0));
-        if (pickUpsPool.Count == 0)
-        {
-            SetPool();
-        }
-        if (pickUpsPool.Count > 0)
-        {
-            GameObject pickup = pickUpsPool.Dequeue();
-            Instantiate(pickup);
-            pickup.transform.position = position;
-        } else
-        {
-            Debug.LogWarning("No pickup found in pool !");
-        }
-    }
-
-    public void PlacePickupOnMap()
-    {
-        for(int i = 0; i< 3; i++)
-        {
-            int rd = Random.Range(0, WaterLayerPostions.Count - 1);
-            Vector2Int position = WaterLayerPostions[rd];
-            WaterLayerPostions.RemoveAt(rd);
-            Vector3Int positionVector3 = new Vector3Int(position.x, position.y, 0);
-            Vector3Int realPosition = GameObject.FindGameObjectWithTag("Manager").GetComponent<MapManager>().DataToTilesCoordinates(positionVector3);
-            SetPickup(realPosition.x, realPosition.y);
-        }
-    }
-
-    public void SetWater(int level)
-    {
-        waterLevel = level;
-        Vector3Int vectorPosition = Vector3Int.zero;
-        WaterLayerPostions.Clear();
-       /* for (int i = 0; i < perlinSizeX; i++)
-        {
-            for (int j = 0; j < perlinSizeY; j++)
-            {
-                vectorPosition.x = mapSize / 2 - i;
-                vectorPosition.y = mapSize / 2 - j;
-                if (map[i, j] == level)
-                {
-                    WaterLayerPostions.Add(new Vector2Int(i, j));
-                }
-                if (map[i, j] <= level)
-                {
-                    waterTilemap.SetTile(vectorPosition, waterTile);
-                }
-                else
-                {
-                    waterTilemap.SetTile(vectorPosition, wall);
-                }
-            }
-        }*/
-       
-    }
+   
     /// <summary>
     /// Generate a perlin noise for a 64*64 map size
     /// </summary>
