@@ -67,15 +67,11 @@ public class StartupMenu : MonoBehaviour {
             loadScene = true;
             loadingText.text = "Generate procedural map ...";
             StartCoroutine(LoadNewScene());
-
         }
-
         if (loadScene == true)
         {
             loadingText.color = new Color(loadingText.color.r, loadingText.color.g, loadingText.color.b, Mathf.PingPong(Time.time, 1));
-
         }
-
     }
     IEnumerator LoadNewScene()
     {
