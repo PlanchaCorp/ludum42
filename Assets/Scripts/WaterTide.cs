@@ -21,7 +21,7 @@ public class WaterTide : MonoBehaviour {
     public int maxLayer = 6;
     public int minLayer = 0;
     public float period = 5.0f;
-    private bool lastRised = false;
+    private bool gonnaRise = false;
     private float timeLeft;
 
     private readonly string waterTag = "WaterTilemap";
@@ -83,6 +83,21 @@ public class WaterTide : MonoBehaviour {
         water.GetComponent<TilemapRenderer>().sortingOrder = actualLayer;
     }
 
+    public float GetTimeLeft()
+    {
+        return timeLeft;
+    }
+
+    public bool WillRise()
+    {
+        return gonnaRise;
+    }
+
+    public bool IsStill()
+    {
+        return state == TideState.STILL;
+    }
+    
     public void SetTideState(TideState state)
     {
         this.state = state;
@@ -117,14 +132,14 @@ public class WaterTide : MonoBehaviour {
             switch (state)
             {
                 case TideState.STILL:
-                    if (lastRised)
+                    if (gonnaRise)
                     {
                         state = TideState.RISING;
                     } else
                     {
                         state = TideState.FALLING;
                     }
-                    lastRised = !lastRised;
+                    gonnaRise = !gonnaRise;
                     break;
                 case TideState.FALLING:
                     state = TideState.STILL;

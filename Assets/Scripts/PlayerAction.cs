@@ -7,13 +7,68 @@ public class PlayerAction : MonoBehaviour {
     /// <summary>
     /// Range within which the player can interact
     /// </summary>
-    public float actionRange = 3.5f;
+    [SerializeField]
+    private float actionRange = 3.5f;
+
+    /// <summary>
+    /// Sprites of the digging bar
+    /// </summary>
+    [SerializeField]
+    private Sprite[] digBarSprites;
+
+    /// <summary>
+    /// Time for digging a sand tile
+    /// </summary>
+    [SerializeField]
+    private float maxDiggingTime = 0.3f;
+
+    /// <summary>
+    /// Cooldown for replenishing sand
+    /// </summary>
+    [SerializeField]
+    private float maxReplenishCooldown = 0.05f;
+
+    /// <summary>
+    /// Canvas with hotbar
+    /// </summary>
+    [SerializeField]
+    private Canvas uiHotbarCanvas;
+
+    /// <summary>
+    /// Max amount of sand in inventory
+    /// </summary>
+    [SerializeField]
+    private int maxSandInInventory = 10;
 
     /// <summary>
     /// Tilemaps of the terrains
     /// </summary>
     private List<Tilemap> terrainTilemaps = new List<Tilemap>();
+
+    /// <summary>
+    /// Tilemap of the water
+    /// </summary>
+    private Tilemap waterTilemap;
+
+    /// <summary>
+    /// Grid object containing all tilesets
+    /// </summary>
     private Grid grid;
+
+    /// <summary>
+    /// Current dig time
+    /// </summary>
+    private float diggingTime = 0;
+
+    /// <summary>
+    /// Current replenishing cooldown elapsed (0 = can replenish)
+    /// </summary>
+    private float replenishTime = 0;
+
+    /// <summary>
+    /// Amount of sand in inventory
+    /// </summary>
+    private int sandInInventory = 0;
 
     // Use this for initialization
     void Start()
@@ -25,13 +80,34 @@ public class PlayerAction : MonoBehaviour {
             terrainTilemaps.Add(terrainObject.GetComponent<Tilemap>());
             i++;
         }
+        waterTilemap = GameObject.FindGameObjectWithTag("WaterTilemap").GetComponent<Tilemap>();
         grid = GameObject.FindGameObjectWithTag("Grid").GetComponent<Grid>();
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        InteractWithEnvironment();
+        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mouseWorldPosition.z = 0;
+        HoverTile(mouseWorldPosition);
+        if (Input.GetMouseButton(0))
+        {
+            InteractWithTerrain(mouseWorldPosition);
+        }
+        else
+        {
+            StopDigging();
+        }
+        CheckHotbar();
+    }
+
+    private void CheckHotbar()
+    {
+        int switchHotbar = uiHotbarCanvas.GetComponent<UIHotbar>().GetSwitch();
+        if (switchHotbar != 1)
+        {
+            StopDigging();
+        }
     }
 
     /// <summary>
@@ -39,29 +115,27 @@ public class PlayerAction : MonoBehaviour {
     /// </summary>
     private void HoverTile(Vector3 mousePosition)
     {
+        GameObject tileSelection = GameObject.FindGameObjectWithTag("TileSelection");
+        bool tileMatched = false;
         foreach (Tilemap terrainTilemap in terrainTilemaps)
         {
             Vector3Int cellPosition = terrainTilemap.WorldToCell(mousePosition);
             TileBase tile = terrainTilemap.GetTile(cellPosition);
             if (tile != null)
             {
-                GameObject tileSelection = GameObject.FindGameObjectWithTag("TileSelection");
-                tileSelection.transform.position = terrainTilemap.CellToLocal(cellPosition);
+                tileMatched = true;
+                Vector3 localCellPosition = terrainTilemap.CellToLocal(cellPosition);
+                if (tileSelection.transform.position != localCellPosition)
+                {
+                    StopDigging();
+                }
+                tileSelection.transform.position = localCellPosition;
+                tileSelection.GetComponent<SpriteRenderer>().enabled = true;
             }
         }
-    }
-
-    /// <summary>
-    /// Handle click interaction
-    /// </summary>
-    private void InteractWithEnvironment()
-    {
-        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mouseWorldPosition.z = 0;
-        HoverTile(mouseWorldPosition);
-        if (Input.GetMouseButtonDown(0))
+        if (!tileMatched)
         {
-            InteractWithTerrain(mouseWorldPosition);
+            tileSelection.GetComponent<SpriteRenderer>().enabled = false;
         }
     }
 
@@ -78,13 +152,28 @@ public class PlayerAction : MonoBehaviour {
             TileBase tile = terrainTilemap.GetTile(cellPosition);
             if (tile != null)
             {
-                Vector3 tileDistanceVector = cellPosition - transform.position;
+                Vector3 tileDistanceVector = mousePosition - transform.position;
                 float tileDistance = Mathf.Sqrt(Mathf.Pow(tileDistanceVector.x, 2) + Mathf.Pow(tileDistanceVector.y, 2));
                 if (tileDistance <= actionRange)
                 {
                     if (!actionDone)
                     {
-                        Dig(cellPosition);
+                        switch (uiHotbarCanvas.GetComponent<UIHotbar>().GetSwitch())
+                        {
+                            case 1:
+                                if (terrainTilemap.GetComponent<TilemapRenderer>().sortingOrder >= waterTilemap.GetComponent<TilemapRenderer>().sortingOrder
+                                    && sandInInventory < maxSandInInventory)
+                                {
+                                    Dig(cellPosition);
+                                }
+                                break;
+                            case 2:
+                                if (sandInInventory > 0)
+                                {
+                                    TryReplenish(cellPosition);
+                                }
+                                break;
+                        }
                         actionDone = true;
                     }
                 }
@@ -97,10 +186,44 @@ public class PlayerAction : MonoBehaviour {
     }
 
     /// <summary>
+    /// Digging action, handling animation and action
+    /// </summary>
+    /// <param name="diggingPosition">Tile position of the sand tile to dig</param>
+    private void Dig(Vector3Int diggingPosition)
+    {
+        SpriteRenderer digBar = GameObject.FindGameObjectWithTag("DigBar").GetComponent<SpriteRenderer>();
+        if (diggingTime < 0)
+        {
+            digBar.enabled = false;
+            diggingTime = maxDiggingTime;
+            FinishDigging(diggingPosition);
+        } else
+        {
+            digBar.enabled = true;
+            diggingTime -= Time.deltaTime;
+            int digBarCurrentSprite = Mathf.FloorToInt(diggingTime * digBarSprites.Length / maxDiggingTime);
+            if (digBarCurrentSprite >= 0)
+            {
+                digBar.sprite = digBarSprites[digBarCurrentSprite];
+            }
+        }
+    }
+
+    /// <summary>
+    /// Stop digging right now
+    /// </summary>
+    private void StopDigging()
+    {
+        SpriteRenderer digBar = GameObject.FindGameObjectWithTag("DigBar").GetComponent<SpriteRenderer>();
+        digBar.enabled = false;
+        diggingTime = maxDiggingTime;
+    }
+
+    /// <summary>
     /// Dig a case of sand, if possible
     /// </summary>
     /// <param name="diggingPosition">Position where to dig sand</param>
-    private void Dig(Vector3Int diggingPosition)
+    private void FinishDigging(Vector3Int diggingPosition)
     {
         Tile[] tiles = GameObject.FindGameObjectWithTag("Grid").GetComponent<IslandGenerator>().GetSandTiles();
         int i = terrainTilemaps.Count - 1;
@@ -119,6 +242,23 @@ public class PlayerAction : MonoBehaviour {
             }
             i--;
         }
+        sandInInventory++;
+    }
+
+    /// <summary>
+    /// Try to replenish if cooldown available
+    /// </summary>
+    /// <param name="diggingPosition">Tile position of the sand tile to replenish</param>
+    private void TryReplenish(Vector3Int replenishPosition)
+    {
+        if (replenishTime <= 0)
+        {
+            Replenish(replenishPosition);
+            replenishTime = maxReplenishCooldown;
+        } else
+        {
+            replenishTime -= Time.deltaTime;
+        }
     }
 
     /// <summary>
@@ -136,17 +276,16 @@ public class PlayerAction : MonoBehaviour {
             Tilemap terrainTilemap = terrainTilemaps[i];
             if (terrainTilemap.GetTile(replenishPosition) != null && i < terrainTilemaps.Count - 2)
             {
-                Debug.Log("tileReplacement");
                 terrainTilemap.SetTile(replenishPosition, null);
                 replacedTile = i + 1;
             }
             if (replacedTile == i && !tileReplaced)
             {
-                Debug.Log("tileReplaced");
                 terrainTilemap.SetTile(replenishPosition, tiles[i]);
                 tileReplaced = true;
             }
             i++;
         }
+        sandInInventory--;
     }
 }
