@@ -23,7 +23,7 @@ public class WaterTide : MonoBehaviour {
 
     private int startingLayer = 2;
     public int maxLayer = 6;
-    public int minLayer = 0;
+    public int minLayer = 1;
     public float period = 20.0f;
     private bool gonnaRise = false;
     private float timeLeft;
@@ -98,6 +98,7 @@ public class WaterTide : MonoBehaviour {
                 if (actualLayer < maxLayer)
                 {
                     actualLayer++;
+                    submergedTiles = new List<TileInfo>();
                     submergedTiles.AddRange(seaTiles);
                 }
                 break;
@@ -237,19 +238,19 @@ public class WaterTide : MonoBehaviour {
             }else{
                 Vector3Int[] neighbours = tile.GetNeighboursCoordinates();
                 foreach(Vector3Int neighbour in neighbours){
-                    if(terrainTilesInfo[neighbour.x,neighbour.y].GetIsFlooded()){
-                        if(!tileDone.Contains(terrainTilesInfo[neighbour.x,neighbour.y])){
-                            submergedTiles.Add(terrainTilesInfo[neighbour.x,neighbour.y]);
-                            tileDone.Add(terrainTilesInfo[neighbour.x,neighbour.y]);
+                    if(!tileDone.Contains(terrainTilesInfo[neighbour.x,neighbour.y])){
+                        if(terrainTilesInfo[neighbour.x,neighbour.y].GetIsFlooded()){
+                                submergedTiles.Add(terrainTilesInfo[neighbour.x,neighbour.y]);
+                                tileDone.Add(terrainTilesInfo[neighbour.x,neighbour.y]);
+                        }else if(!tileDone.Contains(terrainTilesInfo[neighbour.x,neighbour.y])){
+                            if(terrainTilesInfo[neighbour.x,neighbour.y].GetHeight()<actualLayer){
+                                terrainTilesInfo[neighbour.x,neighbour.y].SetIsFlooded(true);
+                                tileDone.Add(terrainTilesInfo[neighbour.x,neighbour.y]);
+                                tileModified.Add(terrainTilesInfo[neighbour.x,neighbour.y]);
+                            }
                         }
-                   }else{
-                       if(terrainTilesInfo[neighbour.x,neighbour.y].GetHeight()<actualLayer){
-                           terrainTilesInfo[neighbour.x,neighbour.y].SetIsFlooded(true);
-                           tileDone.Add(terrainTilesInfo[neighbour.x,neighbour.y]);
-                           tileModified.Add(terrainTilesInfo[neighbour.x,neighbour.y]);
-                       }
                    }
-                 }
+                }
             }
         }
         submergedTiles = tileModified;
