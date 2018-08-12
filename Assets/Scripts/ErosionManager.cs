@@ -60,8 +60,8 @@ public class ErosionManager : MonoBehaviour {
                  currentTile.GetCoordinates()[1] == 0 ||
                  currentTile.GetCoordinates()[1] == mapData.GetLength(1) - 1)
             {
-                Debug.LogWarning("Extremité Atteinte");
-                return;
+               // Debug.LogWarning("Extremité Atteinte");
+               // return;
             }
             else
             {

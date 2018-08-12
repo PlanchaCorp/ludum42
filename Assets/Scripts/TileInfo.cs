@@ -8,15 +8,10 @@ public class TileInfo{
     private int x, y;
     private bool isFlooded, isSea;
     private float durability;
-    public enum WallSate
-    {
-        NOTHING,
-        TOWER,
-        WALL_HORIZONTAL,
-        WALL_LEFT,
-        WALL_RIGHT
-    }
-    private WallSate state;
+
+    private static Tilemap waterTileMap;
+    private static AnimatedTile waterTile;
+    private static int mapSize;
 
     public TileInfo(Vector3Int vector){
         this.durability = 1.0f;
@@ -33,7 +28,13 @@ public class TileInfo{
         this.y = vector.y;
         this.state = WallSate.NOTHING;
     }
-
+    public static void SetTileMapWater(Tilemap wtm, int size){
+        TileInfo.waterTileMap = wtm;
+        TileInfo.mapSize = size;
+    }
+    public static void SetWaterTile(AnimatedTile Water){
+        TileInfo.waterTile = Water;
+    }
     public Vector3Int GetCoordinates()
     {
         return new Vector3Int(x, y, 0);
@@ -62,6 +63,12 @@ public class TileInfo{
     public void SetIsFlooded(bool value){
         this.isFlooded = value;
         this.isSea = false;
+        if(value){
+            Vector3Int vectorPosition = new Vector3Int(0,0,0);
+            vectorPosition.x = TileInfo.mapSize / 2 - this.x;
+            vectorPosition.y = TileInfo.mapSize / 2 - this.y;
+            TileInfo.waterTileMap.SetTile(vectorPosition,waterTile);
+        }
     }
 
     public void DecreaseDurability(float value)

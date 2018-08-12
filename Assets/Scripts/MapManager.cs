@@ -59,7 +59,7 @@ public class MapManager : MonoBehaviour
         for(int k = 0;k< mapData.GetLength(0);k++ ){
             for(int j = 0; j < mapData.GetLength(1); j++ ){
                 Vector3Int vect = new Vector3Int(k, j, 0);
-                if (mapData[k,j]<0){
+                if (mapData[k,j]<2){
                     terrainInfo[k,j] = new TileInfo(vect,true, true);
                 }else{
                     terrainInfo[k,j] = new TileInfo(vect,false, false);
