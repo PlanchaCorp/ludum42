@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3f38667f86accde429ac7b8491372855
+guid: f4453738efd789c468186dd9fdf0d3b7
 TextureImporter:
   fileIDToRecycleName:
     21300000: animationCrabIdling_0
@@ -102,7 +102,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4e060fbd6703fac49ad32786b5818668
+      spriteID: 22c620d2f4f5c4147bb952858149a283
       vertices: []
       indices: 
       edges: []
@@ -122,7 +122,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 01f9bdbf7af730f47838e07fefee7de4
+      spriteID: 30ec47db70357354f99fab6321d1f29f
       vertices: []
       indices: 
       edges: []
@@ -142,7 +142,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 057a8f7c69a26e548be0096bc3fe901e
+      spriteID: 8cd003d6dd745b646bea78502d271d96
       vertices: []
       indices: 
       edges: []
@@ -162,7 +162,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 056c63b879564244d984407a2d09bf78
+      spriteID: 55bbfc85d3781ea4281153b85c275359
       vertices: []
       indices: 
       edges: []
@@ -170,7 +170,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 51f5c36fc55ebb34ebca33ff441c2915
+    spriteID: db6402cedba44e04eaa1348e8622bfbc
     vertices: []
     indices: 
     edges: []

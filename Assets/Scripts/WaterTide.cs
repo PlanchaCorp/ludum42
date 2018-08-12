@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -39,7 +40,7 @@ public class WaterTide : MonoBehaviour {
             risingTimer = 4.0f;
             timeLeft = risingTimer;
             actualLayer = startingLayer;
-
+            GameObject.FindGameObjectsWithTag("Grid").First().GetComponent<IslandGenerator>().SetWater(actualLayer);
             // Change the state of the tide with the current state selected (after 'period' seconds)
             Invoke("ChangeTide", period);
         } else
@@ -82,6 +83,7 @@ public class WaterTide : MonoBehaviour {
 
     private void UpdateTideLayer()
     {
+        GameObject.FindGameObjectsWithTag("Grid").First().GetComponent<IslandGenerator>().SetWater(actualLayer);
         water.GetComponent<TilemapRenderer>().sortingOrder = actualLayer;
     }
 
