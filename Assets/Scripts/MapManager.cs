@@ -103,7 +103,7 @@ public class MapManager : MonoBehaviour
     public void Replenish(Vector3Int replenishPosition)
     {
         // On modifie les données de la map
-        int[,] mapData = grid.GetComponent<IslandGenerator>().map;
+        int[,] mapData = GetMapDataCoordinates();
         mapData[replenishPosition.x, replenishPosition.y]++;
 
         Tile[] tiles = GameObject.FindGameObjectWithTag("Grid").GetComponent<IslandGenerator>().GetSandTiles();

@@ -304,22 +304,8 @@ public class PlayerAction : MonoBehaviour {
     private void FinishDigging(Vector3Int diggingPosition)
     {
         Tile[] tiles = GameObject.FindGameObjectWithTag("Grid").GetComponent<IslandGenerator>().GetSandTiles();
-        int i = terrainTilemaps.Count - 1;
-        int replacedTile = -1;
-        while (i >= 0)
-        {
-            Tilemap terrainTilemap = terrainTilemaps[i];
-            if (terrainTilemap.GetTile(diggingPosition) != null && i > 0)
-            {
-                terrainTilemap.SetTile(diggingPosition, null);
-                replacedTile = i - 1;
-            }
-            if (replacedTile == i)
-            {
-                terrainTilemap.SetTile(diggingPosition, tiles[i]);
-            }
-            i--;
-        }
+        MapManager mapManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<MapManager>();
+        mapManager.Dig(mapManager.TilesToDataCoordinates(diggingPosition));
         sandInInventory++;
     }
 
@@ -345,7 +331,7 @@ public class PlayerAction : MonoBehaviour {
     /// <param name="replenishPosition">Position where to replenish sand</param>
     private void Replenish(Vector3Int replenishPosition)
     {
-        Tile[] tiles = GameObject.FindGameObjectWithTag("Grid").GetComponent<IslandGenerator>().GetSandTiles();
+        /*Tile[] tiles = GameObject.FindGameObjectWithTag("Grid").GetComponent<IslandGenerator>().GetSandTiles();
         int i = 0;
         int replacedTile = -1;
         bool tileReplaced = false;
@@ -363,7 +349,9 @@ public class PlayerAction : MonoBehaviour {
                 tileReplaced = true;
             }
             i++;
-        }
+        }*/
+        MapManager mapManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<MapManager>();
+        mapManager.Dig(mapManager.TilesToDataCoordinates(replenishPosition));
         sandInInventory--;
     }
 
