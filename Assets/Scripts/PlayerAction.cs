@@ -329,7 +329,6 @@ public class PlayerAction : MonoBehaviour {
     /// <param name="diggingPosition">Position where to dig sand</param>
     private void FinishDigging(Vector3Int diggingPosition)
     {
-        Tile[] tiles = GameObject.FindGameObjectWithTag("Grid").GetComponent<IslandGenerator>().GetSandTiles();
         MapManager mapManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<MapManager>();
         mapManager.Dig(mapManager.TilesToDataCoordinates(diggingPosition));
         ModifySandAmount(1);
