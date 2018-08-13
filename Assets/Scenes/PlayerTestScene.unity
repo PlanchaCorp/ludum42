@@ -162,6 +162,16 @@ Prefab:
       propertyPath: uiHotbarCanvas
       value: 
       objectReference: {fileID: 17754803}
+    - target: {fileID: 212932835221762310, guid: cbd418fa49bbc31498ca7cfbe3cdddf0,
+        type: 2}
+      propertyPath: m_SortingLayerID
+      value: 401654443
+      objectReference: {fileID: 0}
+    - target: {fileID: 212932835221762310, guid: cbd418fa49bbc31498ca7cfbe3cdddf0,
+        type: 2}
+      propertyPath: m_SortingLayer
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbd418fa49bbc31498ca7cfbe3cdddf0, type: 2}
   m_IsPrefabAsset: 0
@@ -395,8 +405,8 @@ MonoBehaviour:
   bonusLuck: 0.05
   startingLayer: 2
   maxLayer: 7
-  minLayer: 2
-  period: 5
+  minLayer: 1
+  period: 10
 --- !u!483693784 &755508716
 TilemapRenderer:
   m_ObjectHideFlags: 0
@@ -430,7 +440,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1028222687
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 2
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -866,7 +876,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1502706335
-  m_SortingLayer: 3
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
