@@ -208,6 +208,7 @@ public class MapManager : MonoBehaviour
             TryCreateWalls(buildingPosition);
             // On affiche un chateau            
             DisplayCastleSprite(buildingPosition);
+
             return true;
         } else
         {
@@ -347,6 +348,10 @@ public class MapManager : MonoBehaviour
             case TileInfo.WallState.WALL_RIGHT:
                 tilemap.SetTile(tilePosition, wallRight);
                 break;
+
+               
         }
+        tilemap.GetComponent<TilemapCollider2D>().enabled = false;
+        tilemap.GetComponent<TilemapCollider2D>().enabled = true;
     }
 }
