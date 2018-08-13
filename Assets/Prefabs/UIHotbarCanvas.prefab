@@ -940,6 +940,9 @@ MonoBehaviour:
   DigBar: {fileID: 114279676233564708}
   IconDigBar: {fileID: 1491166655454482}
   IconBreathBar: {fileID: 1255966547724332}
+  digCursor: {fileID: 2800000, guid: d361b4bde57853b4c939675187a7c8a6, type: 3}
+  bucketCursor: {fileID: 2800000, guid: 4361a3333231504459208ea0564066a8, type: 3}
+  hammerCursor: {fileID: 2800000, guid: 8de13eea2925bc141b3e6f4446f2e114, type: 3}
 --- !u!114 &114488070311880848
 MonoBehaviour:
   m_ObjectHideFlags: 1
