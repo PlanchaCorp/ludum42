@@ -175,7 +175,6 @@ public class MapManager : MonoBehaviour
 
         // On affiche la nouvelle Tile
         Tile[] tiles = grid.GetComponent<IslandGenerator>().GetSandTiles();
-        int i = 0;
         Vector3Int tilesReplenishPosition = DataToTilesCoordinates(replenishPosition);
         foreach (Tilemap terrainTilemap in terrainTilemaps)
         {

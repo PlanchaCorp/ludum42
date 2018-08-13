@@ -162,17 +162,7 @@ public class TileInfo{
 
     public bool ShallGetEroded()
     {
-        if (state != WallState.NOTHING)
-        {
-            if (damage >= 2)
-            {
-                return true;
-            }
-        } else if (damage >= 1)
-        {
-            return true;
-        }
-        return false;
+        return state != WallState.NOTHING;
     }
 
     public void DecreaseDurability(float value)

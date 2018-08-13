@@ -10,25 +10,17 @@ public class ErosionManager : MonoBehaviour {
     /// Set to 0.0f to stop the erosion
     /// Set to 10.0f to make the erosion insane
     /// </summary>
-    [SerializeField] private float damageMultiplier;
-    /// <summary>
-    /// List of all the tiles that aren't water
-    /// </summary>
-	List<TileInfo> dryTiles = new List<TileInfo>();
+    private float damageMultiplier = 1f;
+
+    private MapManager mapManager;
+    private int[,] mapData;
+    private TileInfo[,] terrain;
 
 
-    void Start () { 
-        
-        TileInfo[,] terrainTilesInfo = gameObject.GetComponent<MapManager>().GetTerrainInfo();
-
-        // Create the notEmptyTiles list
-        for(int i=0; i<terrainTilesInfo.GetLength(0); i++ ){
-            for(int j=0; j<terrainTilesInfo.GetLength(1); j++ ){
-                if(!terrainTilesInfo[i,j].GetIsFlooded()){
-                    dryTiles.Add(terrainTilesInfo[i,j]);
-                }
-            }
-        }
+    void Start () {
+        mapManager = gameObject.GetComponent<MapManager>();
+        mapData = mapManager.GetMapDataCoordinates();
+        terrain = mapManager.GetTerrainInfo();
     }
 
 	// Update is called once per frame
@@ -41,10 +33,53 @@ public class ErosionManager : MonoBehaviour {
     /// </summary>
     public void Erode()
     {
-        MapManager mapManager = gameObject.GetComponent<MapManager>();
-        int[,] mapData = mapManager.GetMapDataCoordinates();
+        for (int i = 0; i < terrain.GetLength(0); i++)
+        {
+            for (int j = 0; j < terrain.GetLength(1); j++)
+            {
+                TileInfo currentTile = terrain[i, j];
 
-        foreach (TileInfo currentTile in dryTiles)
+                // On ne traite pas l'erosion sur les extremités et l'eau
+                if (currentTile.GetIsFlooded() ||
+                    currentTile.GetIsSea())
+                {
+                    return;
+                }
+                else
+                {
+                    // On teste les contacts avec l'eau
+                    // Si il y a contact l'eau => Dégat sur la tile.
+                    int cpt = 0;
+                    foreach (Vector3Int n in currentTile.GetNeighboursCoordinates())
+                    {
+                        TileInfo t = terrain[n.x, n.y];
+                        if (t.GetIsFlooded())
+                        {
+                            cpt++;
+                        }
+                    }
+                    currentTile.DecreaseDurability((float)cpt * damageMultiplier);
+
+                    // On regarde si la durabilité de la Tile est inférieure à 0.
+                    // Dans ce cas la, on déplace la Tile. ou enleve le chateau
+                    if (currentTile.ShallGetEroded())
+                    {
+                        // On trouve le bon voisin
+                        Vector3Int dest = FindNeighbour(currentTile, mapData, currentTile.GetNeighboursCoordinates());
+
+                        // On déplace
+                        mapManager.Dig(currentTile.GetCoordinates());
+                        mapManager.Replenish(dest);
+                        currentTile.ResetDurability();
+                    }
+                }
+
+            }
+        }
+    }
+
+    /*
+        foreach(TileInfo currentTile in dryTiles)
         {
             // On ne traite pas l'erosion sur les extremités
             if (currentTile.GetCoordinates()[0] == 0 ||
@@ -75,37 +110,37 @@ public class ErosionManager : MonoBehaviour {
                 // Dans ce cas la, on déplace la Tile. ou enleve le chateau
                 if (currentTile.ShallGetEroded())
                 {
-                    if (currentTile.GetWallState() != TileInfo.WallState.NOTHING)
+                    // On trouve le bon voisin
+                    Vector3Int dest = FindNeighbour(currentTile, mapData, currentTile.GetNeighboursCoordinates(), currentTile.GetCoordinates());
+
+                    // On déplace
+                    mapManager.Dig(currentTile.GetCoordinates());
+                    mapManager.Replenish(dest);
+
+                    // On modifie les dryTiles
+                    if (currentTile.GetIsFlooded())
                     {
-                        // On trouve le bon voisin
-                        Vector3Int dest = FindNeighbour(currentTile, mapData, currentTile.GetNeighboursCoordinates(), currentTile.GetCoordinates());
-
-                        // On déplace
-                        mapManager.Dig(currentTile.GetCoordinates());
-                        mapManager.Replenish(dest);
-
-                        // On modifie les dryTiles
-                        if (currentTile.GetIsFlooded())
-                        {
-                            dryTiles.Remove(currentTile);
-
-                        }
-                        if (!terrainInfo[dest.x, dest.y].GetIsFlooded())
-                        {
-                            dryTiles.Add(terrainInfo[dest.x, dest.y]);
-                        }
-                    } else
-                    {
-                        // On enleve le chateau
-                        currentTile.SetWallState(TileInfo.WallState.NOTHING);
-                        mapManager.DisplayCastleSprite(currentTile.GetCoordinates());
+                        toBeRemoved.Add(currentTile);
                     }
-
+                    if (!terrainInfo[dest.x, dest.y].GetIsFlooded())
+                    {
+                        toBeAdded.Add(terrainInfo[dest.x, dest.y]);
+                    }
                     currentTile.ResetDurability();
                 }
             }
         }
-    }
+
+        foreach(TileInfo t in toBeAdded)
+        {
+            dryTiles.Add(t);
+        }
+
+        foreach (TileInfo t in toBeRemoved)
+        {
+            dryTiles.Remove(t);
+        }
+    */
     
     /// <summary>
     /// Helper function for Erode
@@ -115,21 +150,20 @@ public class ErosionManager : MonoBehaviour {
     /// <param name="neighbours"></param>
     /// <param name="currentTileCoordinates"></param>
     /// <returns></returns>
-    private Vector3Int FindNeighbour(TileInfo currentTile, int[,] mapData, Vector3Int[] neighbours, Vector3Int currentTileCoordinates)
+    private Vector3Int FindNeighbour(TileInfo currentTile, int[,] mapData, Vector3Int[] neighbours)
     {
         Vector3Int higherNeighbour = new Vector3Int();
         Vector3Int lowerNeighbour = new Vector3Int();
         Vector3Int dest = new Vector3Int();
-
-        dest.Equals(Vector3Int.zero);
-
+        
         for (int j = 0; j < 6; j++)
         {
-            if (mapData[neighbours[j].x, neighbours[j].y] < mapData[currentTileCoordinates[0], currentTileCoordinates[1]])
+            TileInfo currentNeighbour = terrain[neighbours[j].x, neighbours[j].y];
+            if (currentTile.GetHeight() < currentNeighbour.GetHeight())
             {
                 // Plus petit que soit
                 if (lowerNeighbour != Vector3Int.zero ||
-                    mapData[neighbours[j].x, neighbours[j].y] < mapData[lowerNeighbour[0], lowerNeighbour[1]])
+                    currentTile.GetHeight() < terrain[lowerNeighbour[0], lowerNeighbour[1]].GetHeight())
                 {
                     // Plus petit voisin vide ou
                     // Plus petit que le voisin petit actuel
@@ -137,11 +171,11 @@ public class ErosionManager : MonoBehaviour {
                     lowerNeighbour[1] = neighbours[j].y;
                 }
             }
-            else if (mapData[neighbours[j].x, neighbours[j].y] > mapData[currentTileCoordinates[0], currentTileCoordinates[1]])
+            else if (currentTile.GetHeight() > currentNeighbour.GetHeight())
             {
                 // Plus Grand que soit
                 if (higherNeighbour != Vector3Int.zero ||
-                    mapData[neighbours[j].x, neighbours[j].y] > mapData[higherNeighbour[0], higherNeighbour[1]])
+                    currentTile.GetHeight() > terrain[higherNeighbour[0], higherNeighbour[1]].GetHeight())
                 {
                     // Plus petit voisin vide ou
                     // Plus petit que le voisin petit actuel
