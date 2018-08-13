@@ -162,40 +162,20 @@ Prefab:
       propertyPath: uiHotbarCanvas
       value: 
       objectReference: {fileID: 17754803}
-    - target: {fileID: 212932835221762310, guid: cbd418fa49bbc31498ca7cfbe3cdddf0,
+    - target: {fileID: 114780517994361118, guid: cbd418fa49bbc31498ca7cfbe3cdddf0,
         type: 2}
-      propertyPath: m_SortingLayerID
-      value: 401654443
-      objectReference: {fileID: 0}
-    - target: {fileID: 212932835221762310, guid: cbd418fa49bbc31498ca7cfbe3cdddf0,
-        type: 2}
-      propertyPath: m_SortingLayer
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 58638221707354908, guid: cbd418fa49bbc31498ca7cfbe3cdddf0,
-        type: 2}
-      propertyPath: m_Radius
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 58638221707354908, guid: cbd418fa49bbc31498ca7cfbe3cdddf0,
-        type: 2}
-      propertyPath: m_Offset.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 58638221707354908, guid: cbd418fa49bbc31498ca7cfbe3cdddf0,
-        type: 2}
-      propertyPath: m_Offset.y
-      value: -0.07
+      propertyPath: maxSandInInventory
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 114780517994361118, guid: cbd418fa49bbc31498ca7cfbe3cdddf0,
         type: 2}
       propertyPath: maxDiggingTime
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 114780517994361118, guid: cbd418fa49bbc31498ca7cfbe3cdddf0,
         type: 2}
-      propertyPath: drowningTime
-      value: 3
+      propertyPath: maxReplenishCooldown
+      value: 0.15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbd418fa49bbc31498ca7cfbe3cdddf0, type: 2}
@@ -78011,7 +77991,9 @@ MonoBehaviour:
   - {fileID: 1949362699186768, guid: d842edbbdacbdc648a423d165988190c, type: 2}
   - {fileID: 1683848578763382, guid: a62353516786db445846b98f086753a0, type: 2}
   bonusLuck: 0.05
-  period: 1
+  period: 10
+  rising: 0
+  maxLayerReached: 0
 --- !u!483693784 &755508716
 TilemapRenderer:
   m_ObjectHideFlags: 0
@@ -78195,7 +78177,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c15acea5fdadac344a4965003b1a6806, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageMultiplier: 4
 --- !u!4 &886327455
 Transform:
   m_ObjectHideFlags: 0

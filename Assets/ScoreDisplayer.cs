@@ -9,7 +9,11 @@ public class ScoreDisplayer : MonoBehaviour {
 	void Start () {
         Debug.Log(ScoreHandler.waveNumber);
         gameObject.GetComponent<TextMeshProUGUI>().text = "Score : " + ScoreHandler.scoreValue.ToString() + " Wave Survived : " + ScoreHandler.waveNumber.ToString();
-	}
+        ScoreHandler.scoreValue = 0;
+        ScoreHandler.waveNumber = 0;
+
+
+    }
 	
 
 }
