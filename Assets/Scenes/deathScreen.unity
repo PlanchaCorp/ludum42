@@ -611,7 +611,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 'Game Over
 
-    You have drowned'
+    You have sunk'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fe22716e29330d84ba8e13bf7fe3c5e0, type: 2}
   m_sharedMaterial: {fileID: 21344302438034214, guid: fe22716e29330d84ba8e13bf7fe3c5e0,
@@ -680,7 +680,7 @@ MonoBehaviour:
   m_margin: {x: -137.96228, y: 0, z: -137.96219, w: 0}
   m_textInfo:
     textComponent: {fileID: 1163675931}
-    characterCount: 26
+    characterCount: 23
     spriteCount: 0
     spaceCount: 4
     wordCount: 5
@@ -745,8 +745,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -148}
-  m_SizeDelta: {x: 797.1, y: 201.2}
+  m_AnchoredPosition: {x: 8, y: -148}
+  m_SizeDelta: {x: 860.2, y: 201.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1374639554
 MonoBehaviour:
