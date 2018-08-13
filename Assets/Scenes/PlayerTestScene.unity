@@ -77991,7 +77991,7 @@ MonoBehaviour:
   - {fileID: 1949362699186768, guid: d842edbbdacbdc648a423d165988190c, type: 2}
   - {fileID: 1683848578763382, guid: a62353516786db445846b98f086753a0, type: 2}
   bonusLuck: 0.05
-  period: 20
+  period: 10
   rising: 0
   maxLayerReached: 0
 --- !u!483693784 &755508716
