@@ -12,6 +12,7 @@ public class TileInfo{
     private static Tilemap waterTileMap;
     private static AnimatedTile waterTile;
     private static int mapSize;
+    private MapManager manager;
 
     public enum WallState
     {
@@ -37,8 +38,11 @@ public class TileInfo{
 		this.height = height;
         this.x = vector.x;
         this.y = vector.y;
+
         this.state = WallState.NOTHING;
-         if(isSea || isFlooded){
+        this.manager = GameObject.FindGameObjectWithTag("Manager").GetComponent<MapManager>();
+
+         if (isSea || isFlooded){
             Vector3Int vectorPosition = new Vector3Int(0,0,0);
             vectorPosition.x = TileInfo.mapSize / 2 - this.x;
             vectorPosition.y = TileInfo.mapSize / 2 - this.y;
@@ -84,16 +88,28 @@ public class TileInfo{
     public void SetIsFlooded(bool value){
         this.isFlooded = value;
         this.isSea = false;
+        DisplayWater();
+    }
+
+    public void DisplayWater()
+    {
         Vector3Int dataPosition = new Vector3Int(this.x, this.y, 0);
-        Vector3Int vectorPosition = GameObject.FindGameObjectWithTag("Manager").GetComponent<MapManager>().DataToTilesCoordinates(dataPosition);
-        if(value){
-            GameObject.FindGameObjectWithTag("WaterTilemap").GetComponent<Tilemap>().SetTile(vectorPosition,waterTile);
-        }else{
-            GameObject.FindGameObjectWithTag("WaterTilemap").GetComponent<Tilemap>().SetTile(vectorPosition, null);
+        Vector3Int vectorPosition = manager.DataToTilesCoordinates(dataPosition);
+        if (this.isFlooded)
+        {
+            waterTileMap.SetTile(vectorPosition, waterTile);
         }
+        else
+        {
+            waterTileMap.SetTile(vectorPosition, null);
+        }
+
+        /*
         waterTileMap.GetComponent<TilemapCollider2D>().enabled = false;
         waterTileMap.GetComponent<TilemapCollider2D>().enabled = true;
+        */
     }
+
 	public void Dig(){
 		this.height -= 1;
         if (!isFlooded && height < GameObject.FindGameObjectWithTag("WaterTilemap").GetComponent<WaterTide>().GetLevel())
