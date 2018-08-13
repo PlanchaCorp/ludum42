@@ -73,11 +73,9 @@ public class MapManager : MonoBehaviour
 
         // Get the tile map
         GameObject[] terrainsObjects = GameObject.FindGameObjectsWithTag("TerrainTilemap");
-        int i = 0;
         foreach (GameObject terrainObject in terrainsObjects)
         {
             terrainTilemaps.Add(terrainObject.GetComponent<Tilemap>());
-            i++;
         }
     }
 

@@ -1,29 +1,41 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class ScoreHandler : MonoBehaviour {
 
     private WaterTide waterTide;
+    private TextMeshProUGUI score;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         waterTide = GameObject.FindGameObjectWithTag("WaterTilemap").GetComponent<WaterTide>();
+        score = GameObject.FindGameObjectWithTag("ScoreText").GetComponent<TextMeshProUGUI>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (waterTide.GetActualLayer() == waterTide.GetMaxLayer())
         {
-            Debug.Log(calculateAvailableTiles());
+            StartCoroutine(SetScoreText());
         }
 	}
+
+    /// <summary>
+    /// Assign score text to the textmeshprougui
+    /// </summary>
+    private IEnumerator SetScoreText()
+    {
+        score.SetText("Score : " + CalculateAvailableTiles());
+        yield return new WaitForSeconds(0.5f);
+    }
 
     /// <summary>
     /// Calculate the tiles that are dry and without walls
     /// </summary>
     /// <returns>Tiles count</returns>
-    public int calculateAvailableTiles()
+    public int CalculateAvailableTiles()
     {
         int dryCount = 0;
         TileInfo[,] terrainInfo = GameObject.FindGameObjectWithTag("Manager").GetComponent<MapManager>().GetTerrainInfo();
