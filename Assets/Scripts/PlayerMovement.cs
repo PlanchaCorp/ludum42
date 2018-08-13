@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class PlayerMovement : MonoBehaviour {
     /// <summary>
@@ -8,6 +9,11 @@ public class PlayerMovement : MonoBehaviour {
     /// </summary>
     [SerializeField]
     private float speed = 2.5f;
+
+    /// <summary>
+    /// Side of the map
+    /// </summary>
+    private int mapSide = 40;
 
     /// <summary>
     /// Position of the last mouse click
@@ -53,8 +59,12 @@ public class PlayerMovement : MonoBehaviour {
     public void SetMouseClick(Vector3 position)
     {
         gameObject.GetComponent<Animator>().SetBool("isMoving", true);
-        mouseClickPosition = position;
-        isMoving = true;
+        Vector3Int tilePosition = GameObject.FindGameObjectWithTag("TerrainTilemap").GetComponent<Tilemap>().WorldToCell(position);
+        if (tilePosition.x > -mapSide/2 && tilePosition.x <= mapSide/2 && tilePosition.y > -mapSide/2 && tilePosition.y <= mapSide/2)
+        {
+            mouseClickPosition = position;
+            isMoving = true;
+        }
     }
 
     /// <summary>
