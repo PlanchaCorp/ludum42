@@ -16,6 +16,8 @@ TagManager:
   - Bonus
   - HotbarCanvas
   - SandCountText
+  - WaveNumber
+  - ScoreText
   layers:
   - Default
   - TransparentFX
