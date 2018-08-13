@@ -202,13 +202,11 @@ public class WaterTide : MonoBehaviour {
         if ( actualLayer == maxLayer )
         {
             maxLayerReached = true;
-            rising = 0;
-            actualLayer--;
+            rising = 1;
         } else if (actualLayer == minLayer )
         {
             maxLayerReached = false;
-            rising = 0;
-            actualLayer++;
+            rising = 1;
         }
     }
   
