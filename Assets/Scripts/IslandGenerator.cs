@@ -45,15 +45,6 @@ public class IslandGenerator : MonoBehaviour
 
     public int[,] map;
 
-    private int waterLevel;
-
-    // The origin of the sampled area in the plane.
-    private float xOrg;
-    private float yOrg;
-
-    private Queue<GameObject> pickUpsPool;
-
-
     public Tile[] GetSandTiles()
     {
         return sandTiles;
@@ -61,16 +52,10 @@ public class IslandGenerator : MonoBehaviour
 
 
     public List<Vector2Int> WaterLayerPostions;
-
-    public int GetWaterLevel()
-    {
-        return waterLevel;
-    }
-
+    
     // Use this for initialization
     void Awake()
     {
-        pickUpsPool = new Queue<GameObject>();
         perlinSizeX = mapSize;// Longueur du tableau
         perlinSizeY = mapSize;// Largeur du tableau 
         K = 0.01f;
@@ -80,42 +65,6 @@ public class IslandGenerator : MonoBehaviour
         WaterLayerPostions = new List<Vector2Int>();
        
     }
-
-
-    private void Start()
-    {
-       
-    }
-
-    /*public void SetPool()
-    {
-        while(pickUpsPool.Count < PickUps.Count)
-        {
-            (PickUps
-                .OrderBy(x => Random.Range(0, PickUps.Count)))
-                .ToList()
-                .ForEach(w => pickUpsPool.Enqueue(w));
-        }
-    }*/
-
-    /*private void SetPickup(int x, int y)
-    {
-        Vector3 position = waterTilemap.GetCellCenterWorld(new Vector3Int(x, y, 0));
-        if (pickUpsPool.Count == 0)
-        {
-            SetPool();
-        }
-        if (pickUpsPool.Count > 0)
-        {
-            GameObject pickup = pickUpsPool.Dequeue();
-            Instantiate(pickup);
-            pickup.transform.position = position;
-        }
-        else
-        {
-            Debug.LogWarning("No pickup found in pool !");
-        }
-    }*/
 
     public void PlacePickupOnMap()
     {
@@ -157,8 +106,8 @@ public class IslandGenerator : MonoBehaviour
                 vectorPosition.x = mapSize / 2 - i;
                 vectorPosition.y = mapSize / 2 - j;
 
-                float xCoord = (xOrg + i / (float) perlinSizeX)* scale;
-                float yCoord = (yOrg + j / (float) perlinSizeY) * scale;
+                float xCoord = (i / (float) perlinSizeX)* scale;
+                float yCoord = (j / (float) perlinSizeY) * scale;
 
                 // Create a Stone or Sand
                 Tile tile;
@@ -201,8 +150,8 @@ public class IslandGenerator : MonoBehaviour
             float x = 0.0F;
             while (x < perlinSizeY)
             {
-                float xCoord = xOrg + x / perlinSizeX * scale;
-                float yCoord = yOrg + y / perlinSizeY * scale;
+                float xCoord = x / perlinSizeX * scale;
+                float yCoord = y / perlinSizeY * scale;
                 map[(int)x, (int)y] = Mathf.PerlinNoise(seed + xCoord, seed + yCoord);
 
                 x++;

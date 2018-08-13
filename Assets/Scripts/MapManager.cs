@@ -54,6 +54,7 @@ public class MapManager : MonoBehaviour
 
     private void Start()
     {
+        gameObject.GetComponent<AudioSource>().enabled = true;
         TileInfo.SetTileMapWater( water.GetComponent<Tilemap>(), 40);
         TileInfo.SetWaterTile(waterTile);
         // Get the map data

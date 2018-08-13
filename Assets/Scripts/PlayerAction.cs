@@ -59,16 +59,6 @@ public class PlayerAction : MonoBehaviour {
     private List<Tilemap> terrainTilemaps = new List<Tilemap>();
 
     /// <summary>
-    /// Tilemap of the water
-    /// </summary>
-    private Tilemap waterTilemap;
-
-    /// <summary>
-    /// Grid object containing all tilesets
-    /// </summary>
-    private Grid grid;
-
-    /// <summary>
     /// Current dig time
     /// </summary>
     private float diggingTime = 0;
@@ -110,8 +100,6 @@ public class PlayerAction : MonoBehaviour {
             terrainTilemaps.Add(terrainObject.GetComponent<Tilemap>());
             i++;
         }
-        waterTilemap = GameObject.FindGameObjectWithTag("WaterTilemap").GetComponent<Tilemap>();
-        grid = GameObject.FindGameObjectWithTag("Grid").GetComponent<Grid>();
         ModifySandAmount(0);
     }
 	
