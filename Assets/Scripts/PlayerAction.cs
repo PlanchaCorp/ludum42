@@ -52,7 +52,7 @@ public class PlayerAction : MonoBehaviour {
     /// </summary>
     [SerializeField]
     private float drowningTime = 5f;
-
+    
     /// <summary>
     /// Tilemaps of the terrains
     /// </summary>
@@ -129,6 +129,7 @@ public class PlayerAction : MonoBehaviour {
         {
             StopDigging();
         }
+
         CheckHotbar();
         CheckWater(holdRespiration);
     }
@@ -145,16 +146,14 @@ public class PlayerAction : MonoBehaviour {
         }
     }
 
-
-
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.name== "Water")
+        if(collision.name == "Water")
         {
             holdRespiration = true;
         }
     }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.name == "Water")
