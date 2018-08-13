@@ -72,7 +72,7 @@ public class PlayerAction : MonoBehaviour {
     /// <summary>
     /// Amount of sand in inventory
     /// </summary>
-    private int sandInInventory = 50;
+    private int sandInInventory = 10;
 
     /// <summary>
     /// Current time from which the player began drowning
