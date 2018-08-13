@@ -10,7 +10,7 @@ public class ErosionManager : MonoBehaviour {
     /// Set to 0.0f to stop the erosion
     /// Set to 10.0f to make the erosion insane
     /// </summary>
-    private float damageMultiplier = 1f;
+    [SerializeField] private float damageMultiplier = 4.0f;
 
     private MapManager mapManager;
     private int[,] mapData;
