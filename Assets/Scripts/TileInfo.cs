@@ -116,13 +116,6 @@ public class TileInfo{
         {
             TileInfo[,] terrainInfo = GameObject.FindGameObjectWithTag("Manager").GetComponent<MapManager>().GetTerrainInfo();
             Refresh();
-            if (isFlooded)
-            {
-                foreach(Vector3Int neighbourLocation in GetNeighboursCoordinates())
-                {
-                    terrainInfo[neighbourLocation.x, neighbourLocation.y].Refresh();
-                }
-            }
         }
     }
 	public void Rep(){
@@ -134,12 +127,22 @@ public class TileInfo{
 	}
     public void Refresh()
     {
-        TileInfo[,] terrainInfo = GameObject.FindGameObjectWithTag("Manager").GetComponent<MapManager>().GetTerrainInfo();
-        foreach (Vector3Int neighbourLocation in GetNeighboursCoordinates())
+        if (!isFlooded)
         {
-            if (terrainInfo[neighbourLocation.x, neighbourLocation.y].GetIsFlooded())
+            TileInfo[,] terrainInfo = GameObject.FindGameObjectWithTag("Manager").GetComponent<MapManager>().GetTerrainInfo();
+            foreach (Vector3Int neighbourLocation in GetNeighboursCoordinates())
             {
-                SetIsFlooded(true);
+                if (terrainInfo[neighbourLocation.x, neighbourLocation.y].GetIsFlooded() && height < GameObject.FindGameObjectWithTag("WaterTilemap").GetComponent<WaterTide>().GetActualLayer())
+                {
+                    SetIsFlooded(true);
+                }
+            }
+            if (isFlooded)
+            {
+                foreach (Vector3Int neighbourLocation in GetNeighboursCoordinates())
+                {
+                    terrainInfo[neighbourLocation.x, neighbourLocation.y].Refresh();
+                }
             }
         }
     }
