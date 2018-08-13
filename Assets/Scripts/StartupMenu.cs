@@ -11,6 +11,9 @@ public class StartupMenu : MonoBehaviour {
     [SerializeField] Canvas thirdCanvas;
     [SerializeField] GameObject MenuCanvas;
 
+    [SerializeField]
+    GameObject coquiblue;
+
 
     private float timeStart;
 
@@ -65,7 +68,7 @@ public class StartupMenu : MonoBehaviour {
         if (Input.GetKeyUp(KeyCode.Space) && loadScene == false)
         {
             loadScene = true;
-            loadingText.text = "Generate procedural map ...";
+            loadingText.text = "Procedural map generation in process ...";
             StartCoroutine(LoadNewScene());
         }
         if (loadScene == true)
@@ -81,6 +84,19 @@ public class StartupMenu : MonoBehaviour {
         {
             yield return null;
         }
+    }
+    public void AnimCoquBlue(GameObject prmAni)
+    {
+        prmAni.GetComponent<Animator>().SetBool("isClick", true);
+
+    }
+    public void AnimCoquOran1(GameObject prmAni)
+    {
+        prmAni.GetComponent<Animator>().SetBool("isClick", true);
+    }
+    public void AnimCoquOran2(GameObject prmAni)
+    {
+        prmAni.GetComponent<Animator>().SetBool("isClick", true);
     }
 }
 
