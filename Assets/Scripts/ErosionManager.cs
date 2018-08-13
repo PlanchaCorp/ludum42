@@ -75,32 +75,23 @@ public class ErosionManager : MonoBehaviour {
                 // Dans ce cas la, on déplace la Tile. ou enleve le chateau
                 if (currentTile.ShallGetEroded())
                 {
-                    if (currentTile.GetWallState() != TileInfo.WallState.NOTHING)
+                    // On trouve le bon voisin
+                    Vector3Int dest = FindNeighbour(currentTile, mapData, currentTile.GetNeighboursCoordinates(), currentTile.GetCoordinates());
+
+                    // On déplace
+                    mapManager.Dig(currentTile.GetCoordinates());
+                    mapManager.Replenish(dest);
+
+                    // On modifie les dryTiles
+                    if (currentTile.GetIsFlooded())
                     {
-                        // On trouve le bon voisin
-                        Vector3Int dest = FindNeighbour(currentTile, mapData, currentTile.GetNeighboursCoordinates(), currentTile.GetCoordinates());
+                        dryTiles.Remove(currentTile);
 
-                        // On déplace
-                        mapManager.Dig(currentTile.GetCoordinates());
-                        mapManager.Replenish(dest);
-
-                        // On modifie les dryTiles
-                        if (currentTile.GetIsFlooded())
-                        {
-                            dryTiles.Remove(currentTile);
-
-                        }
-                        if (!terrainInfo[dest.x, dest.y].GetIsFlooded())
-                        {
-                            dryTiles.Add(terrainInfo[dest.x, dest.y]);
-                        }
-                    } else
-                    {
-                        // On enleve le chateau
-                        currentTile.SetWallState(TileInfo.WallState.NOTHING);
-                        mapManager.DisplayCastleSprite(currentTile.GetCoordinates());
                     }
-
+                    if (!terrainInfo[dest.x, dest.y].GetIsFlooded())
+                    {
+                        dryTiles.Add(terrainInfo[dest.x, dest.y]);
+                    }
                     currentTile.ResetDurability();
                 }
             }
