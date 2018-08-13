@@ -117,13 +117,16 @@ public class WaterTide : MonoBehaviour {
 
     private void RollTheBonusDice(int x, int y)
     {
-        float dice = Random.Range(0f, 1f);
-        if (dice <= bonusLuck)
+        if (GameObject.FindGameObjectsWithTag("Bonus").Length < 10)
         {
-            int pickUpNumber = Mathf.FloorToInt(Random.Range(0, pickUps.Capacity));
-            Vector3Int newTileVector = mapManager.GetComponent<MapManager>().DataToTilesCoordinates(new Vector3Int(x, y, 0));
-            pickUps[pickUpNumber].transform.position = newTileVector;
-            Instantiate(pickUps[pickUpNumber]);
+            float dice = Random.Range(0f, 1f);
+            if (dice <= bonusLuck)
+            {
+                int pickUpNumber = Mathf.FloorToInt(Random.Range(0, pickUps.Capacity));
+                Vector3Int newTileVector = mapManager.GetComponent<MapManager>().DataToTilesCoordinates(new Vector3Int(x, y, 0));
+                pickUps[pickUpNumber].transform.position = newTileVector;
+                Instantiate(pickUps[pickUpNumber]);
+            }
         }
     }
 
