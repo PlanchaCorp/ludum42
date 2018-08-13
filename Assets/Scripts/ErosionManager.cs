@@ -83,6 +83,17 @@ public class ErosionManager : MonoBehaviour {
                         // On déplace
                         mapManager.Dig(currentTile.GetCoordinates());
                         mapManager.Replenish(dest);
+
+                        // On modifie les dryTiles
+                        if (currentTile.GetIsFlooded())
+                        {
+                            dryTiles.Remove(currentTile);
+
+                        }
+                        if (!terrainInfo[dest.x, dest.y].GetIsFlooded())
+                        {
+                            dryTiles.Add(terrainInfo[dest.x, dest.y]);
+                        }
                     } else
                     {
                         // On enleve le chateau

@@ -21,14 +21,14 @@ public class WaterTimer : MonoBehaviour {
         {
             if (waterTide.IsStill())
             {
-                time += waterTide.GetRisingTimer() * 2;
+                time += waterTide.GetPeriod() * 2;
             } else
             {
-                time += waterTide.GetRisingTimer() * 3;
+                time += waterTide.GetPeriod() * 3;
             }
         } else if (!waterTide.IsStill())
         {
-            time += waterTide.GetRisingTimer();
+            time += waterTide.GetPeriod();
         }
 
         timer.SetText("Next Wave : " + time.ToString("F1"));

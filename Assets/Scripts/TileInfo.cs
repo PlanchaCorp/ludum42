@@ -140,15 +140,24 @@ public class TileInfo{
 
     public bool ShallFlood( int actualLayer )
     {
+        bool neighbourFlooded = false;
+        foreach ( Vector3Int n in GetNeighboursCoordinates())
+        {
+            if ( manager.GetTerrainInfo()[n.x, n.y].GetIsFlooded() )
+            {
+                neighbourFlooded = true;
+            }
+        }
         if (!GetIsFlooded() &&
             GetHeight() < actualLayer &&
-            GetWallState() == WallState.NOTHING )
+            GetWallState() == WallState.NOTHING &&
+            neighbourFlooded )
         {
             return true;
         } else
         {
             return false;
-        }         
+        }
     }
 
     public bool ShallGetEroded()
