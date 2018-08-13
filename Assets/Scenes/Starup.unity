@@ -714,7 +714,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Press "space bar" when you ready to play game
+  m_Text: Press "space bar" when you're ready to play game
 --- !u!222 &452797152
 CanvasRenderer:
   m_ObjectHideFlags: 0
