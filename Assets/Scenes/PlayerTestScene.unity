@@ -334,11 +334,6 @@ Prefab:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114426031113982220, guid: 505d8c01ea0583140a461c508f99025e,
-        type: 2}
-      propertyPath: digCursor
-      value: 
-      objectReference: {fileID: 2800000, guid: 4361a3333231504459208ea0564066a8, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 505d8c01ea0583140a461c508f99025e, type: 2}
   m_IsPrefabAsset: 0
@@ -582,7 +577,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c15acea5fdadac344a4965003b1a6806, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageMultiplier: 0
+  damageMultiplier: 4
 --- !u!4 &886327455
 Transform:
   m_ObjectHideFlags: 0

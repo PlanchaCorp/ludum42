@@ -96,6 +96,18 @@ public class TileInfo{
     }
 	public void Dig(){
 		this.height -= 1;
+        if (!isFlooded && height < GameObject.FindGameObjectWithTag("WaterTilemap").GetComponent<WaterTide>().GetLevel())
+        {
+            TileInfo[,] terrainInfo = GameObject.FindGameObjectWithTag("Manager").GetComponent<MapManager>().GetTerrainInfo();
+            Refresh();
+            if (isFlooded)
+            {
+                foreach(Vector3Int neighbourLocation in GetNeighboursCoordinates())
+                {
+                    terrainInfo[neighbourLocation.x, neighbourLocation.y].Refresh();
+                }
+            }
+        }
     }
 	public void Rep(){
 		this.height += 1;
@@ -104,6 +116,17 @@ public class TileInfo{
             SetIsFlooded(false);
         }
 	}
+    public void Refresh()
+    {
+        TileInfo[,] terrainInfo = GameObject.FindGameObjectWithTag("Manager").GetComponent<MapManager>().GetTerrainInfo();
+        foreach (Vector3Int neighbourLocation in GetNeighboursCoordinates())
+        {
+            if (terrainInfo[neighbourLocation.x, neighbourLocation.y].GetIsFlooded())
+            {
+                SetIsFlooded(true);
+            }
+        }
+    }
     public void DecreaseDurability(float value)
     {
         this.durability -= value;
