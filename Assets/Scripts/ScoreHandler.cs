@@ -9,7 +9,7 @@ public class ScoreHandler : MonoBehaviour {
     private TextMeshProUGUI score;
     private TextMeshProUGUI wave;
     public static float scoreValue = 0;
-    public static int waveNumber = 0;
+    public static int waveNumber = 1;
     private bool waveChecked = false;
 
     // Use this for initialization
