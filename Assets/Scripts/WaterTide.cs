@@ -135,6 +135,11 @@ public class WaterTide : MonoBehaviour {
         return timeLeft;
     }
 
+    public int GetActualLayer()
+    {
+        return actualLayer;
+    }
+
     public bool WillRise()
     {
         return gonnaRise;
@@ -143,6 +148,11 @@ public class WaterTide : MonoBehaviour {
     public bool IsStill()
     {
         return state == TideState.STILL;
+    }
+
+    public int GetLevel()
+    {
+        return actualLayer;
     }
     
     public void SetTideState(TideState state)
@@ -274,8 +284,5 @@ public class WaterTide : MonoBehaviour {
         }
         submergedTiles = tileModified;
         Invoke("Flood",0.5f);
-       
-
-
     }
 }

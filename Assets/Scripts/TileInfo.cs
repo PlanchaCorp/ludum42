@@ -84,22 +84,26 @@ public class TileInfo{
     public void SetIsFlooded(bool value){
         this.isFlooded = value;
         this.isSea = false;
-        Vector3Int vectorPosition = new Vector3Int(0,0,0);
-        vectorPosition.x = TileInfo.mapSize / 2 - this.x;
-        vectorPosition.y = TileInfo.mapSize / 2 - this.y;
+        Vector3Int dataPosition = new Vector3Int(this.x, this.y, 0);
+        Vector3Int vectorPosition = GameObject.FindGameObjectWithTag("Manager").GetComponent<MapManager>().DataToTilesCoordinates(dataPosition);
         if(value){
-            TileInfo.waterTileMap.SetTile(vectorPosition,waterTile);
+            GameObject.FindGameObjectWithTag("WaterTilemap").GetComponent<Tilemap>().SetTile(vectorPosition,waterTile);
         }else{
-            TileInfo.waterTileMap.SetTile(vectorPosition,null);
+            Debug.Log(vectorPosition);
+            GameObject.FindGameObjectWithTag("WaterTilemap").GetComponent<Tilemap>().SetTile(vectorPosition, null);
         }
         waterTileMap.GetComponent<TilemapCollider2D>().enabled = false;
         waterTileMap.GetComponent<TilemapCollider2D>().enabled = true;
     }
 	public void Dig(){
 		this.height -= 1;
-	}
+    }
 	public void Rep(){
 		this.height += 1;
+        if (height >= GameObject.FindGameObjectWithTag("WaterTilemap").GetComponent<WaterTide>().GetLevel())
+        {
+            SetIsFlooded(false);
+        }
 	}
     public void DecreaseDurability(float value)
     {
