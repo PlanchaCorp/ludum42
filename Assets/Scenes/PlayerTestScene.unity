@@ -364,6 +364,68 @@ Prefab:
       propertyPath: m_isInputParsingRequired
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114199670499046826, guid: 505d8c01ea0583140a461c508f99025e,
+        type: 2}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: fe22716e29330d84ba8e13bf7fe3c5e0,
+        type: 2}
+    - target: {fileID: 114199670499046826, guid: 505d8c01ea0583140a461c508f99025e,
+        type: 2}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 21344302438034214, guid: fe22716e29330d84ba8e13bf7fe3c5e0,
+        type: 2}
+    - target: {fileID: 224850198637449204, guid: 505d8c01ea0583140a461c508f99025e,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 2.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 224850198637449204, guid: 505d8c01ea0583140a461c508f99025e,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -31.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 114199670499046826, guid: 505d8c01ea0583140a461c508f99025e,
+        type: 2}
+      propertyPath: m_text
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 114199670499046826, guid: 505d8c01ea0583140a461c508f99025e,
+        type: 2}
+      propertyPath: m_textInfo.characterCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 224850198637449204, guid: 505d8c01ea0583140a461c508f99025e,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 114199670499046826, guid: 505d8c01ea0583140a461c508f99025e,
+        type: 2}
+      propertyPath: m_textAlignment
+      value: 516
+      objectReference: {fileID: 0}
+    - target: {fileID: 114199670499046826, guid: 505d8c01ea0583140a461c508f99025e,
+        type: 2}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114199670499046826, guid: 505d8c01ea0583140a461c508f99025e,
+        type: 2}
+      propertyPath: m_fontSize
+      value: 48
+      objectReference: {fileID: 0}
+    - target: {fileID: 114199670499046826, guid: 505d8c01ea0583140a461c508f99025e,
+        type: 2}
+      propertyPath: m_fontSizeBase
+      value: 48
+      objectReference: {fileID: 0}
+    - target: {fileID: 114199670499046826, guid: 505d8c01ea0583140a461c508f99025e,
+        type: 2}
+      propertyPath: m_firstOverflowCharacterIndex
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 505d8c01ea0583140a461c508f99025e, type: 2}
   m_IsPrefabAsset: 0
@@ -425,7 +487,6 @@ MonoBehaviour:
   actualLayer: 2
   maxLayer: 7
   minLayer: 1
-  period: 2
 --- !u!483693784 &755508716
 TilemapRenderer:
   m_ObjectHideFlags: 0
