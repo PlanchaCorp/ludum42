@@ -344,6 +344,11 @@ Prefab:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114426031113982220, guid: 505d8c01ea0583140a461c508f99025e,
+        type: 2}
+      propertyPath: digCursor
+      value: 
+      objectReference: {fileID: 2800000, guid: 4361a3333231504459208ea0564066a8, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 505d8c01ea0583140a461c508f99025e, type: 2}
   m_IsPrefabAsset: 0
@@ -438,8 +443,8 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1125569257
-  m_SortingLayer: 1
+  m_SortingLayerID: 1028222687
+  m_SortingLayer: 2
   m_SortingOrder: 2
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
