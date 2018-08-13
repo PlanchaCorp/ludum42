@@ -20,6 +20,7 @@ public class WaterTide : MonoBehaviour {
     [SerializeField] private List<GameObject> pickUps;
     [SerializeField] private float bonusLuck = 0.01f;
     
+    [SerializeField]
     private float period = 20.0f;
     private bool gonnaRise = false;
     private int rising = 0;
