@@ -22,12 +22,13 @@ public class WaterTide : MonoBehaviour {
     [SerializeField] private GameObject mapManager;
     [SerializeField] private List<GameObject> pickUps;
     [SerializeField] private float bonusLuck = 0.01f;
-
-    private int startingLayer = 2;
-    public int maxLayer = 6;
-    public int minLayer = 1;
-    public float period = 20.0f;
+    [SerializeField] private int startingLayer = 1;
+    [SerializeField] public int maxLayer = 6;
+    [SerializeField] public int minLayer = 1;
+    [SerializeField] public float period = 10.0f;
     private bool gonnaRise = false;
+    private int rising = 0;
+    
     private float timeLeft;
     private TileInfo[,] terrainTilesInfo;
     private List<TileInfo> submergedTiles = new List<TileInfo>();
@@ -51,27 +52,11 @@ public class WaterTide : MonoBehaviour {
         water = GameObject.FindGameObjectWithTag(waterTag);
         erosion = GameObject.FindGameObjectWithTag(managerTag);
         submergedTiles.AddRange(seaTiles);
-       // Invoke("Unflood", 0.5f);
-		Invoke("Flood",0.5f);
+        actualLayer = startingLayer;
+        //Invoke("Unflood", 0.5f);
+        Invoke("Flood", 0.5f);
         Invoke("ChangeTide", period);
 	}
-		/* 
-	if (water != null)
-        {
-            startingLayer = water.GetComponent<TilemapRenderer>().sortingOrder;
-            state = TideState.STILL;
-            risingTimer = 4.0f;
-            timeLeft = risingTimer;
-            actualLayer = startingLayer;
-            GameObject.FindGameObjectsWithTag("Grid").First().GetComponent<IslandGenerator>().SetWater(actualLayer);
-            // Change the state of the tide with the current state selected (after 'period' seconds)
-            
-        } else
-        {
-            Debug.LogError("Could not get Water with Tag " + waterTag);
-        }
-    }
-*/	
 	// Update is called once per frame
 	void Update () {
         CheatyStateSettings();
@@ -108,6 +93,7 @@ public class WaterTide : MonoBehaviour {
                 break;
         }
         //UpdateTideLayer();
+       
         erosion.GetComponent<ErosionManager>().Erode();
         Tide();
 
@@ -138,6 +124,11 @@ public class WaterTide : MonoBehaviour {
     public int GetActualLayer()
     {
         return actualLayer;
+    }
+
+    public int GetMaxLayer()
+    {
+        return maxLayer;
     }
 
     public bool WillRise()
@@ -193,14 +184,18 @@ public class WaterTide : MonoBehaviour {
             switch (state)
             {
                 case TideState.STILL:
-                    if (gonnaRise)
+
+                    if (rising < 2)
                     {
                         state = TideState.RISING;
+                        rising++;
                     } else
                     {
                         state = TideState.FALLING;
+                        rising = 0;
                     }
                     gonnaRise = !gonnaRise;
+                   
                     break;
                 case TideState.FALLING:
                     state = TideState.STILL;
@@ -252,6 +247,7 @@ public class WaterTide : MonoBehaviour {
     
 
     public void  Flood(){
+
         terrainTilesInfo = mapManager.GetComponent<MapManager>().GetTerrainInfo(); 
         List<TileInfo> tileDone = new List<TileInfo>();
         List<TileInfo> tileModified = new List<TileInfo>();
@@ -283,6 +279,6 @@ public class WaterTide : MonoBehaviour {
             }
         }
         submergedTiles = tileModified;
-        Invoke("Flood",0.5f);
+        Invoke("Flood", 0.5f);
     }
 }

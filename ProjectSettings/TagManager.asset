@@ -16,6 +16,8 @@ TagManager:
   - Bonus
   - HotbarCanvas
   - SandCountText
+  - WaveNumber
+  - ScoreText
   layers:
   - Default
   - TransparentFX
@@ -56,14 +58,14 @@ TagManager:
   - name: Terrain
     uniqueID: 1125569257
     locked: 0
-  - name: Water
-    uniqueID: 1028222687
-    locked: 0
   - name: Structure
     uniqueID: 2792260961
     locked: 0
   - name: Character
     uniqueID: 401654443
+    locked: 0
+  - name: Water
+    uniqueID: 1028222687
     locked: 0
   - name: UI
     uniqueID: 2296856251

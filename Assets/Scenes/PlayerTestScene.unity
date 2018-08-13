@@ -162,6 +162,16 @@ Prefab:
       propertyPath: uiHotbarCanvas
       value: 
       objectReference: {fileID: 17754803}
+    - target: {fileID: 212932835221762310, guid: cbd418fa49bbc31498ca7cfbe3cdddf0,
+        type: 2}
+      propertyPath: m_SortingLayerID
+      value: 401654443
+      objectReference: {fileID: 0}
+    - target: {fileID: 212932835221762310, guid: cbd418fa49bbc31498ca7cfbe3cdddf0,
+        type: 2}
+      propertyPath: m_SortingLayer
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbd418fa49bbc31498ca7cfbe3cdddf0, type: 2}
   m_IsPrefabAsset: 0
@@ -334,6 +344,26 @@ Prefab:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114592806838934848, guid: 505d8c01ea0583140a461c508f99025e,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114592806838934848, guid: 505d8c01ea0583140a461c508f99025e,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114167226598394494, guid: 505d8c01ea0583140a461c508f99025e,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114167226598394494, guid: 505d8c01ea0583140a461c508f99025e,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 505d8c01ea0583140a461c508f99025e, type: 2}
   m_IsPrefabAsset: 0
@@ -382,7 +412,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waterTile: {fileID: 11400000, guid: f675243b986e55f4f9fdacb5b74b5089, type: 2}
-  state: 0
+  state: 2
   actualLayer: 2
   water: {fileID: 755508713}
   erosion: {fileID: 886327452}
@@ -393,9 +423,10 @@ MonoBehaviour:
   - {fileID: 1949362699186768, guid: d842edbbdacbdc648a423d165988190c, type: 2}
   - {fileID: 1683848578763382, guid: a62353516786db445846b98f086753a0, type: 2}
   bonusLuck: 0.05
-  maxLayer: 6
+  startingLayer: 2
+  maxLayer: 7
   minLayer: 1
-  period: 5
+  period: 10
 --- !u!483693784 &755508716
 TilemapRenderer:
   m_ObjectHideFlags: 0
@@ -429,13 +460,13 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1028222687
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 2
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
-  m_SortOrder: 0
+  m_SortOrder: 2
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
 --- !u!1839735485 &755508717
@@ -541,6 +572,7 @@ GameObject:
   - component: {fileID: 886327455}
   - component: {fileID: 886327454}
   - component: {fileID: 886327453}
+  - component: {fileID: 886327456}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Manager
@@ -577,7 +609,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c15acea5fdadac344a4965003b1a6806, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageMultiplier: 0
+  damageMultiplier: 4
 --- !u!4 &886327455
 Transform:
   m_ObjectHideFlags: 0
@@ -591,6 +623,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &886327456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 886327452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 934e7317448a994428419607d0b72ebb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &957858886
 GameObject:
   m_ObjectHideFlags: 0
@@ -853,7 +896,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1502706335
-  m_SortingLayer: 3
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}

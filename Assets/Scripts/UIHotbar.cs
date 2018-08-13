@@ -16,6 +16,8 @@ public class UIHotbar : MonoBehaviour {
     [SerializeField] GameObject IconDigBar;
     [SerializeField] GameObject IconBreathBar;
     [SerializeField] Texture2D digCursor;
+    [SerializeField] Texture2D bucketCursor;
+    [SerializeField] Texture2D hammerCursor;
 
 
     // Use this for initialization
@@ -91,6 +93,7 @@ public class UIHotbar : MonoBehaviour {
         switchSelector2.sprite = Sprite1;
         switchSelector3.sprite = Sprite1;
         switchStat = 1;
+        Cursor.SetCursor(digCursor, new Vector2(0, 8), CursorMode.Auto);
     }
 
     private void SelectBucket()
@@ -99,7 +102,7 @@ public class UIHotbar : MonoBehaviour {
         switchSelector1.sprite = Sprite1;
         switchSelector3.sprite = Sprite1;
         switchStat = 2;
-        Cursor.SetCursor(digCursor, new Vector2(0, 4), CursorMode.Auto);
+        Cursor.SetCursor(bucketCursor, new Vector2(0, 8), CursorMode.Auto);
     }
 
     private void SelectHammer()
@@ -108,6 +111,7 @@ public class UIHotbar : MonoBehaviour {
         switchSelector1.sprite = Sprite1;
         switchSelector3.sprite = Sprite2;
         switchStat = 3;
+        Cursor.SetCursor(hammerCursor, new Vector2(0, 8), CursorMode.Auto);
     }
 
     public int GetSwitch()
