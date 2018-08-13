@@ -134,20 +134,32 @@ public class MapManager : MonoBehaviour
     /// <param name="tileCoordinates"></param>
     public void Dig(Vector3Int diggingPosition)
     {
-        // On modifie les données de la map
-        mapData[diggingPosition.x, diggingPosition.y]--;
 
-        // On affiche la nouvelle Tile
-        Tile[] tiles = grid.GetComponent<IslandGenerator>().GetSandTiles();
-        Vector3Int tilesDiggingPosition = DataToTilesCoordinates(diggingPosition);
-        foreach (Tilemap terrainTilemap in terrainTilemaps)
+        if (terrainInfo[diggingPosition.x, diggingPosition.y].GetWallState() != TileInfo.WallState.NOTHING)
         {
-            int height = terrainInfo[diggingPosition.x, diggingPosition.y].GetHeight();
-            if (terrainTilemap.GetTile(tilesDiggingPosition) != null && height > 0)
+            // Si il y a un chateau on le casse
+            terrainInfo[diggingPosition.x, diggingPosition.y].SetWallState(TileInfo.WallState.NOTHING);
+            DisplayCastleSprite(diggingPosition);
+        } else
+        {
+            // On modifie les données de la map
+            mapData[diggingPosition.x, diggingPosition.y]--;
+
+            // On affiche la nouvelle Tile
+            Tile[] tiles = grid.GetComponent<IslandGenerator>().GetSandTiles();
+            Vector3Int tilesDiggingPosition = DataToTilesCoordinates(diggingPosition);
+            foreach (Tilemap terrainTilemap in terrainTilemaps)
             {
-                terrainInfo[diggingPosition.x, diggingPosition.y].Dig();
-                terrainTilemap.SetTile(tilesDiggingPosition, tiles[height - 1]);
+                int height = terrainInfo[diggingPosition.x, diggingPosition.y].GetHeight();
+                if (terrainTilemap.GetTile(tilesDiggingPosition) != null && height > 0)
+                {
+                    terrainInfo[diggingPosition.x, diggingPosition.y].Dig();
+                    terrainTilemap.SetTile(tilesDiggingPosition, tiles[height - 1]);
+                }
             }
+
+            // On essaye d'afficher l'eau
+            terrainInfo[diggingPosition.x, diggingPosition.y].DisplayWater();
         }
     }
 
@@ -176,6 +188,9 @@ public class MapManager : MonoBehaviour
                 replenished = true;
             }
         }
+        // On essaye d'afficher l'eau
+        terrainInfo[replenishPosition.x, replenishPosition.y].DisplayWater();
+
         return replenished;
     }
     
@@ -197,7 +212,7 @@ public class MapManager : MonoBehaviour
             return true;
         } else
         {
-            Debug.LogWarning("Can't build on water");
+            Debug.LogWarning("Can't build");
             return false;
         }
     }
@@ -292,6 +307,11 @@ public class MapManager : MonoBehaviour
             {
                 return false;
             }
+            // Check if there is water
+            else if (currentTile.GetIsFlooded())
+            {
+                return false;
+            }
             // Check if there is a tower
             else if ( currentTile.GetWallState() == TileInfo.WallState.TOWER )
             {
@@ -314,7 +334,7 @@ public class MapManager : MonoBehaviour
         switch ( terrainInfo[position.x, position.y].GetWallState() )
         {
             case TileInfo.WallState.NOTHING:
-                Debug.Log("Not a castle sprite");
+                tilemap.SetTile(tilePosition, null);
                 break;
             case TileInfo.WallState.TOWER:
                 tilemap.SetTile(tilePosition, tower);

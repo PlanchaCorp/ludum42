@@ -72,7 +72,7 @@ public class WaterTide : MonoBehaviour {
                 actualLayer--;
                 for(int i = 0; i<terrainTilesInfo.GetLength(0);i++ ){
                     for(int j = 0; j<terrainTilesInfo.GetLength(1);j++ ){
-                            if(terrainTilesInfo[i,j].GetHeight() > actualLayer - 1 && terrainTilesInfo[i,j].GetIsFlooded())
+                            if(terrainTilesInfo[i,j].ShallFlood())
                             {
                                 RollTheBonusDice(i, j);
                                 terrainTilesInfo[i,j].SetIsFlooded(false);
@@ -232,8 +232,6 @@ public class WaterTide : MonoBehaviour {
     }
     */    
         
-    
-
     public void  Flood(){
 
         terrainTilesInfo = mapManager.GetComponent<MapManager>().GetTerrainInfo(); 

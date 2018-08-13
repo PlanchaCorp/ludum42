@@ -7,7 +7,7 @@ public class TileInfo{
 
     private int x, y, height;
     private bool isFlooded, isSea;
-    private float durability;
+    private float damage;
 
     private static Tilemap waterTileMap;
     private static AnimatedTile waterTile;
@@ -25,7 +25,7 @@ public class TileInfo{
     private WallState state;
 
     public TileInfo(Vector3Int vector, int height, bool flooded, bool isSea){
-        this.durability = 1.0f;
+        this.damage = 1.0f;
         this.isFlooded = flooded;
         this.isSea = isSea;
 		this.height = height;
@@ -91,7 +91,7 @@ public class TileInfo{
     public void DisplayWater()
     {
         Vector3Int vectorPosition = manager.DataToTilesCoordinates(new Vector3Int(this.x, this.y, 0));
-        if (this.isFlooded)
+        if (isFlooded)
         {
             waterTileMap.SetTile(vectorPosition, waterTile);
         }
@@ -105,7 +105,6 @@ public class TileInfo{
 		this.height -= 1;
         if (!isFlooded && height < GameObject.FindGameObjectWithTag("WaterTilemap").GetComponent<WaterTide>().GetLevel())
         {
-            TileInfo[,] terrainInfo = manager.GetComponent<MapManager>().GetTerrainInfo();
             Refresh();
         }
     }
@@ -149,23 +148,37 @@ public class TileInfo{
         } else
         {
             return false;
+        }         
+    }
+
+    public bool ShallGetEroded()
+    {
+        if (state != WallState.NOTHING)
+        {
+            if (damage >= 2)
+            {
+                return true;
+            }
+        } else if (damage >= 1)
+        {
+            return true;
         }
-         
+        return false;
     }
 
     public void DecreaseDurability(float value)
     {
-        this.durability -= value;
+        this.damage -= value;
     }
 
-    public float GetDurability()
+    public float GetDamageAmount()
     {
-        return this.durability;
+        return this.damage;
     }
 
     public void ResetDurability()
     {
-        this.durability = 1.0f;
+        this.damage = 1.0f;
     }
 
     public void SetWallState( WallState state)

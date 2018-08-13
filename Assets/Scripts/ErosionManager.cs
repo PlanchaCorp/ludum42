@@ -72,15 +72,23 @@ public class ErosionManager : MonoBehaviour {
                 currentTile.DecreaseDurability((float)cpt * damageMultiplier);
 
                 // On regarde si la durabilité de la Tile est inférieure à 0.
-                // Dans ce cas la, on déplace la Tile.
-                if (currentTile.GetDurability() <= 0)
+                // Dans ce cas la, on déplace la Tile. ou enleve le chateau
+                if (currentTile.ShallGetEroded())
                 {
-                    // On trouve le bon voisin
-                    Vector3Int dest = FindNeighbour(currentTile, mapData, currentTile.GetNeighboursCoordinates(), currentTile.GetCoordinates());
+                    if (currentTile.GetWallState() != TileInfo.WallState.NOTHING)
+                    {
+                        // On trouve le bon voisin
+                        Vector3Int dest = FindNeighbour(currentTile, mapData, currentTile.GetNeighboursCoordinates(), currentTile.GetCoordinates());
 
-                    // On déplace
-                    mapManager.Dig(currentTile.GetCoordinates());
-                    mapManager.Replenish(dest);
+                        // On déplace
+                        mapManager.Dig(currentTile.GetCoordinates());
+                        mapManager.Replenish(dest);
+                    } else
+                    {
+                        // On enleve le chateau
+                        currentTile.SetWallState(TileInfo.WallState.NOTHING);
+                        mapManager.DisplayCastleSprite(currentTile.GetCoordinates());
+                    }
 
                     currentTile.ResetDurability();
                 }
