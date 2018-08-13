@@ -263,7 +263,7 @@ public class WaterTide : MonoBehaviour {
                                 tileDone.Add(terrainTilesInfo[neighbour.x,neighbour.y]);
                         }else if(!tileDone.Contains(terrainTilesInfo[neighbour.x,neighbour.y])){
                             if(terrainTilesInfo[neighbour.x,neighbour.y].GetHeight()<actualLayer){
-                                terrainTilesInfo[neighbour.x,neighbour.y].SetIsFlooded(true);
+                                //terrainTilesInfo[neighbour.x,neighbour.y].SetIsFlooded(true);
                                 tileDone.Add(terrainTilesInfo[neighbour.x,neighbour.y]);
                                 tileModified.Add(terrainTilesInfo[neighbour.x,neighbour.y]);
                             }

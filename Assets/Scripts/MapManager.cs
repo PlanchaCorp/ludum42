@@ -179,7 +179,7 @@ public class MapManager : MonoBehaviour
     /// Build a sand castle
     /// </summary>
     /// <param name="buildingPosition"></param>
-    public void Build(Vector3Int buildingPosition)
+    public bool Build(Vector3Int buildingPosition)
     {
         // On verifie si l'on est sur du sable et qu'il n'y a rien
         if ( !terrainInfo[buildingPosition.x, buildingPosition.y].GetIsFlooded() &&
@@ -191,11 +191,11 @@ public class MapManager : MonoBehaviour
 
             // On affiche un chateau            
             DisplayCastleSprite(buildingPosition);
-
+            return true;
         } else
         {
             Debug.LogWarning("Can't build on water");
-            return;
+            return false;
         }
     }
 
