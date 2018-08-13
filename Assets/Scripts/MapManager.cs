@@ -175,6 +175,7 @@ public class MapManager : MonoBehaviour
 
         // On affiche la nouvelle Tile
         Tile[] tiles = grid.GetComponent<IslandGenerator>().GetSandTiles();
+        int i = 0;
         Vector3Int tilesReplenishPosition = DataToTilesCoordinates(replenishPosition);
         foreach (Tilemap terrainTilemap in terrainTilemaps)
         {
@@ -207,6 +208,7 @@ public class MapManager : MonoBehaviour
             TryCreateWalls(buildingPosition);
             // On affiche un chateau            
             DisplayCastleSprite(buildingPosition);
+
             return true;
         } else
         {
@@ -346,6 +348,10 @@ public class MapManager : MonoBehaviour
             case TileInfo.WallState.WALL_RIGHT:
                 tilemap.SetTile(tilePosition, wallRight);
                 break;
+
+               
         }
+        tilemap.GetComponent<TilemapCollider2D>().enabled = false;
+        tilemap.GetComponent<TilemapCollider2D>().enabled = true;
     }
 }

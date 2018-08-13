@@ -20,10 +20,11 @@ public class WaterTide : MonoBehaviour {
     [SerializeField] private List<GameObject> pickUps;
     [SerializeField] private float bonusLuck = 0.01f;
     
+    [SerializeField]
     private float period = 20.0f;
     private bool gonnaRise = false;
     private int rising = 0;
-    private int maxLayer = 6;
+    private int maxLayer = 7;
     private int minLayer = 1;
     private int startingLayer = 1;
     private int actualLayer;
@@ -177,7 +178,10 @@ public class WaterTide : MonoBehaviour {
                 {
                     state = TideState.FALLING;
                     rising = 0;
-                }                   
+                }
+                if (rising >= maxLayer) {
+                    rising = minLayer;
+                }
                 break;
             default:
                 state = TideState.STILL;
