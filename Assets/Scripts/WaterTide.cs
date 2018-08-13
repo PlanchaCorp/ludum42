@@ -177,7 +177,10 @@ public class WaterTide : MonoBehaviour {
                 {
                     state = TideState.FALLING;
                     rising = 0;
-                }                   
+                }
+                if (rising >= maxLayer) {
+                    rising = minLayer;
+                }
                 break;
             default:
                 state = TideState.STILL;
