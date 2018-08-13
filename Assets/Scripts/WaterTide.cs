@@ -22,11 +22,13 @@ public class WaterTide : MonoBehaviour {
     [SerializeField] private GameObject mapManager;
     [SerializeField] private List<GameObject> pickUps;
     [SerializeField] private float bonusLuck = 0.01f;
-    [SerializeField] private int startingLayer = 2;
+    [SerializeField] private int startingLayer = 1;
     [SerializeField] public int maxLayer = 6;
     [SerializeField] public int minLayer = 1;
     [SerializeField] public float period = 10.0f;
     private bool gonnaRise = false;
+    private int rising = 0;
+    
     private float timeLeft;
     private TileInfo[,] terrainTilesInfo;
     private List<TileInfo> submergedTiles = new List<TileInfo>();
@@ -91,6 +93,7 @@ public class WaterTide : MonoBehaviour {
                 break;
         }
         //UpdateTideLayer();
+       
         erosion.GetComponent<ErosionManager>().Erode();
         Tide();
 
@@ -121,6 +124,11 @@ public class WaterTide : MonoBehaviour {
     public int GetActualLayer()
     {
         return actualLayer;
+    }
+
+    public int GetMaxLayer()
+    {
+        return maxLayer;
     }
 
     public bool WillRise()
@@ -176,14 +184,18 @@ public class WaterTide : MonoBehaviour {
             switch (state)
             {
                 case TideState.STILL:
-                    if (gonnaRise)
+
+                    if (rising < 2)
                     {
                         state = TideState.RISING;
+                        rising++;
                     } else
                     {
                         state = TideState.FALLING;
+                        rising = 0;
                     }
                     gonnaRise = !gonnaRise;
+                   
                     break;
                 case TideState.FALLING:
                     state = TideState.STILL;
@@ -235,17 +247,11 @@ public class WaterTide : MonoBehaviour {
     public void  Flood(){
 
         terrainTilesInfo = mapManager.GetComponent<MapManager>().GetTerrainInfo(); 
-
         List<TileInfo> tileDone = new List<TileInfo>();
         List<TileInfo> tileModified = new List<TileInfo>();
-
         while(submergedTiles.Count() != 0){
-
-            // Get the first Tile
             TileInfo tile = submergedTiles[0];
             submergedTiles.RemoveAt(0);
-
-            // Check if the tile is not out of Map Bounds
             if (tile.GetCoordinates()[0] == 0 ||
                  tile.GetCoordinates()[0] == terrainTilesInfo.GetLength(0) - 1 ||
                  tile.GetCoordinates()[1] == 0 ||
@@ -253,27 +259,18 @@ public class WaterTide : MonoBehaviour {
             {
 
             }else{
-
-                // Get the neighbours of the tile
                 Vector3Int[] neighbours = tile.GetNeighboursCoordinates();
                 foreach(Vector3Int neighbour in neighbours){
-                    TileInfo neighbourInfo = terrainTilesInfo[neighbour.x, neighbour.y];
-                    // If neighbours hasn't already been done
-                    if (!tileDone.Contains(neighbourInfo))
-                    {
-                        // Check if the neighbour is flooded
-                        if(neighbourInfo.GetIsFlooded())
-                        {
-                            // Neighbour is Flooded =>
-                            // Mark it as Done
-                            submergedTiles.Add(neighbourInfo);
-                            tileDone.Add(neighbourInfo);
-
-                        } else if (neighbourInfo.ShallFlood(actualLayer))
-                        {
-                            neighbourInfo.SetIsFlooded(true);
-                            tileDone.Add(neighbourInfo);
-                            tileModified.Add(neighbourInfo);
+                    if(!tileDone.Contains(terrainTilesInfo[neighbour.x,neighbour.y])){
+                        if(terrainTilesInfo[neighbour.x,neighbour.y].GetIsFlooded()){
+                                submergedTiles.Add(terrainTilesInfo[neighbour.x,neighbour.y]);
+                                tileDone.Add(terrainTilesInfo[neighbour.x,neighbour.y]);
+                        }else if(!tileDone.Contains(terrainTilesInfo[neighbour.x,neighbour.y])){
+                            if(terrainTilesInfo[neighbour.x,neighbour.y].GetHeight()<actualLayer){
+                                terrainTilesInfo[neighbour.x,neighbour.y].SetIsFlooded(true);
+                                tileDone.Add(terrainTilesInfo[neighbour.x,neighbour.y]);
+                                tileModified.Add(terrainTilesInfo[neighbour.x,neighbour.y]);
+                            }
                         }
                    }
                 }
