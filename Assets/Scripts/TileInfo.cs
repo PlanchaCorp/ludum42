@@ -68,12 +68,12 @@ public class TileInfo{
     {
         Vector3Int pos = new Vector3Int(this.x, this.y, 0);
         Vector3Int[] neighbours = new Vector3Int[6];
-        neighbours[0] = new Vector3Int(this.x, this.y+1,0);
-        neighbours[1] = new Vector3Int(this.x, this.y-1,0);
-        neighbours[2] = new Vector3Int(this.x-1, this.y,0);
-        neighbours[3] = new Vector3Int(this.x+1, this.y,0);
-        neighbours[4] = new Vector3Int(this.x-1+this.y%2,this.y+1,0);
-        neighbours[5] = new Vector3Int(this.x-1+this.y%2,this.y-1,0);
+        neighbours[0] = GetTopLeft(pos);
+        neighbours[1] = GetTopRight(pos);
+        neighbours[2] = GetBottomLeft(pos);
+        neighbours[3] = GetBottomRight(pos);
+        neighbours[4] = GetLeft(pos);
+        neighbours[5] = GetRight(pos);
         return neighbours;
     }
 
@@ -93,8 +93,7 @@ public class TileInfo{
 
     public void DisplayWater()
     {
-        Vector3Int dataPosition = new Vector3Int(this.x, this.y, 0);
-        Vector3Int vectorPosition = manager.DataToTilesCoordinates(dataPosition);
+        Vector3Int vectorPosition = manager.DataToTilesCoordinates(new Vector3Int(this.x, this.y, 0));
         if (this.isFlooded)
         {
             waterTileMap.SetTile(vectorPosition, waterTile);
@@ -103,11 +102,6 @@ public class TileInfo{
         {
             waterTileMap.SetTile(vectorPosition, null);
         }
-
-        /*
-        waterTileMap.GetComponent<TilemapCollider2D>().enabled = false;
-        waterTileMap.GetComponent<TilemapCollider2D>().enabled = true;
-        */
     }
 
 	public void Dig(){

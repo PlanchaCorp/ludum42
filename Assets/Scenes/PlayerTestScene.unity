@@ -382,7 +382,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waterTile: {fileID: 11400000, guid: f675243b986e55f4f9fdacb5b74b5089, type: 2}
-  state: 0
+  state: 2
   actualLayer: 2
   water: {fileID: 755508713}
   erosion: {fileID: 886327452}
@@ -435,7 +435,7 @@ TilemapRenderer:
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
-  m_SortOrder: 0
+  m_SortOrder: 2
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
 --- !u!1839735485 &755508717
