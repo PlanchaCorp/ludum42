@@ -162,16 +162,6 @@ Prefab:
       propertyPath: uiHotbarCanvas
       value: 
       objectReference: {fileID: 17754803}
-    - target: {fileID: 50703660409204332, guid: cbd418fa49bbc31498ca7cfbe3cdddf0,
-        type: 2}
-      propertyPath: m_CollisionDetection
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114780517994361118, guid: cbd418fa49bbc31498ca7cfbe3cdddf0,
-        type: 2}
-      propertyPath: water
-      value: 
-      objectReference: {fileID: 755508713}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbd418fa49bbc31498ca7cfbe3cdddf0, type: 2}
   m_IsPrefabAsset: 0
