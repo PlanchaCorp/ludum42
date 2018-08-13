@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<< HEAD
-guid: b353f1fdd02732d43aa013acb1c35dc2
-=======
-guid: c5160d27eb1552c449174f27c6b14958
->>>>>>> fbf21b483fcf4cd2fa3241f0e53a6d7a02d16008
+guid: 4361a3333231504459208ea0564066a8
 TextureImporter:
   fileIDToRecycleName: {}
   externalObjects: {}
@@ -24,7 +20,7 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
-  isReadable: 0
+  isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   grayScaleToAlpha: 0
@@ -35,8 +31,8 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
+    filterMode: 0
+    aniso: 1
     mipBias: -100
     wrapU: 1
     wrapV: 1
@@ -55,7 +51,7 @@ TextureImporter:
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
-  textureType: 8
+  textureType: 7
   textureShape: 1
   singleChannelComponent: 0
   maxTextureSizeSet: 0
@@ -67,7 +63,18 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -79,11 +86,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-<<<<<<< HEAD
-    spriteID: 442e706079f0a94429ba88d7b10d6ac7
-=======
-    spriteID: c86d6902f99605c4fb7a37f96db71db2
->>>>>>> fbf21b483fcf4cd2fa3241f0e53a6d7a02d16008
+    spriteID: da4a991ee8f3bab42a5299a2357039d4
     vertices: []
     indices: 
     edges: []
