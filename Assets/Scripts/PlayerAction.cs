@@ -359,8 +359,11 @@ public class PlayerAction : MonoBehaviour {
     private void Replenish(Vector3Int replenishPosition)
     {
         MapManager mapManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<MapManager>();
-        mapManager.Replenish(mapManager.TilesToDataCoordinates(replenishPosition));
-        ModifySandAmount(-1);
+        bool replenished = mapManager.Replenish(mapManager.TilesToDataCoordinates(replenishPosition));
+        if (replenished)
+        {
+            ModifySandAmount(-1);
+        }
     }
 
     /// <summary>
@@ -372,9 +375,12 @@ public class PlayerAction : MonoBehaviour {
         if (replenishTime <= 0)
         {
             MapManager mapManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<MapManager>();
-            mapManager.Build(mapManager.TilesToDataCoordinates(buildingPosition));
-            replenishTime = maxReplenishCooldown;
-            ModifySandAmount(-1);
+            bool builded = mapManager.Build(mapManager.TilesToDataCoordinates(buildingPosition));
+            if (builded)
+            {
+                replenishTime = maxReplenishCooldown;
+                ModifySandAmount(-1);
+            }
         }
         else
         {
