@@ -15,6 +15,7 @@ public class UIHotbar : MonoBehaviour {
     [SerializeField] Slider DigBar;
     [SerializeField] GameObject IconDigBar;
     [SerializeField] GameObject IconBreathBar;
+    [SerializeField] Texture2D digCursor;
 
 
     // Use this for initialization
@@ -98,6 +99,7 @@ public class UIHotbar : MonoBehaviour {
         switchSelector1.sprite = Sprite1;
         switchSelector3.sprite = Sprite1;
         switchStat = 2;
+        Cursor.SetCursor(digCursor, new Vector2(0, 4), CursorMode.Auto);
     }
 
     private void SelectHammer()

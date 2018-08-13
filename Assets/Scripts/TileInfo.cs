@@ -89,7 +89,6 @@ public class TileInfo{
         if(value){
             GameObject.FindGameObjectWithTag("WaterTilemap").GetComponent<Tilemap>().SetTile(vectorPosition,waterTile);
         }else{
-            Debug.Log(vectorPosition);
             GameObject.FindGameObjectWithTag("WaterTilemap").GetComponent<Tilemap>().SetTile(vectorPosition, null);
         }
         waterTileMap.GetComponent<TilemapCollider2D>().enabled = false;
