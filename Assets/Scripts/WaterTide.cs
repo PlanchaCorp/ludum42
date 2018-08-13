@@ -75,6 +75,7 @@ public class WaterTide : MonoBehaviour {
                 if (actualLayer > minLayer)
                 {
                     actualLayer--;
+                    Fall();
                 }
                 break;
             case TideState.RISING:
@@ -211,7 +212,7 @@ public class WaterTide : MonoBehaviour {
         }
     }
   
-    public void  Flood(){
+    public void Flood(){
 
         terrainInfo = mapManager.GetComponent<MapManager>().GetTerrainInfo(); 
         List<TileInfo> tileDone = new List<TileInfo>();
@@ -247,5 +248,21 @@ public class WaterTide : MonoBehaviour {
         }
         submergedTiles = tileModified;
         Invoke("Flood", 0.5f);
+    }
+
+    private void Fall()
+    {
+        TileInfo[,] terrain = mapManager.GetComponent<MapManager>().GetTerrainInfo();
+        for (int i = 0; i < terrain.GetLength(0); i++)
+        {
+            for (int j = 0; j < terrain.GetLength(1); j++)
+            {
+               if ( terrain[i, j].GetHeight() == actualLayer ||
+                    terrain[i, j].GetHeight() == actualLayer + 1)
+                {
+                    terrain[i, j].SetIsFlooded(false);
+                }
+            }
+        }
     }
 }
