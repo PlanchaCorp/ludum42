@@ -14,7 +14,6 @@ public class WaterTide : MonoBehaviour {
 
     [SerializeField] private AnimatedTile waterTile;
     [SerializeField] private TideState state;
-    [SerializeField] private GameObject water;
     [SerializeField] private GameObject erosion;
     [SerializeField] private GameObject mapManager;
 
@@ -53,7 +52,6 @@ public class WaterTide : MonoBehaviour {
            }
         }
         
-        water = GameObject.FindGameObjectWithTag("WaterTilemap");
         erosion = GameObject.FindGameObjectWithTag("Manager");
         actualLayer = startingLayer;
 

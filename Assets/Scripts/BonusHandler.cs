@@ -36,13 +36,10 @@ public class BonusHandler : MonoBehaviour {
     /// </summary>
     [SerializeField]
     private float pickupDistance = 1.0f;
-
-    GameObject[] terrains;
-
+    
     // Use this for initialization
     void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
-        terrains = GameObject.FindGameObjectsWithTag("TerrainTilemap");
     }
 	
 	// Update is called once per frame
