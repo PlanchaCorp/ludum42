@@ -628,8 +628,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6691b36905143944f87deece2ed518ea, type: 2}
   - {fileID: 11400000, guid: 6a05962c5801f024497a7373d5602839, type: 2}
   - {fileID: 11400000, guid: e798bee14cddab540922700f9cbd8f11, type: 2}
-  - {fileID: 11400000, guid: e798bee14cddab540922700f9cbd8f11, type: 2}
-  - {fileID: 11400000, guid: e798bee14cddab540922700f9cbd8f11, type: 2}
+  - {fileID: 11400000, guid: 741858d437d491443b591b136a38ae17, type: 2}
+  - {fileID: 11400000, guid: 1b1899645831c5248bac908ecb8e35b8, type: 2}
   stoneTiles:
   - {fileID: 11400000, guid: 894ee2e3df07b24458a0fad21904983b, type: 2}
   - {fileID: 11400000, guid: 1d223253ca4c34a4d8784499b39d223d, type: 2}
