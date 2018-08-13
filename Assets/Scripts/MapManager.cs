@@ -192,17 +192,6 @@ public class MapManager : MonoBehaviour
             // On modifie les données
             terrainInfo[buildingPosition.x, buildingPosition.y].SetWallState(TileInfo.WallState.TOWER);
             TryCreateWalls(buildingPosition);
-
-
-            Vector3Int[] neigh = terrainInfo[buildingPosition.x, buildingPosition.y].GetNeighboursCoordinates();
-            foreach(Vector3Int n in neigh)
-            {
-                Debug.Log(n);
-                terrainInfo[n.x, n.y].SetWallState(TileInfo.WallState.TOWER);
-                DisplayCastleSprite(n);
-            }
-
-
             // On affiche un chateau            
             DisplayCastleSprite(buildingPosition);
             return true;

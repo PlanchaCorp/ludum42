@@ -14,30 +14,21 @@ public class ErosionManager : MonoBehaviour {
     /// <summary>
     /// List of all the tiles that aren't water
     /// </summary>
-	List<TileInfo> notEmptyTiles = new List<TileInfo>();
+	List<TileInfo> dryTiles = new List<TileInfo>();
 
 
     void Start () { 
         
         TileInfo[,] terrainTilesInfo = gameObject.GetComponent<MapManager>().GetTerrainInfo();
-        for(int i = 0; i<terrainTilesInfo.GetLength(0);i++ ){
-           for(int j = 0; j<terrainTilesInfo.GetLength(1);j++ ){
-                if(!terrainTilesInfo[i,j].GetIsFlooded()){
-                    notEmptyTiles.Add(terrainTilesInfo[i,j]);
-                }
-           }
-        }
-        /*int[,] mapData = gameObject.GetComponent<MapManager>().GetMapDataCoordinates();
 
-		for(int x=0; x<mapData.GetLength(0); x++){
-			for(int y=0; y<mapData.GetLength(1); y++){
-				if(mapData[x,y] > 0){
-                    Vector3Int vect = new Vector3Int(x, y, 0);
-					TileInfo tile = new TileInfo(vect);
-					notEmptyTiles.Add(tile);
-				};
-			};
-		};*/
+        // Create the notEmptyTiles list
+        for(int i=0; i<terrainTilesInfo.GetLength(0); i++ ){
+            for(int j=0; j<terrainTilesInfo.GetLength(1); j++ ){
+                if(!terrainTilesInfo[i,j].GetIsFlooded()){
+                    dryTiles.Add(terrainTilesInfo[i,j]);
+                }
+            }
+        }
     }
 
 	// Update is called once per frame
@@ -50,9 +41,10 @@ public class ErosionManager : MonoBehaviour {
     /// </summary>
     public void Erode()
     {
-        int[,] mapData = gameObject.GetComponent<MapManager>().GetMapDataCoordinates();
+        MapManager mapManager = gameObject.GetComponent<MapManager>();
+        int[,] mapData = mapManager.GetMapDataCoordinates();
 
-        foreach (TileInfo currentTile in notEmptyTiles)
+        foreach (TileInfo currentTile in dryTiles)
         {
             // On ne traite pas l'erosion sur les extremités
             if (currentTile.GetCoordinates()[0] == 0 ||
@@ -61,17 +53,18 @@ public class ErosionManager : MonoBehaviour {
                  currentTile.GetCoordinates()[1] == mapData.GetLength(1) - 1)
             {
                // Debug.LogWarning("Extremité Atteinte");
-               // return;
+               return;
             }
             else
             {
                 // On teste les contacts avec l'eau
                 // Si il y a contact l'eau => Dégat sur la tile.
-                Vector3Int[] neighbours = currentTile.GetNeighboursCoordinates();
                 int cpt = 0;
-                for (int j = 0; j < 6; j++)
+                TileInfo[,] terrainInfo = mapManager.GetTerrainInfo();
+                foreach ( Vector3Int n in currentTile.GetNeighboursCoordinates())
                 {
-                    if (mapData[neighbours[j].x, neighbours[j].y] == 0)
+                    TileInfo t = terrainInfo[n.x, n.y];
+                    if ( t.GetIsFlooded())
                     {
                         cpt++;
                     }
@@ -83,15 +76,11 @@ public class ErosionManager : MonoBehaviour {
                 if (currentTile.GetDurability() <= 0)
                 {
                     // On trouve le bon voisin
-                    Vector3Int currentTileCoordinates = currentTile.GetCoordinates();
-                    Vector3Int dest;
-                    dest = FindNeighbour(currentTile, mapData, neighbours, currentTileCoordinates);
+                    Vector3Int dest = FindNeighbour(currentTile, mapData, currentTile.GetNeighboursCoordinates(), currentTile.GetCoordinates());
 
                     // On déplace
-                    gameObject.GetComponent<MapManager>()
-                        .Dig(currentTileCoordinates);
-                    gameObject.GetComponent<MapManager>()
-                        .Replenish(dest);
+                    mapManager.Dig(currentTile.GetCoordinates());
+                    mapManager.Replenish(dest);
 
                     currentTile.ResetDurability();
                 }

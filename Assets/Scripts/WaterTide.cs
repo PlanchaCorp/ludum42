@@ -22,11 +22,10 @@ public class WaterTide : MonoBehaviour {
     [SerializeField] private GameObject mapManager;
     [SerializeField] private List<GameObject> pickUps;
     [SerializeField] private float bonusLuck = 0.01f;
-
-    private int startingLayer = 2;
-    public int maxLayer = 6;
-    public int minLayer = 1;
-    public float period = 20.0f;
+    [SerializeField] private int startingLayer = 2;
+    [SerializeField] public int maxLayer = 6;
+    [SerializeField] public int minLayer = 1;
+    [SerializeField] public float period = 10.0f;
     private bool gonnaRise = false;
     private float timeLeft;
     private TileInfo[,] terrainTilesInfo;
@@ -51,27 +50,11 @@ public class WaterTide : MonoBehaviour {
         water = GameObject.FindGameObjectWithTag(waterTag);
         erosion = GameObject.FindGameObjectWithTag(managerTag);
         submergedTiles.AddRange(seaTiles);
-       // Invoke("Unflood", 0.5f);
-		Invoke("Flood",0.5f);
+        actualLayer = startingLayer;
+        //Invoke("Unflood", 0.5f);
+        Invoke("Flood", 0.5f);
         Invoke("ChangeTide", period);
 	}
-		/* 
-	if (water != null)
-        {
-            startingLayer = water.GetComponent<TilemapRenderer>().sortingOrder;
-            state = TideState.STILL;
-            risingTimer = 4.0f;
-            timeLeft = risingTimer;
-            actualLayer = startingLayer;
-            GameObject.FindGameObjectsWithTag("Grid").First().GetComponent<IslandGenerator>().SetWater(actualLayer);
-            // Change the state of the tide with the current state selected (after 'period' seconds)
-            
-        } else
-        {
-            Debug.LogError("Could not get Water with Tag " + waterTag);
-        }
-    }
-*/	
 	// Update is called once per frame
 	void Update () {
         CheatyStateSettings();
@@ -252,6 +235,7 @@ public class WaterTide : MonoBehaviour {
     
 
     public void  Flood(){
+
         terrainTilesInfo = mapManager.GetComponent<MapManager>().GetTerrainInfo(); 
 
         List<TileInfo> tileDone = new List<TileInfo>();
@@ -287,7 +271,7 @@ public class WaterTide : MonoBehaviour {
                             submergedTiles.Add(neighbourInfo);
                             tileDone.Add(neighbourInfo);
 
-                        } else if (neighbourInfo.GetHeight() < actualLayer)
+                        } else if (neighbourInfo.ShallFlood(actualLayer))
                         {
                             neighbourInfo.SetIsFlooded(true);
                             tileDone.Add(neighbourInfo);
@@ -298,6 +282,6 @@ public class WaterTide : MonoBehaviour {
             }
         }
         submergedTiles = tileModified;
-        Invoke("Flood",0.5f);
+        Invoke("Flood", 0.5f);
     }
 }

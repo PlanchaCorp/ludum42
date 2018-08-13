@@ -24,14 +24,7 @@ public class TileInfo{
     }
     private WallState state;
 
-    public TileInfo(Vector3Int vector){
-        this.durability = 1.0f;
-        this.isFlooded = false;
-        this.x = vector.x;
-        this.y = vector.y;
-        this.state = WallState.NOTHING;
-    }
-     public TileInfo(Vector3Int vector, int height, bool flooded, bool isSea){
+    public TileInfo(Vector3Int vector, int height, bool flooded, bool isSea){
         this.durability = 1.0f;
         this.isFlooded = flooded;
         this.isSea = isSea;
@@ -42,23 +35,27 @@ public class TileInfo{
         this.state = WallState.NOTHING;
         this.manager = GameObject.FindGameObjectWithTag("Manager").GetComponent<MapManager>();
 
-         if (isSea || isFlooded){
+        if (isSea || isFlooded){
             Vector3Int vectorPosition = new Vector3Int(0,0,0);
             vectorPosition.x = TileInfo.mapSize / 2 - this.x;
             vectorPosition.y = TileInfo.mapSize / 2 - this.y;
             TileInfo.waterTileMap.SetTile(vectorPosition,waterTile);
         }
     }
+
     public int GetHeight(){
         return this.height;
     }
+
     public static void SetTileMapWater(Tilemap wtm, int size){
         TileInfo.waterTileMap = wtm;
         TileInfo.mapSize = size;
     }
+
     public static void SetWaterTile(AnimatedTile Water){
         TileInfo.waterTile = Water;
     }
+
     public Vector3Int GetCoordinates()
     {
         return new Vector3Int(x, y, 0);
@@ -108,10 +105,11 @@ public class TileInfo{
 		this.height -= 1;
         if (!isFlooded && height < GameObject.FindGameObjectWithTag("WaterTilemap").GetComponent<WaterTide>().GetLevel())
         {
-            TileInfo[,] terrainInfo = GameObject.FindGameObjectWithTag("Manager").GetComponent<MapManager>().GetTerrainInfo();
+            TileInfo[,] terrainInfo = manager.GetComponent<MapManager>().GetTerrainInfo();
             Refresh();
         }
     }
+
 	public void Rep(){
 		this.height += 1;
         if (height >= GameObject.FindGameObjectWithTag("WaterTilemap").GetComponent<WaterTide>().GetLevel())
@@ -119,27 +117,42 @@ public class TileInfo{
             SetIsFlooded(false);
         }
 	}
+
     public void Refresh()
     {
         if (!isFlooded)
         {
-            TileInfo[,] terrainInfo = GameObject.FindGameObjectWithTag("Manager").GetComponent<MapManager>().GetTerrainInfo();
+            TileInfo[,] terrainInfo = manager.GetTerrainInfo();
             foreach (Vector3Int neighbourLocation in GetNeighboursCoordinates())
             {
-                if (terrainInfo[neighbourLocation.x, neighbourLocation.y].GetIsFlooded() && height < GameObject.FindGameObjectWithTag("WaterTilemap").GetComponent<WaterTide>().GetActualLayer())
+                if (ShallFlood())
                 {
                     SetIsFlooded(true);
-                }
-            }
-            if (isFlooded)
-            {
-                foreach (Vector3Int neighbourLocation in GetNeighboursCoordinates())
-                {
                     terrainInfo[neighbourLocation.x, neighbourLocation.y].Refresh();
                 }
             }
         }
     }
+
+    public bool ShallFlood()
+    {
+        return ShallFlood(GameObject.FindGameObjectWithTag("WaterTilemap").GetComponent<WaterTide>().GetActualLayer());
+    }
+
+    public bool ShallFlood( int actualLayer )
+    {
+        if (!GetIsFlooded() &&
+            GetHeight() < actualLayer &&
+            GetWallState() == WallState.NOTHING )
+        {
+            return true;
+        } else
+        {
+            return false;
+        }
+         
+    }
+
     public void DecreaseDurability(float value)
     {
         this.durability -= value;
