@@ -155,8 +155,10 @@ public class MapManager : MonoBehaviour
     /// Replenish a case of sand, if possible
     /// </summary>
     /// <param name="replenishPosition">Position where to replenish sand</param>
-    public void Replenish(Vector3Int replenishPosition)
+    public bool Replenish(Vector3Int replenishPosition)
     {
+        bool replenished = false;
+
         // On modifie les données de la map
         mapData[replenishPosition.x, replenishPosition.y]++;
 
@@ -171,8 +173,10 @@ public class MapManager : MonoBehaviour
             {
                 terrainInfo[replenishPosition.x, replenishPosition.y].Rep();
                 terrainTilemap.SetTile(tilesReplenishPosition, tiles[height + 1]);
+                replenished = true;
             }
         }
+        return replenished;
     }
     
     /// <summary>

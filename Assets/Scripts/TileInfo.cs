@@ -38,7 +38,7 @@ public class TileInfo{
         this.x = vector.x;
         this.y = vector.y;
         this.state = WallState.NOTHING;
-         if(isSea){
+         if(isSea || isFlooded){
             Vector3Int vectorPosition = new Vector3Int(0,0,0);
             vectorPosition.x = TileInfo.mapSize / 2 - this.x;
             vectorPosition.y = TileInfo.mapSize / 2 - this.y;
