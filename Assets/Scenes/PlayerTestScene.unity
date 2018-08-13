@@ -500,7 +500,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waterTile: {fileID: 11400000, guid: f675243b986e55f4f9fdacb5b74b5089, type: 2}
   state: 2
-  water: {fileID: 755508713}
   erosion: {fileID: 886327452}
   mapManager: {fileID: 886327452}
   pickUps:
@@ -508,6 +507,9 @@ MonoBehaviour:
   - {fileID: 1949362699186768, guid: d842edbbdacbdc648a423d165988190c, type: 2}
   - {fileID: 1683848578763382, guid: a62353516786db445846b98f086753a0, type: 2}
   bonusLuck: 0.05
+  period: 30
+  rising: 0
+  maxLayerReached: 0
 --- !u!483693784 &755508716
 TilemapRenderer:
   m_ObjectHideFlags: 0
