@@ -7,28 +7,54 @@ public class ScoreHandler : MonoBehaviour {
 
     private WaterTide waterTide;
     private TextMeshProUGUI score;
+    private TextMeshProUGUI wave;
+    private float scoreValue = 0;
+    private int waveNumber = 0;
+    private bool waveChecked = false;
 
     // Use this for initialization
     void Start () {
         waterTide = GameObject.FindGameObjectWithTag("WaterTilemap").GetComponent<WaterTide>();
         score = GameObject.FindGameObjectWithTag("ScoreText").GetComponent<TextMeshProUGUI>();
-	}
+        wave = GameObject.FindGameObjectWithTag("WaveNumber").GetComponent<TextMeshProUGUI>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
 		if (waterTide.GetActualLayer() == waterTide.GetMaxLayer())
         {
-            StartCoroutine(SetScoreText());
+            if (!waveChecked)
+            {
+                waveNumber++;
+                SetScoreText();
+                SetWaveText();
+                waveChecked = true;
+            }
+        } else
+        {
+            waveChecked = false;
         }
 	}
 
     /// <summary>
     /// Assign score text to the textmeshprougui
     /// </summary>
-    private IEnumerator SetScoreText()
+    private void SetScoreText()
     {
-        score.SetText("Score : " + CalculateAvailableTiles());
-        yield return new WaitForSeconds(0.5f);
+        int newScore = CalculateAvailableTiles();
+        if (scoreValue < newScore)
+        {
+            scoreValue = newScore;
+            score.SetText("Score : " + newScore);
+        }
+    }
+
+    /// <summary>
+    /// Assign wave number to the textmeshprougui
+    /// </summary>
+    private void SetWaveText()
+    {
+        wave.SetText("Wave " + waveNumber);
     }
 
     /// <summary>
