@@ -20,13 +20,13 @@ public class WaterTide : MonoBehaviour {
     [SerializeField] private List<GameObject> pickUps;
     [SerializeField] private float bonusLuck = 0.01f;
     
-    [SerializeField] private float period = 20.0f;
+    [SerializeField] private float period = 2.0f;
     private bool gonnaRise = false;
-    [SerializeField] private int rising = 0;
+    [SerializeField] private int rising = 1;
     private int maxLayer = 6;
     private int minLayer = 1;
-    private int startingLayer = 1;
-    private int actualLayer;
+    private int startingLayer = 2;
+    [SerializeField] private int actualLayer = 2;
     [SerializeField] private bool maxLayerReached = false;
 
     private TileInfo[,] terrainInfo;
@@ -170,8 +170,9 @@ public class WaterTide : MonoBehaviour {
         switch (state)
         {
             case TideState.STILL:
-                if (rising % 3 == 0)
+                if (rising == 3)
                 {
+                    rising = 0;
                     if (maxLayerReached)
                     {
                         state = TideState.RISING;
@@ -191,15 +192,22 @@ public class WaterTide : MonoBehaviour {
                         state = TideState.RISING;
                     }
                 }
+                rising++;
                 break;
             default:
                 state = TideState.STILL;
                 break;
         }
-        rising++;
-        if ( rising % maxLayer == 0 )
+        if ( actualLayer == maxLayer )
         {
-            maxLayerReached = !maxLayerReached;
+            maxLayerReached = true;
+            rising = 0;
+            actualLayer--;
+        } else if (actualLayer == minLayer )
+        {
+            maxLayerReached = false;
+            rising = 0;
+            actualLayer++;
         }
     }
   
