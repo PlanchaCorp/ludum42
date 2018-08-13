@@ -24,7 +24,7 @@ public class WaterTide : MonoBehaviour {
     private float period = 20.0f;
     private bool gonnaRise = false;
     private int rising = 0;
-    private int maxLayer = 6;
+    private int maxLayer = 7;
     private int minLayer = 1;
     private int startingLayer = 1;
     private int actualLayer;
