@@ -172,6 +172,31 @@ Prefab:
       propertyPath: m_SortingLayer
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 58638221707354908, guid: cbd418fa49bbc31498ca7cfbe3cdddf0,
+        type: 2}
+      propertyPath: m_Radius
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 58638221707354908, guid: cbd418fa49bbc31498ca7cfbe3cdddf0,
+        type: 2}
+      propertyPath: m_Offset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 58638221707354908, guid: cbd418fa49bbc31498ca7cfbe3cdddf0,
+        type: 2}
+      propertyPath: m_Offset.y
+      value: -0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 114780517994361118, guid: cbd418fa49bbc31498ca7cfbe3cdddf0,
+        type: 2}
+      propertyPath: maxDiggingTime
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114780517994361118, guid: cbd418fa49bbc31498ca7cfbe3cdddf0,
+        type: 2}
+      propertyPath: drowningTime
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbd418fa49bbc31498ca7cfbe3cdddf0, type: 2}
   m_IsPrefabAsset: 0
@@ -483,10 +508,6 @@ MonoBehaviour:
   - {fileID: 1949362699186768, guid: d842edbbdacbdc648a423d165988190c, type: 2}
   - {fileID: 1683848578763382, guid: a62353516786db445846b98f086753a0, type: 2}
   bonusLuck: 0.05
-  startingLayer: 2
-  actualLayer: 2
-  maxLayer: 7
-  minLayer: 1
 --- !u!483693784 &755508716
 TilemapRenderer:
   m_ObjectHideFlags: 0
@@ -520,7 +541,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1028222687
-  m_SortingLayer: 4
+  m_SortingLayer: 3
   m_SortingOrder: 2
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -903,6 +924,7 @@ GameObject:
   - component: {fileID: 1493529063}
   - component: {fileID: 1493529065}
   - component: {fileID: 1493529064}
+  - component: {fileID: 1493529066}
   m_Layer: 0
   m_Name: Structure
   m_TagString: StructureTilemap
@@ -956,7 +978,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1502706335
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -1029,6 +1051,19 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!19719996 &1493529066
+TilemapCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1493529062}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
 --- !u!1 &1952688258
 GameObject:
   m_ObjectHideFlags: 0
