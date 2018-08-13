@@ -8,8 +8,8 @@ public class ScoreHandler : MonoBehaviour {
     private WaterTide waterTide;
     private TextMeshProUGUI score;
     private TextMeshProUGUI wave;
-    private float scoreValue = 0;
-    private int waveNumber = 0;
+    public static float scoreValue = 0;
+    public static int waveNumber = 0;
     private bool waveChecked = false;
 
     // Use this for initialization

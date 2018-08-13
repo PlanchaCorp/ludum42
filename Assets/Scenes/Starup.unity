@@ -422,7 +422,7 @@ MonoBehaviour:
   thirdCanvas: {fileID: 859251430}
   MenuCanvas: {fileID: 1548087558}
   coquiblue: {fileID: 0}
-  scene: 0
+  scene: 1
   loadingText: {fileID: 452797151}
 --- !u!1 &437279748
 GameObject:

@@ -180,7 +180,7 @@ public class WaterTide : MonoBehaviour {
                     rising = 0;
                 }
                 if (rising >= maxLayer) {
-                    rising = minLayer;
+                    rising = minLayer-maxLayer;
                 }
                 break;
             default:

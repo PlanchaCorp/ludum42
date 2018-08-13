@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class PlayerAction : MonoBehaviour {
     /// <summary>
@@ -168,6 +169,7 @@ public class PlayerAction : MonoBehaviour {
             if (currentDrowningTime > drowningTime)
             {
                 Debug.Log("You just drowned !");
+                SceneManager.LoadScene("deathScreen");
             }
         } else
         {
